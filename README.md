@@ -83,74 +83,73 @@
 
 ---
 
-## 📁 项目结构
+## 项目结构
 
 poker-egg-fullstack/
+├── frontend/ # React 前端应用
+│ ├── public/
+│ │ └── easter-egg.html # 经典彩蛋页面（v1.0 版本）
+│ ├── src/
+│ │ ├── components/ # UI 组件
+│ │ │ ├── PokerTable/ # 牌桌组件
+│ │ │ │ ├── PokerTable.jsx
+│ │ │ │ └── PokerTable.css
+│ │ │ ├── Dashboard/ # 仪表盘组件
+│ │ │ │ ├── Dashboard.jsx
+│ │ │ │ └── Dashboard.css
+│ │ │ ├── GameLobby/ # 游戏大厅
+│ │ │ │ ├── GameLobby.jsx
+│ │ │ │ └── GameLobby.css
+│ │ │ ├── Profile/ # 个人中心
+│ │ │ │ ├── Profile.jsx
+│ │ │ │ └── Profile.css
+│ │ │ └── Stats/ # 战绩统计
+│ │ │ ├── Stats.jsx
+│ │ │ └── Stats.css
+│ │ ├── store/
+│ │ │ └── gameStore.js # Zustand 状态管理
+│ │ ├── services/
+│ │ │ ├── api.js # API 调用
+│ │ │ └── socket.js # WebSocket 连接
+│ │ ├── App.jsx # 主应用组件
+│ │ ├── App.css # 全局样式
+│ │ ├── main.jsx # 应用入口
+│ │ └── index.css # 基础样式
+│ ├── package.json # 前端依赖
+│ ├── vite.config.js # Vite 配置
+│ ├── .env # 开发环境变量
+│ ├── .env.production # 生产环境变量
+│ └── index.html # HTML 入口
 │
-├── frontend/                          # React 前端应用
-│   ├── public/
-│   │   └── easter-egg.html           # 经典彩蛋页面（v1.0 版本）
-│   ├── src/
-│   │   ├── components/               # UI 组件
-│   │   │   ├── PokerTable/          # 牌桌组件
-│   │   │   │   ├── PokerTable.jsx
-│   │   │   │   └── PokerTable.css
-│   │   │   ├── Dashboard/           # 仪表盘组件
-│   │   │   │   ├── Dashboard.jsx
-│   │   │   │   └── Dashboard.css
-│   │   │   ├── GameLobby/           # 游戏大厅
-│   │   │   │   ├── GameLobby.jsx
-│   │   │   │   └── GameLobby.css
-│   │   │   ├── Profile/             # 个人中心
-│   │   │   │   ├── Profile.jsx
-│   │   │   │   └── Profile.css
-│   │   │   └── Stats/               # 战绩统计
-│   │   │       ├── Stats.jsx
-│   │   │       └── Stats.css
-│   │   ├── store/
-│   │   │   └── gameStore.js         # Zustand 状态管理
-│   │   ├── services/
-│   │   │   ├── api.js               # API 调用
-│   │   │   └── socket.js            # WebSocket 连接
-│   │   ├── App.jsx                  # 主应用组件
-│   │   ├── App.css                  # 全局样式
-│   │   ├── main.jsx                 # 应用入口
-│   │   └── index.css                # 基础样式
-│   ├── package.json                 # 前端依赖
-│   ├── vite.config.js              # Vite 配置
-│   ├── .env                        # 开发环境变量
-│   ├── .env.production             # 生产环境变量
-│   └── index.html                  # HTML 入口
+├── backend/ # Python 后端应用
+│ ├── services/
+│ │ ├── game_engine.py # 游戏引擎（核心逻辑）
+│ │ └── deck_manager.py # 牌堆管理
+│ ├── ai/
+│ │ └── ai_engine.py # AI 引擎（3个难度）
+│ ├── models/
+│ │ ├── database.py # 数据库连接
+│ │ └── schemas.py # Pydantic 数据模型
+│ ├── auth/
+│ │ └── auth.py # JWT 认证
+│ ├── logs/ # 日志文件
+│ ├── app.py # FastAPI 主程序
+│ ├── requirements.txt # Python 依赖
+│ ├── Dockerfile # Docker 镜像
+│ └── .env # 环境变量
 │
-├── backend/                          # Python 后端应用
-│   ├── services/
-│   │   ├── game_engine.py          # 游戏引擎（核心逻辑）
-│   │   └── deck_manager.py         # 牌堆管理
-│   ├── ai/
-│   │   └── ai_engine.py            # AI 引擎（3个难度）
-│   ├── models/
-│   │   ├── database.py             # 数据库连接
-│   │   └── schemas.py              # Pydantic 数据模型
-│   ├── auth/
-│   │   └── auth.py                 # JWT 认证
-│   ├── logs/                        # 日志文件
-│   ├── app.py                       # FastAPI 主程序
-│   ├── requirements.txt             # Python 依赖
-│   ├── Dockerfile                   # Docker 镜像
-│   └── .env                         # 环境变量
+├── nginx/ # Nginx 配置（生产环境）
+│ └── nginx.conf
 │
-├── nginx/                            # Nginx 配置（生产环境）
-│   └── nginx.conf
+├── .github/ # GitHub Actions
+│ └── workflows/
+│ └── deploy.yml # 自动部署工作流
 │
-├── .github/                          # GitHub Actions
-│   └── workflows/
-│       └── deploy.yml               # 自动部署工作流
-│
-├── docker-compose.yml               # Docker 编排
-├── railway.json                     # Railway 部署配置
-├── .gitignore                       # Git 忽略文件
-├── LICENSE                          # MIT 开源协议
-└── README.md                        # 项目说明
+├── docker-compose.yml # Docker 编排
+├── railway.json # Railway 部署配置
+├── .gitignore # Git 忽略文件
+├── LICENSE # MIT 开源协议
+└── README.md # 项目说明
 
 ## 🚀 快速开始
 
