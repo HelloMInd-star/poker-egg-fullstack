@@ -1,0 +1,107 @@
+.game-lobby {
+  padding: 20px 0;
+}
+
+.lobby-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.lobby-header h2 {
+  color: #fff;
+  margin: 0;
+}
+
+.lobby-stats {
+  background: rgba(255, 255, 255, 0.03) !important;
+  border: 1px solid rgba(167, 139, 250, 0.1) !important;
+  border-radius: 16px !important;
+  margin-bottom: 24px;
+}
+
+.stat-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.stat-number {
+  font-size: 28px;
+  font-weight: 700;
+  color: #a78bfa;
+}
+
+.stat-label {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.4);
+  letter-spacing: 1px;
+}
+
+.lobby-table {
+  background: rgba(255, 255, 255, 0.02) !important;
+  border-radius: 16px !important;
+  overflow: hidden;
+}
+
+.lobby-table .ant-table {
+  background: transparent !important;
+}
+
+.lobby-table .ant-table-thead > tr > th {
+  background: rgba(167, 139, 250, 0.05) !important;
+  color: rgba(255, 255, 255, 0.6) !important;
+  border-bottom: 1px solid rgba(167, 139, 250, 0.1) !important;
+}
+
+.lobby-table .ant-table-tbody > tr > td {
+  color: rgba(255, 255, 255, 0.8) !important;
+  border-bottom: 1px solid rgba(167, 139, 250, 0.05) !important;
+}
+
+.lobby-table .ant-table-tbody > tr:hover > td {
+  background: rgba(167, 139, 250, 0.05) !important;
+}
+
+.lobby-modal .ant-modal-content {
+  background: linear-gradient(160deg, #1a1333, #0d0a1e) !important;
+  border: 1px solid rgba(167, 139, 250, 0.2) !important;
+  border-radius: 16px !important;
+}
+
+.lobby-modal .ant-modal-header {
+  background: transparent !important;
+  border-bottom: 1px solid rgba(167, 139, 250, 0.1) !important;
+}
+
+.lobby-modal .ant-modal-title {
+  color: #fff !important;
+}
+
+.lobby-modal .ant-form-item-label label {
+  color: rgba(255, 255, 255, 0.8) !important;
+}
+
+.lobby-modal .ant-input,
+.lobby-modal .ant-select-selector {
+  background: rgba(255, 255, 255, 0.05) !important;
+  border-color: rgba(167, 139, 250, 0.2) !important;
+  color: #fff !important;
+}
+
+.lobby-modal .ant-input:hover,
+.lobby-modal .ant-select-selector:hover {
+  border-color: rgba(167, 139, 250, 0.4) !important;
+}
+
+@media (max-width: 720px) {
+  .lobby-header {
+    flex-direction: column;
+    gap: 12px;
+  }
+  
+  .stat-item {
+    flex: 1;
+  }
+}
