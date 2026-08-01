@@ -85,59 +85,32 @@
 
 ## 📁 项目结构
 
-poker\-egg\-fullstack/
-
-├── frontend/                 \# React 前端
-
-│   ├── src/
-
-│   │   ├── components/      \# UI 组件
-
-│   │   ├── store/           \# 状态管理
-
-│   │   ├── services/        \# API 服务
-
-│   │   ├── App\.jsx
-
-│   │   └── main\.jsx
-
-│   ├── public/
-
-│   │   └── easter\-egg\.html  \# 经典彩蛋
-
-│   ├── package\.json
-
-│   └── vite\.config\.js
-
+poker-egg-fullstack/
+├── frontend/ # React 前端
+│ ├── src/
+│ │ ├── components/ # UI 组件
+│ │ ├── store/ # 状态管理
+│ │ ├── services/ # API 服务
+│ │ ├── App.jsx
+│ │ └── main.jsx
+│ ├── public/
+│ │ └── easter-egg.html # 经典彩蛋
+│ ├── package.json
+│ └── vite.config.js
 │
-
-├── backend/                  \# Python 后端
-
-│   ├── services/
-
-│   │   └── game\_engine\.py   \# 游戏引擎
-
-│   ├── ai/
-
-│   │   └── ai\_engine\.py     \# AI 引擎
-
-│   ├── models/              \# 数据模型
-
-│   ├── auth/                \# 用户认证
-
-│   ├── app\.py               \# 主程序
-
-│   └── requirements\.txt
-
+├── backend/ # Python 后端
+│ ├── services/
+│ │ └── game_engine.py # 游戏引擎
+│ ├── ai/
+│ │ └── ai_engine.py # AI 引擎
+│ ├── models/ # 数据模型
+│ ├── auth/ # 用户认证
+│ ├── app.py # 主程序
+│ └── requirements.txt
 │
-
-├── docker\-compose\.yml       \# Docker 部署
-
-├── railway\.json             \# Railway 配置
-
-└── README\.md
-
-```Plain
+├── docker-compose.yml # Docker 部署
+├── railway.json # Railway 配置
+└── README.md
 
 ## 🚀 快速开始
 
