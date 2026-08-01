@@ -98,7 +98,9 @@ poker-egg-fullstack/
 ├── railway.json # Railway 配置
 └── README.md
 
-## 快速开始
+---
+
+## 🚀 快速开始
 
 ### 方式一：Docker 部署（推荐）
 
@@ -114,10 +116,9 @@ docker-compose up -d
 # 前端: http://localhost:3000
 # 后端: http://localhost:5000
 # API 文档: http://localhost:5000/docs
-￼
-￼
-方式二：本地开发
-bash
+
+### 方式二：本地开发
+```bash
 # 后端
 cd backend
 pip install -r requirements.txt
@@ -129,66 +130,4 @@ npm install
 npm run dev
 
 # 访问 http://localhost:5173
-部署指南
-前端部署到 GitHub Pages
-1. 构建前端: cd frontend && npm run build
-2. 将 dist/ 目录部署到 GitHub Pages
-3. 访问 https://hellomind-star.github.io/poker-egg-fullstack/
-后端部署到 Railway
-1. 在 Railway 创建新项目
-2. 连接 GitHub 仓库
-3. 设置 Root Directory 为 backend
-4. 添加环境变量
-5. 自动部署完成
-API 文档
-启动后端后访问:
-• Swagger UI: /docs
-• ReDoc: /redoc
-主要 API 端点
-• GET /api/health - 健康检查
-• POST /api/game/create - 创建游戏
-• POST /api/game/{id}/join - 加入游戏
-• GET /api/game/{id} - 获取游戏状态
-• POST /api/auth/register - 用户注册
-• POST /api/auth/login - 用户登录
-• WS /ws/{game_id} - WebSocket 连接
-环境变量
-后端环境变量
-DATABASE_URL=postgresql://user:pass@host:5432/db
-REDIS_URL=redis://redis:6379
-SECRET_KEY=your-secret-key
-JWT_ALGORITHM=HS256
-JWT_EXPIRE_MINUTES=60
-CORS_ORIGINS=["http://localhost:3000"]
-前端环境变量
-VITE_API_URL=https://your-backend-domain.com
-VITE_WS_URL=wss://your-backend-domain.com
-路线图
-☑ 基础牌桌交互
-☑ AI 陪练（3个难度）
-☑ 凯利公式集成
-☑ 用户认证
-☑ 战绩统计
-□ 多人对战模式
-□ 强化学习 AI
-□ 锦标赛模式
-□ 移动端 APP
-贡献指南
-欢迎贡献代码！
-1. Fork 本仓库
-2. 创建特性分支: git checkout -b feature/AmazingFeature
-3. 提交更改: git commit -m 'Add some AmazingFeature'
-4. 推送到分支: git push origin feature/AmazingFeature
-5. 开启 Pull Request
-开源协议
-本项目采用 MIT 协议 - 详见 LICENSE 文件
-作者
-HelloMind-star (Mine)
-• GitHub: https://github.com/HelloMind-star
-支持项目
-如果这个项目对你有帮助，请给个 Star 支持一下！
-Built with ❤️ by Mine
-
-
-
 
