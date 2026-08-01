@@ -1,0 +1,170 @@
+.stats-page {
+  padding: 20px 0;
+}
+
+.stats-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.stats-header h2 {
+  color: #fff;
+  margin: 0;
+}
+
+.stats-controls {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.stats-overview {
+  margin-bottom: 16px;
+}
+
+.stat-card {
+  background: rgba(255, 255, 255, 0.03) !important;
+  border: 1px solid rgba(167, 139, 250, 0.1) !important;
+  border-radius: 16px !important;
+}
+
+.stat-card .ant-statistic-title {
+  color: rgba(255, 255, 255, 0.4) !important;
+}
+
+.stat-card .ant-statistic-content {
+  color: #fff !important;
+}
+
+.chart-card {
+  background: rgba(255, 255, 255, 0.03) !important;
+  border: 1px solid rgba(167, 139, 250, 0.1) !important;
+  border-radius: 16px !important;
+}
+
+.chart-card .ant-card-head {
+  border-bottom: 1px solid rgba(167, 139, 250, 0.08) !important;
+}
+
+.chart-card .ant-card-head-title {
+  color: rgba(255, 255, 255, 0.8) !important;
+}
+
+.stats-detail {
+  background: rgba(255, 255, 255, 0.03) !important;
+  border: 1px solid rgba(167, 139, 250, 0.1) !important;
+  border-radius: 16px !important;
+  height: 100%;
+}
+
+.stats-detail .ant-card-head {
+  border-bottom: 1px solid rgba(167, 139, 250, 0.08) !important;
+}
+
+.stats-detail .ant-card-head-title {
+  color: rgba(255, 255, 255, 0.8) !important;
+}
+
+.detail-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px 16px;
+}
+
+.detail-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 4px 0;
+}
+
+.detail-label {
+  color: rgba(255, 255, 255, 0.4);
+  font-size: 13px;
+}
+
+.detail-value {
+  color: #fff;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.detail-value.win {
+  color: #22c55e;
+}
+
+.detail-value.lose {
+  color: #fca5a5;
+}
+
+.achievement-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.achievement-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 12px;
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: 8px;
+}
+
+.achievement-item .anticon {
+  font-size: 20px;
+}
+
+.achievement-item span {
+  flex: 1;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.recent-games {
+  margin-top: 16px;
+  background: rgba(255, 255, 255, 0.03) !important;
+  border: 1px solid rgba(167, 139, 250, 0.1) !important;
+  border-radius: 16px !important;
+}
+
+.recent-games .ant-card-head {
+  border-bottom: 1px solid rgba(167, 139, 250, 0.08) !important;
+}
+
+.recent-games .ant-card-head-title {
+  color: rgba(255, 255, 255, 0.8) !important;
+}
+
+.recent-games .ant-table {
+  background: transparent !important;
+}
+
+.recent-games .ant-table-thead > tr > th {
+  background: rgba(167, 139, 250, 0.05) !important;
+  color: rgba(255, 255, 255, 0.6) !important;
+  border-bottom: 1px solid rgba(167, 139, 250, 0.1) !important;
+}
+
+.recent-games .ant-table-tbody > tr > td {
+  color: rgba(255, 255, 255, 0.8) !important;
+  border-bottom: 1px solid rgba(167, 139, 250, 0.05) !important;
+}
+
+@media (max-width: 720px) {
+  .stats-header {
+    flex-direction: column;
+    gap: 12px;
+    align-items: stretch;
+  }
+  
+  .stats-controls {
+    flex-wrap: wrap;
+  }
+  
+  .detail-grid {
+    grid-template-columns: 1fr;
+  }
+}
