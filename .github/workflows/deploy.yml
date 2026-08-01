@@ -1,5 +1,5 @@
 # .github/workflows/deploy.yml
-# 这个只负责部署前端到 GitHub Pages
+# 部署前端到 GitHub Pages（构建 frontend/dist 并发布到 gh-pages）
 
 name: Deploy Frontend to GitHub Pages
 
@@ -25,12 +25,12 @@ jobs:
         with:
           node-version: '18'
           cache: 'npm'
-          cache-dependency-path: 'frontend/package-lock.json'
+          cache-dependency-path: frontend/package.json
 
       - name: Install and Build Frontend
         run: |
           cd frontend
-          npm ci
+          npm install
           npm run build
 
       - name: Deploy to GitHub Pages
