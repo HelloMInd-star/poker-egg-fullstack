@@ -1,0 +1,1309 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Y.Mine · Poker Egg</title>
+  <style>
+    /* ===== 基础重置 ===== */
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: #0b0a1a;
+      font-family: system-ui, 'Inter', -apple-system, sans-serif;
+      min-height: 100vh;
+      overflow: hidden;
+    }
+
+    /* ===== 封面样式 ===== */
+    .poker-splash {
+      position: fixed;
+      inset: 0;
+      z-index: 10000;
+      background: radial-gradient(ellipse at center, #0f0c24 0%, #1a1333 40%, #0d0a1e 100%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.8s cubic-bezier(0.2, 0.9, 0.3, 1.2);
+      overflow: hidden;
+    }
+    
+    .poker-splash.hidden {
+      opacity: 0;
+      pointer-events: none;
+      transform: scale(1.1);
+    }
+    
+    /* 背景动画卡片 */
+    .splash-cards {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      opacity: 0.1;
+      pointer-events: none;
+    }
+    
+    .splash-card-float {
+      position: absolute;
+      font-size: 80px;
+      animation: floatCard 20s ease-in-out infinite;
+      opacity: 0.3;
+    }
+    
+    .splash-card-float:nth-child(1) { top: 10%; left: 10%; animation-delay: 0s; }
+    .splash-card-float:nth-child(2) { top: 20%; right: 15%; animation-delay: -4s; font-size: 100px; }
+    .splash-card-float:nth-child(3) { bottom: 25%; left: 20%; animation-delay: -8s; }
+    .splash-card-float:nth-child(4) { bottom: 15%; right: 10%; animation-delay: -12s; font-size: 90px; }
+    .splash-card-float:nth-child(5) { top: 50%; left: 50%; transform: translate(-50%, -50%); animation-delay: -6s; font-size: 120px; opacity: 0.15; }
+    
+    @keyframes floatCard {
+      0%, 100% { transform: translate(0, 0) rotate(0deg); }
+      25% { transform: translate(30px, -40px) rotate(10deg); }
+      50% { transform: translate(-20px, -80px) rotate(-5deg); }
+      75% { transform: translate(40px, -30px) rotate(15deg); }
+    }
+    
+    /* 封面主内容 */
+    .splash-content {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      animation: fadeInUp 1s ease-out;
+    }
+    
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(40px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    .splash-icon {
+      font-size: 80px;
+      margin-bottom: 16px;
+      display: inline-block;
+      animation: pulse 2s ease-in-out infinite;
+    }
+    
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+    }
+    
+    .splash-title {
+      font-size: 52px;
+      font-weight: 800;
+      background: linear-gradient(135deg, #a78bfa 0%, #7c3aed 50%, #ef4444 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      letter-spacing: 2px;
+      margin-bottom: 8px;
+    }
+    
+    .splash-subtitle {
+      font-size: 18px;
+      color: rgba(255,255,255,0.5);
+      letter-spacing: 4px;
+      font-weight: 300;
+      margin-bottom: 6px;
+    }
+    
+    .splash-tagline {
+      font-size: 14px;
+      color: rgba(167,139,250,0.5);
+      letter-spacing: 6px;
+      font-weight: 200;
+      margin-bottom: 40px;
+    }
+    
+    .splash-divider {
+      width: 60px;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, #a78bfa, transparent);
+      margin: 16px auto 32px;
+    }
+    
+    /* 进入按钮 */
+    .splash-btn {
+      padding: 16px 56px;
+      border: 2px solid rgba(167,139,250,0.4);
+      border-radius: 50px;
+      background: linear-gradient(135deg, rgba(167,139,250,0.15), rgba(239,68,68,0.08));
+      color: #fff;
+      font-size: 18px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+      letter-spacing: 2px;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .splash-btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 40px rgba(167,139,250,0.3);
+      border-color: rgba(167,139,250,0.8);
+    }
+    
+    .splash-btn::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: linear-gradient(45deg, transparent, rgba(167,139,250,0.1), transparent);
+      transform: rotate(45deg) translateX(-100%);
+      transition: all 0.6s;
+    }
+    
+    .splash-btn:hover::before {
+      transform: rotate(45deg) translateX(100%);
+    }
+    
+    .splash-btn .arrow {
+      display: inline-block;
+      transition: transform 0.3s;
+      margin-left: 8px;
+    }
+    
+    .splash-btn:hover .arrow {
+      transform: translateX(8px);
+    }
+    
+    /* 版本信息 */
+    .splash-version {
+      position: absolute;
+      bottom: 30px;
+      color: rgba(255,255,255,0.15);
+      font-size: 12px;
+      letter-spacing: 2px;
+    }
+    
+    /* 粒子背景 */
+    .splash-particles {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      pointer-events: none;
+    }
+    
+    .particle {
+      position: absolute;
+      width: 4px;
+      height: 4px;
+      background: rgba(167,139,250,0.3);
+      border-radius: 50%;
+      animation: particleFloat 15s linear infinite;
+    }
+    
+    @keyframes particleFloat {
+      0% {
+        transform: translateY(100vh) rotate(0deg);
+        opacity: 0;
+      }
+      10% { opacity: 1; }
+      90% { opacity: 1; }
+      100% {
+        transform: translateY(-10vh) rotate(720deg);
+        opacity: 0;
+      }
+    }
+
+    /* ===== 入口触发按钮（首页浮动） ===== */
+    .poker-egg-trigger {
+      position: fixed;
+      right: 24px;
+      bottom: 24px;
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, rgba(167,139,250,0.25), rgba(239,68,68,0.15));
+      border: 1.5px solid rgba(167,139,250,0.4);
+      backdrop-filter: blur(10px);
+      color: #fff;
+      font-size: 26px;
+      cursor: pointer;
+      z-index: 998;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 24px rgba(167,139,250,0.25);
+      transition: all .3s;
+      animation: pokerPulse 3s ease-in-out infinite;
+    }
+    .poker-egg-trigger:hover {
+      transform: scale(1.1) rotate(-8deg);
+      box-shadow: 0 6px 32px rgba(239,68,68,0.4);
+      border-color: rgba(239,68,68,0.6);
+    }
+    .poker-egg-trigger .egg-hint {
+      position: absolute;
+      right: 70px;
+      background: rgba(20,16,40,0.95);
+      border: 1px solid rgba(167,139,250,0.3);
+      padding: 6px 12px;
+      border-radius: 8px;
+      font-size: 11px;
+      white-space: nowrap;
+      color: rgba(255,255,255,0.8);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .2s;
+    }
+    .poker-egg-trigger:hover .egg-hint { opacity: 1; }
+
+    @keyframes pokerPulse {
+      0%, 100% { box-shadow: 0 4px 24px rgba(167,139,250,0.25); }
+      50%      { box-shadow: 0 4px 32px rgba(239,68,68,0.35); }
+    }
+
+    /* ===== Modal遮罩 + 窗口 ===== */
+    .poker-modal-mask {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.75);
+      backdrop-filter: blur(6px);
+      z-index: 9999;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: opacity .25s;
+    }
+    .poker-modal-mask.open {
+      display: flex;
+      opacity: 1;
+    }
+    .poker-modal {
+      width: min(880px, 95vw);
+      max-height: 92vh;
+      overflow-y: auto;
+      background: linear-gradient(160deg, #0f0c24 0%, #1a1333 50%, #0d0a1e 100%);
+      border: 1px solid rgba(167,139,250,0.25);
+      border-radius: 20px;
+      box-shadow: 0 20px 80px rgba(167,139,250,0.2), 0 0 0 1px rgba(255,255,255,0.04) inset;
+      padding: 0;
+      position: relative;
+      transform: scale(0.9);
+      transition: transform .3s cubic-bezier(.2,.9,.3,1.2);
+    }
+    .poker-modal-mask.open .poker-modal { transform: scale(1); }
+
+    .poker-modal-header {
+      padding: 20px 28px 16px;
+      border-bottom: 1px solid rgba(167,139,250,0.12);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .poker-modal-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: 0.5px;
+    }
+    .poker-modal-title .sub {
+      font-size: 11px;
+      font-weight: 400;
+      color: rgba(255,255,255,0.4);
+      margin-left: 10px;
+      letter-spacing: 0.3px;
+    }
+    .poker-close {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      border: 1px solid rgba(255,255,255,0.1);
+      background: transparent;
+      color: rgba(255,255,255,0.6);
+      font-size: 18px;
+      cursor: pointer;
+      transition: all .2s;
+    }
+    .poker-close:hover {
+      background: rgba(239,68,68,0.2);
+      border-color: rgba(239,68,68,0.5);
+      color: #fff;
+    }
+
+    .poker-modal-body { padding: 22px 28px 26px; }
+
+    /* ===== 牌桌 ===== */
+    .poker-table {
+      background: radial-gradient(ellipse at center, #0f4c3a 0%, #0a3328 60%, #051e18 100%);
+      border: 6px solid #5c3a1e;
+      border-radius: 120px;
+      padding: 28px 24px 22px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.6), inset 0 0 40px rgba(0,0,0,0.3);
+      position: relative;
+      margin-bottom: 18px;
+    }
+    .poker-table::before {
+      content: '';
+      position: absolute;
+      inset: 8px;
+      border: 1px dashed rgba(255,255,255,0.08);
+      border-radius: 110px;
+      pointer-events: none;
+    }
+
+    .poker-board-area {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      min-height: 96px;
+      margin-bottom: 18px;
+      align-items: center;
+    }
+
+    .poker-hole-area {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      margin-top: 8px;
+      min-height: 88px;
+      align-items: center;
+    }
+
+    .poker-pot {
+      text-align: center;
+      color: rgba(255,215,0,0.9);
+      font-size: 13px;
+      margin-bottom: 8px;
+      letter-spacing: 0.5px;
+    }
+    .poker-pot .amt {
+      font-size: 18px;
+      font-weight: 700;
+      color: #ffd700;
+      margin-left: 6px;
+      text-shadow: 0 0 10px rgba(255,215,0,0.5);
+    }
+
+    /* ===== 卡牌 ===== */
+    .poker-card {
+      width: 62px;
+      height: 86px;
+      border-radius: 8px;
+      background: #fff;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 6px 7px;
+      font-weight: 700;
+      position: relative;
+      transition: transform .2s;
+      user-select: none;
+    }
+    .poker-card:hover { transform: translateY(-4px); }
+    .poker-card.back {
+      background: linear-gradient(135deg, #6b21a8 0%, #4c1d95 50%, #3b0764 100%);
+      background-image: repeating-linear-gradient(45deg, rgba(255,255,255,0.06) 0 6px, transparent 6px 12px);
+      border: 2px solid rgba(167,139,250,0.4);
+    }
+    .poker-card.slot {
+      background: rgba(255,255,255,0.03);
+      border: 2px dashed rgba(255,255,255,0.15);
+      box-shadow: none;
+      color: rgba(255,255,255,0.2);
+      font-size: 22px;
+      align-items: center;
+      justify-content: center;
+      font-weight: 400;
+    }
+    .poker-card .corner-tl { font-size: 14px; line-height: 1; }
+    .poker-card .corner-br { font-size: 14px; line-height: 1; align-self: flex-end; transform: rotate(180deg); }
+    .poker-card .center-suit { font-size: 26px; text-align: center; }
+    .poker-card.red { color: #dc2626; }
+    .poker-card.black { color: #1a1a1a; }
+    .poker-card.dealing { animation: cardDeal .4s ease-out; }
+    @keyframes cardDeal {
+      0%   { transform: translateY(-40px) rotate(-15deg); opacity: 0; }
+      100% { transform: translateY(0) rotate(0); opacity: 1; }
+    }
+
+    /* ===== 玩家信息条 ===== */
+    .poker-player-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 14px;
+      background: rgba(0,0,0,0.35);
+      border-radius: 10px;
+      margin-bottom: 14px;
+      font-size: 12px;
+    }
+    .poker-player-bar .me {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: #fff;
+      font-weight: 600;
+    }
+    .poker-player-bar .avatar-dot {
+      width: 28px; height: 28px; border-radius: 50%;
+      background: linear-gradient(135deg, #a78bfa, #7c3aed);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 14px;
+    }
+    .poker-player-bar .chips {
+      color: #ffd700;
+      font-weight: 700;
+      font-size: 14px;
+    }
+    .poker-stage-tag {
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      background: rgba(167,139,250,0.15);
+      color: #c4b5fd;
+      border: 1px solid rgba(167,139,250,0.3);
+      text-transform: uppercase;
+    }
+    .poker-stage-tag.state-meltdown { background: rgba(239,68,68,0.2); color: #fca5a5; border-color: rgba(239,68,68,0.5); animation: meltdownPulse .6s infinite; }
+    .poker-stage-tag.state-black_swan { background: rgba(249,115,22,0.2); color: #fdba74; border-color: rgba(249,115,22,0.5); }
+    .poker-stage-tag.state-extreme { background: rgba(234,179,8,0.2); color: #fde047; border-color: rgba(234,179,8,0.5); }
+    .poker-stage-tag.state-tension { background: rgba(59,130,246,0.2); color: #93c5fd; border-color: rgba(59,130,246,0.5); }
+    @keyframes meltdownPulse {
+      0%,100%{box-shadow:0 0 0 0 rgba(239,68,68,0.6);}
+      50%{box-shadow:0 0 0 8px rgba(239,68,68,0);}
+    }
+
+    /* ===== 凯利仪表 ===== */
+    .poker-meters {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+    .poker-meter {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 10px;
+      padding: 10px 12px;
+    }
+    .poker-meter .label {
+      font-size: 10px;
+      color: rgba(255,255,255,0.4);
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+    .poker-meter .value {
+      font-size: 20px;
+      font-weight: 700;
+      color: #fff;
+      font-variant-numeric: tabular-nums;
+    }
+    .poker-meter .value.win { color: #22c55e; }
+    .poker-meter .value.lose { color: #ef4444; }
+    .poker-meter .value.kelly { color: #a78bfa; }
+    .poker-meter .sub {
+      font-size: 10px;
+      color: rgba(255,255,255,0.35);
+      margin-top: 2px;
+    }
+    .poker-meter.kelly-rec {
+      background: linear-gradient(135deg, rgba(167,139,250,0.15), rgba(167,139,250,0.04));
+      border-color: rgba(167,139,250,0.3);
+    }
+    .poker-meter.gt-meter {
+      background: linear-gradient(135deg, rgba(251,191,36,0.12), rgba(251,191,36,0.03));
+      border-color: rgba(251,191,36,0.25);
+    }
+    .poker-meter.gt-meter .value { color: #fbbf24; }
+    .poker-meter.dcf-warn {
+      background: rgba(239,68,68,0.1);
+      border-color: rgba(239,68,68,0.4);
+    }
+    .poker-meter.dcf-warn .value { color: #fca5a5; }
+
+    /* 凯利条 */
+    .kelly-bar {
+      margin-top: 6px;
+      height: 6px;
+      background: rgba(255,255,255,0.08);
+      border-radius: 3px;
+      overflow: hidden;
+      position: relative;
+    }
+    .kelly-bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #22c55e, #a78bfa, #ef4444);
+      border-radius: 3px;
+      transition: width .4s;
+    }
+    .kelly-bar-marker {
+      position: absolute;
+      top: -2px;
+      width: 2px;
+      height: 10px;
+      background: #fff;
+      box-shadow: 0 0 6px rgba(255,255,255,0.6);
+    }
+
+    /* ===== 操作按钮区 ===== */
+    .poker-actions {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 8px;
+      margin-bottom: 14px;
+    }
+    .poker-btn {
+      padding: 12px 8px;
+      border-radius: 10px;
+      border: 1px solid rgba(255,255,255,0.1);
+      background: rgba(255,255,255,0.04);
+      color: #fff;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all .2s;
+      letter-spacing: 0.3px;
+    }
+    .poker-btn:hover:not(:disabled) {
+      background: rgba(255,255,255,0.1);
+      transform: translateY(-2px);
+    }
+    .poker-btn:disabled { opacity: 0.35; cursor: not-allowed; }
+    .poker-btn.fold { color: #fca5a5; border-color: rgba(239,68,68,0.3); }
+    .poker-btn.fold:hover:not(:disabled) { background: rgba(239,68,68,0.15); }
+    .poker-btn.call { color: #93c5fd; border-color: rgba(59,130,246,0.3); }
+    .poker-btn.call:hover:not(:disabled) { background: rgba(59,130,246,0.15); }
+    .poker-btn.raise { color: #c4b5fd; border-color: rgba(167,139,250,0.4); }
+    .poker-btn.raise:hover:not(:disabled) { background: rgba(167,139,250,0.2); }
+    .poker-btn.allin {
+      grid-column: span 1;
+      background: linear-gradient(135deg, #dc2626, #991b1b);
+      border-color: #ef4444;
+      color: #fff;
+      font-weight: 800;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      animation: allinGlow 2s ease-in-out infinite;
+    }
+    .poker-btn.allin:disabled { animation: none; background: rgba(239,68,68,0.2); }
+    .poker-btn.allin:hover:not(:disabled) {
+      background: linear-gradient(135deg, #ef4444, #b91c1c);
+      box-shadow: 0 0 24px rgba(239,68,68,0.6);
+    }
+    .poker-btn.next-street {
+      color: #86efac;
+      border-color: rgba(34,197,94,0.4);
+      background: rgba(34,197,94,0.08);
+    }
+    .poker-btn.next-street:hover:not(:disabled) { background: rgba(34,197,94,0.2); }
+    @keyframes allinGlow {
+      0%,100% { box-shadow: 0 0 12px rgba(239,68,68,0.4); }
+      50% { box-shadow: 0 0 24px rgba(239,68,68,0.8); }
+    }
+
+    .poker-deal-row {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+    .poker-btn.new-hand {
+      flex: 1;
+      background: linear-gradient(135deg, rgba(167,139,250,0.2), rgba(167,139,250,0.08));
+      border-color: rgba(167,139,250,0.4);
+      color: #c4b5fd;
+    }
+
+    /* ===== 表理映射面板（核心"里"可视化） ===== */
+    .poker-bridge-panel {
+      background: rgba(167,139,250,0.04);
+      border: 1px solid rgba(167,139,250,0.15);
+      border-radius: 12px;
+      padding: 14px 16px;
+      margin-top: 12px;
+    }
+    .poker-bridge-title {
+      font-size: 11px;
+      color: #a78bfa;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .poker-bridge-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+    }
+    .bridge-item {
+      background: rgba(0,0,0,0.25);
+      border-radius: 8px;
+      padding: 8px 10px;
+      font-size: 11px;
+    }
+    .bridge-item .b-label {
+      color: rgba(255,255,255,0.4);
+      margin-bottom: 3px;
+      letter-spacing: 0.3px;
+    }
+    .bridge-item .b-value {
+      color: #fff;
+      font-weight: 600;
+      font-size: 13px;
+      font-variant-numeric: tabular-nums;
+    }
+    .bridge-item .b-value.good { color: #86efac; }
+    .bridge-item .b-value.warn { color: #fbbf24; }
+    .bridge-item .b-value.bad  { color: #fca5a5; }
+
+    .poker-dcf-alert {
+      margin-top: 10px;
+      padding: 8px 12px;
+      background: rgba(239,68,68,0.12);
+      border: 1px solid rgba(239,68,68,0.4);
+      border-radius: 8px;
+      color: #fca5a5;
+      font-size: 11px;
+      display: none;
+    }
+    .poker-dcf-alert.show { display: block; animation: shake .4s; }
+    @keyframes shake {
+      0%,100%{transform:translateX(0);}
+      25%{transform:translateX(-4px);}
+      75%{transform:translateX(4px);}
+    }
+
+    .poker-log {
+      margin-top: 10px;
+      max-height: 90px;
+      overflow-y: auto;
+      font-family: ui-monospace, monospace;
+      font-size: 11px;
+      color: rgba(255,255,255,0.5);
+      background: rgba(0,0,0,0.3);
+      border-radius: 6px;
+      padding: 8px 10px;
+      line-height: 1.6;
+    }
+    .poker-log .win { color: #86efac; }
+    .poker-log .lose { color: #fca5a5; }
+    .poker-log .sys { color: #a78bfa; }
+
+    /* ===== 结算弹层 ===== */
+    .poker-settle-banner {
+      padding: 16px;
+      border-radius: 12px;
+      text-align: center;
+      margin-bottom: 12px;
+      font-weight: 700;
+      display: none;
+    }
+    .poker-settle-banner.win {
+      display: block;
+      background: linear-gradient(135deg, rgba(34,197,94,0.2), rgba(34,197,94,0.05));
+      border: 1px solid rgba(34,197,94,0.4);
+      color: #86efac;
+    }
+    .poker-settle-banner.lose {
+      display: block;
+      background: linear-gradient(135deg, rgba(239,68,68,0.2), rgba(239,68,68,0.05));
+      border: 1px solid rgba(239,68,68,0.4);
+      color: #fca5a5;
+    }
+    .poker-settle-banner .big { font-size: 28px; display: block; margin-bottom: 4px; }
+
+    /* ===== 响应式 ===== */
+    @media (max-width: 720px) {
+      .poker-meters { grid-template-columns: repeat(2, 1fr); }
+      .poker-bridge-grid { grid-template-columns: repeat(2, 1fr); }
+      .poker-actions { grid-template-columns: repeat(3, 1fr); }
+      .poker-btn.allin { grid-column: span 3; }
+      .poker-card { width: 48px; height: 68px; padding: 4px 5px; }
+      .poker-card .center-suit { font-size: 20px; }
+      .poker-card .corner-tl, .poker-card .corner-br { font-size: 11px; }
+      .poker-table { padding: 18px 12px 14px; border-radius: 60px; }
+      .poker-modal-body { padding: 16px; }
+      .poker-modal-header { padding: 16px 18px 12px; }
+      
+      .splash-title { font-size: 32px; }
+      .splash-icon { font-size: 56px; }
+      .splash-subtitle { font-size: 14px; }
+      .splash-btn { padding: 14px 36px; font-size: 16px; }
+      .splash-card-float { font-size: 50px !important; }
+    }
+  </style>
+</head>
+<body>
+  <!-- ===== 封面入口 ===== -->
+  <div class="poker-splash" id="splashScreen">
+    <!-- 浮动背景卡片 -->
+    <div class="splash-cards">
+      <div class="splash-card-float">♠</div>
+      <div class="splash-card-float">♥</div>
+      <div class="splash-card-float">♦</div>
+      <div class="splash-card-float">♣</div>
+      <div class="splash-card-float">🃏</div>
+    </div>
+    
+    <!-- 粒子背景 -->
+    <div class="splash-particles" id="particles"></div>
+    
+    <!-- 主内容 -->
+    <div class="splash-content">
+      <div class="splash-icon">♠️</div>
+      <h1 class="splash-title">Y.Mine · Poker Egg</h1>
+      <div class="splash-subtitle">✦ 表 理 映 射 ✦</div>
+      <div class="splash-divider"></div>
+      <div class="splash-tagline">德州扑克 · 凯利公式 · 博弈可视化</div>
+      
+      <button class="splash-btn" id="enterBtn">
+        <span>进入牌桌</span>
+        <span class="arrow">→</span>
+      </button>
+    </div>
+    
+    <div class="splash-version">v1.0 · 暗紫极简</div>
+  </div>
+
+  <!-- ===== 触发按钮 ===== -->
+  <div class="poker-egg-trigger" id="pokerTrigger">
+    ♠️
+    <span class="egg-hint">Y.Mine · Poker Egg</span>
+  </div>
+
+  <!-- ===== Modal ===== -->
+  <div class="poker-modal-mask" id="pokerModal">
+    <div class="poker-modal">
+      <div class="poker-modal-header">
+        <div class="poker-modal-title">
+          ♠ Y.Mine · Poker Egg
+          <span class="sub">表层 · 牌桌映射</span>
+        </div>
+        <button class="poker-close" id="pokerClose">✕</button>
+      </div>
+      <div class="poker-modal-body">
+        <!-- 牌桌 -->
+        <div class="poker-table">
+          <div class="poker-pot">
+            🪙 POT <span class="amt" id="potDisplay">0</span>
+          </div>
+          <div class="poker-board-area" id="boardArea">
+            <!-- 公牌由JS填充 -->
+          </div>
+          <div class="poker-hole-area" id="holeArea">
+            <!-- 手牌由JS填充 -->
+          </div>
+        </div>
+
+        <!-- 玩家条 + 阶段标签 -->
+        <div class="poker-player-bar">
+          <div class="me">
+            <span class="avatar-dot">🧑‍💻</span>
+            <span>You</span>
+            <span class="chips" id="chipDisplay">1000</span>
+          </div>
+          <span class="poker-stage-tag" id="stageTag">PREFLOP</span>
+        </div>
+
+        <!-- 凯利仪表盘 -->
+        <div class="poker-meters" id="meterContainer">
+          <div class="poker-meter kelly-rec">
+            <div class="label">📐 凯利指数</div>
+            <div class="value kelly" id="kellyValue">0.00%</div>
+            <div class="kelly-bar"><div class="kelly-bar-fill" id="kellyFill" style="width:0%"></div><div class="kelly-bar-marker" id="kellyMarker" style="left:50%"></div></div>
+            <div class="sub">最优仓位</div>
+          </div>
+          <div class="poker-meter gt-meter">
+            <div class="label">⚡ 博弈张力</div>
+            <div class="value" id="tensionValue">0.00</div>
+            <div class="sub">波动系数</div>
+          </div>
+          <div class="poker-meter">
+            <div class="label">📈 胜率</div>
+            <div class="value win" id="winRateValue">0%</div>
+            <div class="sub">当前评估</div>
+          </div>
+          <div class="poker-meter dcf-warn" id="dcfMeter">
+            <div class="label">⚠️ DCF 折价</div>
+            <div class="value" id="dcfValue">0.0%</div>
+            <div class="sub">安全边际</div>
+          </div>
+        </div>
+
+        <!-- 操作按钮 -->
+        <div class="poker-actions" id="actionButtons">
+          <button class="poker-btn fold" id="foldBtn">弃牌</button>
+          <button class="poker-btn call" id="callBtn">跟注</button>
+          <button class="poker-btn raise" id="raiseBtn">加注</button>
+          <button class="poker-btn allin" id="allinBtn">All In</button>
+          <button class="poker-btn next-street" id="nextBtn">下一街</button>
+        </div>
+        <div class="poker-deal-row">
+          <button class="poker-btn new-hand" id="newHandBtn">🔄 新一局</button>
+        </div>
+
+        <!-- 结算横幅 -->
+        <div class="poker-settle-banner" id="settleBanner">
+          <span class="big" id="settleIcon">🎉</span>
+          <span id="settleMsg">你赢了 0 筹码</span>
+        </div>
+
+        <!-- 表理映射面板 -->
+        <div class="poker-bridge-panel">
+          <div class="poker-bridge-title">🔮 表理映射 · 里</div>
+          <div class="poker-bridge-grid" id="bridgeGrid">
+            <div class="bridge-item"><div class="b-label">🧠 凯利映射</div><div class="b-value" id="bridgeKelly">0.00%</div></div>
+            <div class="bridge-item"><div class="b-label">📊 博弈势能</div><div class="b-value" id="bridgeTension">0.00</div></div>
+            <div class="bridge-item"><div class="b-label">🔄 波动率</div><div class="b-value" id="bridgeVolatility">0.00</div></div>
+            <div class="bridge-item"><div class="b-label">📉 折价预警</div><div class="b-value" id="bridgeDcf">0.0%</div></div>
+            <div class="bridge-item"><div class="b-label">💹 期望值</div><div class="b-value" id="bridgeEv">+0.0</div></div>
+            <div class="bridge-item"><div class="b-label">🎯 安全边际</div><div class="b-value" id="bridgeMargin">0.0%</div></div>
+          </div>
+          <div class="poker-dcf-alert" id="dcfAlert">⚠️ DCF 折价突破阈值，注意风险</div>
+        </div>
+
+        <!-- 日志 -->
+        <div class="poker-log" id="pokerLog">
+          <div class="sys">♠ 欢迎来到 Y.Mine · Poker Egg</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function(){
+      "use strict";
+
+      // ===== 粒子生成 =====
+      function createParticles() {
+        const container = document.getElementById('particles');
+        if (!container) return;
+        for (let i = 0; i < 30; i++) {
+          const particle = document.createElement('div');
+          particle.className = 'particle';
+          particle.style.left = Math.random() * 100 + '%';
+          particle.style.width = (Math.random() * 6 + 2) + 'px';
+          particle.style.height = particle.style.width;
+          particle.style.animationDuration = (Math.random() * 20 + 10) + 's';
+          particle.style.animationDelay = (Math.random() * 10) + 's';
+          particle.style.opacity = Math.random() * 0.5 + 0.2;
+          container.appendChild(particle);
+        }
+      }
+
+      // ===== 封面进入 =====
+      const splashScreen = document.getElementById('splashScreen');
+      const enterBtn = document.getElementById('enterBtn');
+      
+      enterBtn.addEventListener('click', function() {
+        splashScreen.classList.add('hidden');
+        // 延迟触发彩蛋打开
+        setTimeout(() => {
+          document.getElementById('pokerTrigger').click();
+        }, 400);
+      });
+
+      // 初始化粒子
+      createParticles();
+
+      // ===== 彩蛋核心逻辑 =====
+      // ----- 状态 -----
+      const state = {
+        chips: 1000,
+        pot: 0,
+        stage: 'preflop',
+        hole: [],
+        board: [],
+        handOver: false,
+        lastAction: '',
+        betSize: 20,
+      };
+
+      // 牌组工具
+      const RANKS = ['2','3','4','5','6','7','8','9','10','J','Q','K','A'];
+      const SUITS = ['♠','♥','♦','♣'];
+      const SUIT_COLOR = { '♠':'black', '♥':'red', '♦':'red', '♣':'black' };
+
+      function createDeck() {
+        const deck = [];
+        for (const suit of SUITS) {
+          for (const rank of RANKS) {
+            deck.push({ rank, suit, color: SUIT_COLOR[suit] });
+          }
+        }
+        return deck;
+      }
+
+      function shuffle(arr) {
+        for (let i = arr.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [arr[i], arr[j]] = [arr[j], arr[i]];
+        }
+        return arr;
+      }
+
+      // ----- DOM refs -----
+      const $ = id => document.getElementById(id);
+      const holeArea = $('holeArea');
+      const boardArea = $('boardArea');
+      const potDisplay = $('potDisplay');
+      const chipDisplay = $('chipDisplay');
+      const stageTag = $('stageTag');
+      const kellyValue = $('kellyValue');
+      const kellyFill = $('kellyFill');
+      const kellyMarker = $('kellyMarker');
+      const tensionValue = $('tensionValue');
+      const winRateValue = $('winRateValue');
+      const dcfValue = $('dcfValue');
+      const dcfMeter = $('dcfMeter');
+      const dcfAlert = $('dcfAlert');
+      const bridgeKelly = $('bridgeKelly');
+      const bridgeTension = $('bridgeTension');
+      const bridgeVolatility = $('bridgeVolatility');
+      const bridgeDcf = $('bridgeDcf');
+      const bridgeEv = $('bridgeEv');
+      const bridgeMargin = $('bridgeMargin');
+      const settleBanner = $('settleBanner');
+      const settleIcon = $('settleIcon');
+      const settleMsg = $('settleMsg');
+      const pokerLog = $('pokerLog');
+
+      const foldBtn = $('foldBtn');
+      const callBtn = $('callBtn');
+      const raiseBtn = $('raiseBtn');
+      const allinBtn = $('allinBtn');
+      const nextBtn = $('nextBtn');
+      const newHandBtn = $('newHandBtn');
+
+      // Modal control
+      const mask = $('pokerModal');
+      const trigger = $('pokerTrigger');
+      const closeBtn = $('pokerClose');
+
+      function openModal() {
+        mask.classList.add('open');
+      }
+      function closeModal() {
+        mask.classList.remove('open');
+      }
+      trigger.addEventListener('click', openModal);
+      closeBtn.addEventListener('click', closeModal);
+      mask.addEventListener('click', (e) => {
+        if (e.target === mask) closeModal();
+      });
+
+      // ----- 核心逻辑 -----
+      let deck = [];
+
+      function resetDeck() {
+        deck = shuffle(createDeck());
+      }
+
+      function drawCard() {
+        return deck.pop();
+      }
+
+      function newHand() {
+        state.hole = [];
+        state.board = [];
+        state.pot = 0;
+        state.handOver = false;
+        state.stage = 'preflop';
+        state.betSize = 20;
+        settleBanner.className = 'poker-settle-banner';
+        settleBanner.style.display = 'none';
+
+        resetDeck();
+        state.hole.push(drawCard(), drawCard());
+        updateUI();
+        log('🆕 新的一局', 'sys');
+        enableActions(true);
+        updateStageTag();
+        updateMeters();
+        updateBridge();
+        updateButtons();
+      }
+
+      function dealNextStreet() {
+        if (state.handOver) return;
+        if (state.stage === 'preflop') {
+          state.board.push(drawCard(), drawCard(), drawCard());
+          state.stage = 'flop';
+        } else if (state.stage === 'flop') {
+          state.board.push(drawCard());
+          state.stage = 'turn';
+        } else if (state.stage === 'turn') {
+          state.board.push(drawCard());
+          state.stage = 'river';
+        } else if (state.stage === 'river') {
+          showdown();
+          return;
+        }
+        updateUI();
+        updateStageTag();
+        updateMeters();
+        updateBridge();
+        updateButtons();
+        log(`📌 ${state.stage.toUpperCase()} 发出`, 'sys');
+      }
+
+      function showdown() {
+        if (state.handOver) return;
+        state.handOver = true;
+        const win = Math.random() > 0.45;
+        const amount = Math.floor(Math.random() * 80) + 20;
+        if (win) {
+          state.chips += state.pot + amount;
+          state.pot = 0;
+          showSettle(true, amount + state.pot);
+          log(`🏆 你赢了 ${amount + state.pot} 筹码！`, 'win');
+        } else {
+          state.chips -= amount;
+          if (state.chips < 0) state.chips = 0;
+          state.pot = 0;
+          showSettle(false, amount);
+          log(`💔 你输了 ${amount} 筹码`, 'lose');
+        }
+        updateUI();
+        updateStageTag();
+        updateMeters();
+        updateBridge();
+        enableActions(false);
+        updateButtons();
+      }
+
+      function showSettle(win, amt) {
+        settleBanner.style.display = 'block';
+        settleBanner.className = 'poker-settle-banner ' + (win ? 'win' : 'lose');
+        settleIcon.textContent = win ? '🎉' : '😢';
+        settleMsg.textContent = win ? `你赢了 ${amt} 筹码` : `你输了 ${amt} 筹码`;
+      }
+
+      function playerAction(action) {
+        if (state.handOver) return;
+        if (action === 'fold') {
+          state.handOver = true;
+          state.pot = 0;
+          log('🙅 你弃牌了', 'lose');
+          showSettle(false, 0);
+          enableActions(false);
+          updateUI();
+          updateStageTag();
+          updateButtons();
+          return;
+        }
+        if (action === 'call') {
+          const callAmt = Math.min(20, state.chips);
+          state.chips -= callAmt;
+          state.pot += callAmt;
+          log(`✅ 跟注 ${callAmt}`, 'sys');
+          updateUI();
+          updateMeters();
+          updateBridge();
+          updateButtons();
+          return;
+        }
+        if (action === 'raise') {
+          const raiseAmt = Math.min(40, state.chips);
+          state.chips -= raiseAmt;
+          state.pot += raiseAmt;
+          log(`⬆️ 加注 ${raiseAmt}`, 'sys');
+          updateUI();
+          updateMeters();
+          updateBridge();
+          updateButtons();
+          return;
+        }
+        if (action === 'allin') {
+          const allAmt = state.chips;
+          state.chips = 0;
+          state.pot += allAmt;
+          log(`🔥 ALL IN ${allAmt}`, 'sys');
+          updateUI();
+          updateMeters();
+          updateBridge();
+          updateButtons();
+        }
+      }
+
+      // ----- UI 渲染 -----
+      function updateUI() {
+        // hole
+        if (state.hole.length === 2) {
+          holeArea.innerHTML = '';
+          state.hole.forEach(c => {
+            const div = document.createElement('div');
+            div.className = `poker-card ${c.color}`;
+            div.innerHTML = `
+              <span class="corner-tl">${c.rank}</span>
+              <span class="center-suit">${c.suit}</span>
+              <span class="corner-br">${c.rank}</span>
+            `;
+            holeArea.appendChild(div);
+          });
+        } else {
+          holeArea.innerHTML = '';
+          for (let i=0; i<2; i++) {
+            const slot = document.createElement('div');
+            slot.className = 'poker-card slot';
+            slot.textContent = '?';
+            holeArea.appendChild(slot);
+          }
+        }
+
+        // board
+        boardArea.innerHTML = '';
+        if (state.board.length > 0) {
+          state.board.forEach(c => {
+            const div = document.createElement('div');
+            div.className = `poker-card ${c.color}`;
+            div.innerHTML = `
+              <span class="corner-tl">${c.rank}</span>
+              <span class="center-suit">${c.suit}</span>
+              <span class="corner-br">${c.rank}</span>
+            `;
+            boardArea.appendChild(div);
+          });
+        }
+        // 补齐占位
+        const total = state.stage === 'preflop' ? 0 : (state.stage === 'flop' ? 3 : (state.stage === 'turn' ? 4 : 5));
+        for (let i=state.board.length; i<5; i++) {
+          const slot = document.createElement('div');
+          slot.className = 'poker-card slot';
+          slot.textContent = '?';
+          boardArea.appendChild(slot);
+        }
+
+        potDisplay.textContent = state.pot;
+        chipDisplay.textContent = state.chips;
+      }
+
+      function updateStageTag() {
+        const tag = stageTag;
+        tag.className = 'poker-stage-tag';
+        if (state.handOver) {
+          tag.textContent = 'SHOWDOWN';
+          tag.classList.add('state-extreme');
+          return;
+        }
+        const stageMap = {
+          preflop: { label: 'PREFLOP', cls: 'state-tension' },
+          flop: { label: 'FLOP', cls: 'state-tension' },
+          turn: { label: 'TURN', cls: 'state-tension' },
+          river: { label: 'RIVER', cls: 'state-extreme' },
+        };
+        const s = stageMap[state.stage] || stageMap.preflop;
+        tag.textContent = s.label;
+        tag.classList.add(s.cls);
+        if (state.stage === 'river' && !state.handOver) {
+          tag.classList.add('state-meltdown');
+        }
+      }
+
+      // ----- 凯利 & 仪表模拟 -----
+      function updateMeters() {
+        const progress = { preflop:0.1, flop:0.3, turn:0.6, river:0.9 }[state.stage] || 0.1;
+        const rand = Math.random() * 0.3 + 0.2;
+        const kelly = Math.min(1, Math.max(0, (progress * 0.8 + rand * 0.2)));
+        const kellyPercent = (kelly * 100).toFixed(1);
+        kellyValue.textContent = kellyPercent + '%';
+        kellyFill.style.width = (kelly * 100) + '%';
+        kellyMarker.style.left = (kelly * 100) + '%';
+
+        const tension = (0.5 + Math.random() * 0.8 + progress * 0.2).toFixed(2);
+        tensionValue.textContent = tension;
+
+        const winRate = (40 + Math.random() * 30 + progress * 10).toFixed(0);
+        winRateValue.textContent = winRate + '%';
+
+        const dcf = (Math.random() * 20 - 5).toFixed(1);
+        dcfValue.textContent = dcf + '%';
+        if (parseFloat(dcf) < -8) {
+          dcfMeter.classList.add('dcf-warn');
+          dcfAlert.classList.add('show');
+        } else {
+          dcfMeter.classList.remove('dcf-warn');
+          dcfAlert.classList.remove('show');
+        }
+
+        bridgeKelly.textContent = kellyPercent + '%';
+        bridgeTension.textContent = tension;
+        bridgeVolatility.textContent = (0.2 + Math.random() * 0.6).toFixed(2);
+        bridgeDcf.textContent = dcf + '%';
+        const ev = (Math.random() * 3 - 1).toFixed(1);
+        bridgeEv.textContent = (parseFloat(ev) > 0 ? '+' : '') + ev;
+        const margin = (10 + Math.random() * 20 - progress * 5).toFixed(1);
+        bridgeMargin.textContent = margin + '%';
+        
+        document.querySelectorAll('.bridge-item .b-value').forEach(el => {
+          const val = parseFloat(el.textContent);
+          if (el.id === 'bridgeDcf' && val < -5) el.className = 'b-value bad';
+          else if (el.id === 'bridgeKelly' && val > 30) el.className = 'b-value good';
+          else if (el.id === 'bridgeMargin' && val < 5) el.className = 'b-value bad';
+          else if (el.id === 'bridgeEv' && val > 0) el.className = 'b-value good';
+          else el.className = 'b-value';
+        });
+      }
+
+      function updateBridge() {
+        // 同updateMeters已更新
+      }
+
+      function enableActions(enabled) {
+        [foldBtn, callBtn, raiseBtn, allinBtn, nextBtn].forEach(b => b.disabled = !enabled);
+        if (state.handOver) {
+          [foldBtn, callBtn, raiseBtn, allinBtn, nextBtn].forEach(b => b.disabled = true);
+        }
+      }
+
+      function updateButtons() {
+        if (state.handOver) {
+          enableActions(false);
+          return;
+        }
+        enableActions(true);
+        if (state.chips <= 0) {
+          [foldBtn, callBtn, raiseBtn, allinBtn].forEach(b => b.disabled = true);
+        }
+      }
+
+      function log(msg, cls='sys') {
+        const entry = document.createElement('div');
+        entry.className = cls;
+        entry.textContent = msg;
+        pokerLog.appendChild(entry);
+        pokerLog.scrollTop = pokerLog.scrollHeight;
+        if (pokerLog.children.length > 50) pokerLog.removeChild(pokerLog.firstChild);
+      }
+
+      // ----- 事件绑定 -----
+      foldBtn.addEventListener('click', () => playerAction('fold'));
+      callBtn.addEventListener('click', () => playerAction('call'));
+      raiseBtn.addEventListener('click', () => playerAction('raise'));
+      allinBtn.addEventListener('click', () => playerAction('allin'));
+      nextBtn.addEventListener('click', dealNextStreet);
+      newHandBtn.addEventListener('click', newHand);
+
+      // 初始化
+      newHand();
+
+      // 定时更新仪表
+      setInterval(() => {
+        if (mask.classList.contains('open') && !state.handOver) {
+          updateMeters();
+          updateBridge();
+        }
+      }, 4000);
+
+    })();
+  </script>
+</body>
+</html>
