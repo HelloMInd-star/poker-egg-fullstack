@@ -44,7 +44,6 @@ function App() {
   const handleLogin = async (values) => {
     setLoading(true);
     try {
-      // 调用API登录
       const response = await fetch('/api/auth/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -127,6 +126,21 @@ function App() {
           <div className="header-right">
             {isLoggedIn ? (
               <Space>
+                {/* 🎯 彩蛋按钮 - 已登录时显示 */}
+                <Button 
+                  type="text" 
+                  ghost
+                  onClick={() => window.open('/easter-egg.html', '_blank')}
+                  style={{ 
+                    color: '#a78bfa',
+                    fontSize: '16px',
+                    padding: '4px 8px'
+                  }}
+                  title="🎯 查看经典彩蛋"
+                >
+                  🥚
+                </Button>
+                
                 <Text style={{ color: '#fff' }}>
                   👋 {user?.username || '玩家'}
                 </Text>
@@ -141,6 +155,21 @@ function App() {
               </Space>
             ) : (
               <Space>
+                {/* 🎯 彩蛋按钮 - 未登录时也显示 */}
+                <Button 
+                  type="text" 
+                  ghost
+                  onClick={() => window.open('/easter-egg.html', '_blank')}
+                  style={{ 
+                    color: '#a78bfa',
+                    fontSize: '16px',
+                    padding: '4px 8px'
+                  }}
+                  title="🎯 查看经典彩蛋"
+                >
+                  🥚
+                </Button>
+                
                 <Button 
                   type="default" 
                   ghost
@@ -202,6 +231,15 @@ function App() {
                           onClick={() => window.location.href = '/stats'}
                         >
                           📊 查看战绩
+                        </Button>
+                        {/* 🎯 首页也加一个彩蛋入口 */}
+                        <Button 
+                          size="large"
+                          ghost
+                          onClick={() => window.open('/easter-egg.html', '_blank')}
+                          style={{ color: '#a78bfa' }}
+                        >
+                          🥚 彩蛋
                         </Button>
                       </Space>
                     </Card>
