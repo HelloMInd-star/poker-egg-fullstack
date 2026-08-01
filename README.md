@@ -83,9 +83,9 @@
 
 ---
 
-
 ## 📁 项目结构
 
+poker\-egg\-fullstack/
 
 ├── frontend/                 \# React 前端
 
@@ -137,10 +137,7 @@
 
 └── README\.md
 
-
 ```Plain
-
----
 
 ## 🚀 快速开始
 
