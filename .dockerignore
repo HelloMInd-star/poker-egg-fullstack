@@ -1,0 +1,54 @@
+# Git
+.git
+.gitignore
+.github
+
+# Docker
+docker-compose*.yml
+Dockerfile
+.dockerignore
+
+# Node modules (will be installed in container)
+**/node_modules
+**/npm-debug.log
+**/yarn-error.log
+
+# Python
+**/__pycache__
+**/*.pyc
+**/*.pyo
+**/*.pyd
+**/.Python
+**/env
+**/venv
+**/.venv
+**/pip-log.txt
+**/pip-delete-this-directory.txt
+**/.pytest_cache
+**/.mypy_cache
+
+# Build outputs
+**/dist
+**/build
+**/*.egg-info
+
+# Logs
+**/logs
+**/*.log
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# IDE
+.vscode
+.idea
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Documentation
+README.md
+LICENSE
