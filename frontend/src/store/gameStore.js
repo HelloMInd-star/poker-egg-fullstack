@@ -1,5 +1,4 @@
 import { create } from 'zustand';
-import { io } from 'socket.io-client';
 
 export const useGameStore = create((set, get) => ({
   // 状态
@@ -12,6 +11,7 @@ export const useGameStore = create((set, get) => ({
   error: null,
   history: [],
   stats: null,
+  pingInterval: null,
 
   // 连接游戏
   connectToGame: (gameId, playerId) => {
@@ -22,48 +22,84 @@ export const useGameStore = create((set, get) => ({
       disconnectGame();
     }
 
-    // 创建新连接
-    const newSocket = io(import.meta.env.VITE_WS_URL || 'ws://localhost:5000', {
-      path: `/ws/${gameId}`,
-      transports: ['websocket'],
-      autoConnect: true,
-    });
+    // 确定WebSocket URL：优先使用环境变量，否则使用当前host（支持代理）
+    const wsProtocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+    const wsHost = import.meta.env.VITE_WS_URL || `${wsProtocol}//${window.location.host}`;
+    const wsUrl = `${wsHost}/ws/${gameId}`;
+    
+    console.log('连接WebSocket:', wsUrl);
 
-    newSocket.on('connect', () => {
+    // 创建原生WebSocket连接
+    const newSocket = new WebSocket(wsUrl);
+
+    newSocket.onopen = () => {
       console.log('WebSocket 连接成功');
       set({ isConnected: true, currentGameId: gameId, playerId });
-    });
+      
+      // 发送心跳保持连接
+      const interval = setInterval(() => {
+        if (newSocket.readyState === WebSocket.OPEN) {
+          newSocket.send(JSON.stringify({ type: 'ping' }));
+        }
+      }, 30000);
+      set({ pingInterval: interval });
+    };
 
-    newSocket.on('game_state', (data) => {
-      set({ gameState: data.data || data });
-    });
+    newSocket.onmessage = (event) => {
+      try {
+        const message = JSON.parse(event.data);
+        const { type, data } = message;
+        
+        switch (type) {
+          case 'pong':
+            // 心跳响应，忽略
+            break;
+          case 'game_state':
+            set({ gameState: data || message });
+            break;
+          case 'action_result':
+            console.log('行动结果:', data);
+            break;
+          case 'ai_action':
+            console.log('AI行动:', data);
+            break;
+          case 'system_message':
+            console.log('系统消息:', data);
+            break;
+          case 'player_joined':
+            console.log('玩家加入:', data);
+            break;
+          case 'chat':
+            console.log('聊天消息:', data);
+            break;
+          case 'hand_over':
+            console.log('牌局结束:', data);
+            break;
+          case 'error':
+            set({ error: data?.message || '连接错误' });
+            console.error('WebSocket错误:', data);
+            break;
+          default:
+            console.log('收到消息:', message);
+        }
+      } catch (e) {
+        console.error('解析WebSocket消息失败:', e);
+      }
+    };
 
-    newSocket.on('action_result', (data) => {
-      console.log('行动结果:', data);
-      // 可以添加通知
-    });
+    newSocket.onerror = (error) => {
+      console.error('WebSocket错误:', error);
+      set({ error: 'WebSocket连接错误' });
+    };
 
-    newSocket.on('ai_action', (data) => {
-      console.log('AI行动:', data);
-    });
-
-    newSocket.on('system_message', (data) => {
-      console.log('系统消息:', data);
-    });
-
-    newSocket.on('hand_over', (data) => {
-      console.log('牌局结束:', data);
-    });
-
-    newSocket.on('error', (data) => {
-      set({ error: data.data?.message || '连接错误' });
-      console.error('WebSocket错误:', data);
-    });
-
-    newSocket.on('disconnect', () => {
-      set({ isConnected: false });
+    newSocket.onclose = () => {
       console.log('WebSocket 断开连接');
-    });
+      const { pingInterval } = get();
+      if (pingInterval) {
+        clearInterval(pingInterval);
+      }
+      set({ isConnected: false, pingInterval: null });
+    };
 
     set({ socket: newSocket });
     return newSocket;
@@ -71,9 +107,11 @@ export const useGameStore = create((set, get) => ({
 
   // 断开游戏
   disconnectGame: () => {
-    const { socket } = get();
+    const { socket, pingInterval } = get();
+    if (pingInterval) {
+      clearInterval(pingInterval);
+    }
     if (socket) {
-      socket.disconnect();
       socket.close();
     }
     set({ 
@@ -81,43 +119,47 @@ export const useGameStore = create((set, get) => ({
       isConnected: false, 
       currentGameId: null,
       gameState: null,
-      playerId: null
+      playerId: null,
+      pingInterval: null
     });
   },
 
-  // 发送行动
-  sendAction: (action, amount = 0) => {
-    const { socket, playerId, currentGameId } = get();
+  // 发送消息
+  _sendMessage: (message) => {
+    const { socket, isConnected } = get();
     if (!socket || !isConnected) {
       console.error('未连接到游戏');
       return;
     }
+    if (socket.readyState !== WebSocket.OPEN) {
+      console.error('WebSocket未就绪');
+      return;
+    }
+    socket.send(JSON.stringify(message));
+  },
 
-    socket.send(JSON.stringify({
+  // 发送行动
+  sendAction: (action, amount = 0) => {
+    const { playerId } = get();
+    get()._sendMessage({
       type: 'action',
       data: {
         player_id: playerId,
         action: action,
         amount: amount
       }
-    }));
+    });
   },
 
   // 发送聊天消息
   sendChat: (message) => {
-    const { socket, playerId } = get();
-    if (!socket || !isConnected) {
-      console.error('未连接到游戏');
-      return;
-    }
-
-    socket.send(JSON.stringify({
+    get()._sendMessage({
       type: 'chat',
       data: {
         player_name: 'Player',
         message: message
       }
-    }));
+    });
   },
 
   // 创建游戏

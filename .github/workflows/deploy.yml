@@ -1,5 +1,7 @@
 # .github/workflows/deploy.yml
 # 部署前端到 GitHub Pages（构建 frontend/dist 并发布到 gh-pages）
+# 注意：GitHub Pages 仅托管静态文件，API 和 WebSocket 需要单独部署后端服务
+#       部署后需要在前端配置中设置正确的 VITE_API_URL 和 VITE_WS_URL 指向你的后端地址
 
 name: Deploy Frontend to GitHub Pages
 
@@ -31,7 +33,8 @@ jobs:
         run: |
           cd frontend
           npm install
-          npm run build
+          # 设置 GitHub Pages 的 base 路径
+          VITE_BASE_PATH=/poker-egg-fullstack/ npm run build
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3

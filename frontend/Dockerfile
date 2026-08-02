@@ -5,7 +5,6 @@ WORKDIR /app
 
 # 复制package文件
 COPY package*.json ./
-COPY yarn.lock ./
 
 # 安装依赖
 RUN npm ci
@@ -13,7 +12,9 @@ RUN npm ci
 # 复制源代码
 COPY . .
 
-# 构建
+# 构建（默认base为根路径，可通过ARG覆盖）
+ARG VITE_BASE_PATH=/
+ENV VITE_BASE_PATH=$VITE_BASE_PATH
 RUN npm run build
 
 # ==================== 开发阶段 ====================
@@ -23,7 +24,6 @@ WORKDIR /app
 
 # 复制package文件
 COPY package*.json ./
-COPY yarn.lock ./
 
 # 安装依赖（包括开发依赖）
 RUN npm install
@@ -32,7 +32,7 @@ RUN npm install
 COPY . .
 
 # 暴露端口
-EXPOSE 3000 5173
+EXPOSE 5173
 
 # 启动开发服务器
 CMD ["npm", "run", "dev", "--", "--host", "0.0.0.0"]
