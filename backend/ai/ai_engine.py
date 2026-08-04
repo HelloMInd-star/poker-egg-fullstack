@@ -5,7 +5,10 @@ AI陪练引擎
 import random
 import numpy as np
 from typing import Dict, List, Optional
-from ..services.game_engine import Card, HandEvaluator
+import sys
+import os
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+from services.game_engine import Card, HandEvaluator
 
 
 class PokerAI:

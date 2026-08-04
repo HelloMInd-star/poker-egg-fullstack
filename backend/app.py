@@ -2,7 +2,7 @@
 Poker Egg 后端主程序
 FastAPI + WebSocket 实时通信
 """
-from fastapi import FastAPI, WebSocket, WebSocketDisconnect, Depends, HTTPException, status
+from fastapi import FastAPI, WebSocket, WebSocketDisconnect, Depends, HTTPException, status, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from fastapi.responses import JSONResponse
@@ -538,9 +538,35 @@ async def register(user_data: UserCreate):
     }
 
 @app.post("/api/auth/login")
-async def login(form_data: OAuth2PasswordRequestForm = Depends()):
-    """用户登录"""
-    user = await Database.authenticate_user(form_data.username, form_data.password)
+async def login(request: Request):
+    """用户登录（同时支持表单和 JSON 格式）"""
+    # 尝试从表单读取
+    username = None
+    password = None
+    
+    try:
+        form = await request.form()
+        username = form.get("username")
+        password = form.get("password")
+    except Exception:
+        pass
+    
+    # 如果表单没有，尝试从 JSON 读取
+    if not username or not password:
+        try:
+            body = await request.json()
+            username = body.get("username") or username
+            password = body.get("password") or password
+        except Exception:
+            pass
+    
+    if not username or not password:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="用户名和密码不能为空",
+        )
+    
+    user = await Database.authenticate_user(username, password)
     if not user:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
