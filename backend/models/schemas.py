@@ -42,7 +42,7 @@ class GameJoin(BaseModel):
 class PlayerAction(BaseModel):
     """玩家行动"""
     player_id: str
-    action_type: str = Field(..., regex="^(fold|check|call|raise|allin)$")
+    action_type: str = Field(..., pattern="^(fold|check|call|raise|allin)$")
     amount: Optional[int] = 0
 
 
