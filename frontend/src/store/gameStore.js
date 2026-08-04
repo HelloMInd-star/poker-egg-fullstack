@@ -185,6 +185,9 @@ export const useGameStore = create((set, get) => ({
       // 连接到游戏
       get().connectToGame(game_id, player_id);
       
+      // 自动开始游戏
+      await get().startGame(game_id);
+      
       set({ isLoading: false });
       return { gameId: game_id, playerId: player_id };
     } catch (error) {
