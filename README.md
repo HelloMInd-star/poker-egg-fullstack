@@ -66,7 +66,7 @@
 | **Vite** | 构建工具 |
 | **Ant Design** | UI 组件库 |
 | **Zustand** | 状态管理 |
-| **Socket.io-client** | 实时通信 |
+| **WebSocket（原生）** | 实时通信 |
 | **Framer Motion** | 动画效果 |
 | **Recharts** | 数据图表 |
 
@@ -185,6 +185,10 @@ npm run dev
 
 # 访问 http://localhost:5173
 ```
+
+> 💡 **提示**：如果没有安装 PostgreSQL 和 Redis，后端会自动降级为**内存模式**。
+> 在内存模式下，**任意用户名和密码都可以登录**（例如 `testuser` / `123456`），
+> 但重启后端后数据会丢失。
 ---
 
 ## 🌐 部署指南
@@ -225,10 +229,17 @@ npm run dev
 | GET  | `/api/health`         | 健康检查       |
 | POST | `/api/game/create`    | 创建游戏       |
 | POST | `/api/game/{id}/join` | 加入游戏       |
+| POST | `/api/game/{id}/start`| 开始游戏（发牌）|
+| POST | `/api/game/{id}/action` | 玩家行动（弃牌/跟注/加注） |
+| POST | `/api/game/{id}/ai/add` | 添加 AI 玩家 |
 | GET  | `/api/game/{id}`      | 获取游戏状态   |
+| GET  | `/api/auth/me`        | 获取当前用户信息 |
 | POST | `/api/auth/register`  | 用户注册       |
 | POST | `/api/auth/login`     | 用户登录       |
+| GET  | `/api/stats/{playerId}` | 获取玩家统计 |
 | WS   | `/ws/{game_id}`       | WebSocket 连接 |
+
+> 💡 **登录接口说明**：`/api/auth/login` 同时支持 `application/x-www-form-urlencoded` 和 `application/json` 两种请求格式。
 
 ---
 
