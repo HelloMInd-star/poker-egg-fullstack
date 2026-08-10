@@ -1,7 +1,7 @@
 """
-Poker Egg 后端主程序
-FastAPI + WebSocket 实时通信
-修复版：WebSocket多连接、CORS配置、$PORT监听、AI轮询循环、DB启动日志
+Poker Face Arena 后端主程序 · 扑克人格竞技场
+Game-OS V2.5 决策AI中台 · 首个公开可玩 Demo
+FastAPI + WebSocket 实时通信 + MBTI人格AI + Kelly风控
 """
 from fastapi import FastAPI, WebSocket, WebSocketDisconnect, Depends, HTTPException, status, Request, Query
 from fastapi.middleware.cors import CORSMiddleware
@@ -31,7 +31,7 @@ logger = logging.getLogger(__name__)
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     """应用生命周期管理"""
-    logger.info("🚀 Poker Egg 服务器启动中...")
+    logger.info("♠️ Poker Face Arena 服务器启动中...")
     await Database.connect()
     # MVP fix: 真正通过 _pool 是否为 None 判断数据库连接状态，区分成功/降级
     if Database._pool is not None:
@@ -40,13 +40,13 @@ async def lifespan(app: FastAPI):
         logger.info("⚠️ 数据库未连接，以内存模式运行（无持久化）")
     yield
     await Database.disconnect()
-    logger.info("🛑 Poker Egg 服务器已关闭")
+    logger.info("🛑 Poker Face Arena 服务器已关闭")
 
 
 app = FastAPI(
-    title="Poker Egg API",
-    description="德州扑克AI陪练平台 - 全栈应用",
-    version="1.0.1",
+    title="Poker Face Arena API",
+    description="扑克人格竞技场 · Game-OS V2.5 决策AI中台 · MBTI人格对手 × Kelly风控 × 三层AI架构",
+    version="1.1.0",
     lifespan=lifespan
 )
 
@@ -318,9 +318,10 @@ game_manager = GameManager()
 @app.get("/")
 async def root():
     return {
-        "name": "Poker Egg API",
-        "version": "1.0.1",
+        "name": "Poker Face Arena API",
+        "version": "1.1.0",
         "status": "running",
+        "tagline": "Read your opponent. Read yourself.",
         "documentation": "/docs",
     }
 
@@ -442,7 +443,7 @@ async def websocket_endpoint(websocket: WebSocket, game_id: str):
     game = game_manager.get_game(game_id)
     if game:
         await websocket.send_json({"type": "game_state", "data": game.get_state()})
-        await websocket.send_json({"type": "system_message", "data": {"message": "👋 欢迎来到 Poker Egg!"}})
+        await websocket.send_json({"type": "system_message", "data": {"message": "♠️ 欢迎来到 Poker Face Arena · 扑克人格竞技场"}})
     
     try:
         while True:

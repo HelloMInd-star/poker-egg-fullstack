@@ -134,7 +134,7 @@ function App() {
         <Header className="app-header">
           <div className="header-left">
             <Link to="/" className="logo-link">
-              <span className="logo">♠️ Poker Egg</span>
+              <span className="logo">♠️ Poker Face Arena</span>
             </Link>
           </div>
           
@@ -225,10 +225,10 @@ function App() {
                     <Card className="welcome-card">
                       <div className="welcome-icon">♠️</div>
                       <Title level={1} className="welcome-title">
-                        Y.Mine · Poker Egg
+                        ♠️♥️ Poker Face Arena ♦️♣️
                       </Title>
                       <Text className="welcome-subtitle">
-                        德州扑克 · 凯利公式 · AI陪练
+                        扑克人格竞技场 · MBTI × Kelly × 三层AI
                       </Text>
                       <div className="welcome-divider" />
                       <Space size="large" className="welcome-actions">
@@ -287,7 +287,7 @@ function App() {
 
         <Footer className="app-footer">
           <Text type="secondary">
-            © 2024 Poker Egg · Made with ❤️ by HelloMind-star
+            © 2024 Poker Face Arena · Made with ❤️ by Hello.Mind-star (Y.MINE)
           </Text>
         </Footer>
       </Layout>
