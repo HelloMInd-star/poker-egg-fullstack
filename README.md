@@ -21,7 +21,7 @@
 >
 > 所有对局均为虚拟筹码，所有行为数据仅用于人格建模研究。
 
-[🎮 在线体验（Vercel 即将上线）](https://poker-face-arena.vercel.app) · [📖 API 文档](https://poker-egg-fullstack-production.up.railway.app/docs) · [🧠 三层 AI 架构](#-三层-ai-架构) · [🃏 16 型人格对手](#-四大气质组速览) · [🔌 后端 API](https://poker-egg-fullstack-production.up.railway.app/api/health)
+[🎮 在线体验](https://poker-egg-fullstack-hellomind-stars-projects.vercel.app) · [📖 API 文档](https://poker-egg-fullstack-production.up.railway.app/docs) · [🧠 三层 AI 架构](#-三层-ai-架构) · [🃏 16 型人格对手](#-四大气质组速览) · [🔌 后端 API](https://poker-egg-fullstack-production.up.railway.app/api/health)
 
 </div>
 
