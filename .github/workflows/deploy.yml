@@ -19,7 +19,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write   # 需要创建/覆盖 gh-pages 分支
   pages: write
   id-token: write
 
