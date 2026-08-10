@@ -44,3 +44,17 @@ Thumbs.db
 # Logs
 logs/
 *.log
+
+# Testing / coverage
+.pytest_cache/
+.coverage
+htmlcov/
+coverage/
+
+# Vite / frontend build
+frontend/dist/
+frontend/.vite/
+
+# Backup files
+*.bak
+*.tmp

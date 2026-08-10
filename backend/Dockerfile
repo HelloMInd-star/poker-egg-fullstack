@@ -3,7 +3,7 @@ FROM python:3.11-slim AS builder
 
 WORKDIR /app
 
-# 安装系统依赖
+# 安装系统依赖（bcrypt需要gcc）
 RUN apt-get update && apt-get install -y \
     gcc \
     g++ \
@@ -25,52 +25,43 @@ FROM python:3.11-slim AS development
 
 WORKDIR /app
 
-# 安装系统依赖
 RUN apt-get update && apt-get install -y \
     gcc \
     g++ \
     curl \
     && rm -rf /var/lib/apt/lists/*
 
-# 复制虚拟环境（包含所有依赖）
 COPY --from=builder /opt/venv /opt/venv
 ENV PATH="/opt/venv/bin:$PATH"
 
-# 复制源代码
 COPY . .
 
-# 暴露端口
-EXPOSE 5000
+EXPOSE 8000
 
-# 启动开发服务器
-CMD ["uvicorn", "app:app", "--host", "0.0.0.0", "--port", "5000", "--reload"]
+CMD ["uvicorn", "app:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]
 
 # ==================== 生产阶段 ====================
 FROM python:3.11-slim AS production
 
 WORKDIR /app
 
-# 安装系统依赖（仅运行时需要）
 RUN apt-get update && apt-get install -y \
     curl \
     && rm -rf /var/lib/apt/lists/*
 
-# 复制虚拟环境（包含所有依赖）
 COPY --from=builder /opt/venv /opt/venv
 ENV PATH="/opt/venv/bin:$PATH"
 
-# 复制源代码
 COPY . .
 
-# 创建日志目录
 RUN mkdir -p /app/logs
 
-# 创建非root用户
 RUN useradd -m -u 1000 appuser && chown -R appuser:appuser /app
 USER appuser
 
-# 暴露端口
+# MVP fix: 游戏状态存内存，必须单 worker（--workers 1）；默认端口 5000，支持 $PORT 环境变量
+ENV PORT=5000
 EXPOSE 5000
 
-# 启动生产服务器
-CMD ["uvicorn", "app:app", "--host", "0.0.0.0", "--port", "5000", "--workers", "4"]
+# 注意：游戏状态存内存，必须单worker；使用sh以支持$PORT环境变量
+CMD sh -c "uvicorn app:app --host 0.0.0.0 --port ${PORT:-5000} --workers 1"
