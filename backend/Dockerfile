@@ -63,5 +63,5 @@ USER appuser
 ENV PORT=5000
 EXPOSE 5000
 
-# 注意：游戏状态存内存，必须单worker；使用sh以支持$PORT环境变量
-CMD sh -c "uvicorn app:app --host 0.0.0.0 --port ${PORT:-5000} --workers 1"
+# 使用shell形式而非JSON数组，这样 $PORT 会被正确展开
+CMD uvicorn app:app --host 0.0.0.0 --port ${PORT:-5000} --workers 1
