@@ -1,5 +1,49 @@
 import { create } from 'zustand';
 
+// ============ API / WS 基础URL配置 ============
+// MVP fix: 统一 API/WS base URL 构造，VITE_API_URL 优先，否则相对路径；
+// 去掉尾斜杠避免重复拼接 /ws/ 或 /api/
+
+/** 构造API base URL（不带尾斜杠） */
+function getApiBase() {
+  const fromEnv = import.meta.env.VITE_API_URL;
+  if (fromEnv) return fromEnv.replace(/\/+$/, '');
+  // 同域部署（Nginx/Docker/代理）使用空串作为相对路径
+  return '';
+}
+
+/** 构造WS base URL（不带尾斜杠，ws/wss协议） */
+function getWsBase() {
+  const fromEnv = import.meta.env.VITE_WS_URL;
+  if (fromEnv) return fromEnv.replace(/\/+$/, '');
+  // 根据API base推导：如果API是http(s)://host，则WS对应ws(s)://host
+  const apiBase = getApiBase();
+  if (apiBase) {
+    return apiBase.replace(/^http/, 'ws');
+  }
+  // 根据当前页面协议推导
+  const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+  return `${protocol}//${window.location.host}`;
+}
+
+const API_BASE = getApiBase();
+const WS_BASE = getWsBase();
+
+// fetch helper：自动加API前缀
+async function apiFetch(path, options = {}) {
+  const url = `${API_BASE}${path}`;
+  const headers = {
+    'Content-Type': 'application/json',
+    ...(options.headers || {})
+  };
+  const token = localStorage.getItem('token');
+  if (token) {
+    headers['Authorization'] = `Bearer ${token}`;
+  }
+  const resp = await fetch(url, { ...options, headers });
+  return resp;
+}
+
 export const useGameStore = create((set, get) => ({
   // 状态
   gameState: null,
@@ -12,31 +56,25 @@ export const useGameStore = create((set, get) => ({
   history: [],
   stats: null,
   pingInterval: null,
+  apiBase: API_BASE,
+  wsBase: WS_BASE,
 
   // 连接游戏
   connectToGame: (gameId, playerId) => {
-    const { socket, disconnectGame } = get();
-    
-    // 如果有旧连接，先断开
-    if (socket) {
+    const { disconnectGame } = get();
+    if (get().socket) {
       disconnectGame();
     }
 
-    // 确定WebSocket URL：优先使用环境变量，否则使用当前host（支持代理）
-    const wsProtocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
-    const wsHost = import.meta.env.VITE_WS_URL || `${wsProtocol}//${window.location.host}`;
-    const wsUrl = `${wsHost}/ws/${gameId}`;
-    
+    // 正确拼接WS URL：wsBase 可能是 wss://xxx 或空；避免重复 /ws
+    const wsUrl = `${WS_BASE}/ws/${gameId}`;
     console.log('连接WebSocket:', wsUrl);
 
-    // 创建原生WebSocket连接
     const newSocket = new WebSocket(wsUrl);
 
     newSocket.onopen = () => {
       console.log('WebSocket 连接成功');
       set({ isConnected: true, currentGameId: gameId, playerId });
-      
-      // 发送心跳保持连接
       const interval = setInterval(() => {
         if (newSocket.readyState === WebSocket.OPEN) {
           newSocket.send(JSON.stringify({ type: 'ping' }));
@@ -52,9 +90,9 @@ export const useGameStore = create((set, get) => ({
         
         switch (type) {
           case 'pong':
-            // 心跳响应，忽略
             break;
           case 'game_state':
+            // 后端 broadcast game_state 时 data 是真正的 state
             set({ gameState: data || message });
             break;
           case 'action_result':
@@ -95,9 +133,7 @@ export const useGameStore = create((set, get) => ({
     newSocket.onclose = () => {
       console.log('WebSocket 断开连接');
       const { pingInterval } = get();
-      if (pingInterval) {
-        clearInterval(pingInterval);
-      }
+      if (pingInterval) clearInterval(pingInterval);
       set({ isConnected: false, pingInterval: null });
     };
 
@@ -105,15 +141,10 @@ export const useGameStore = create((set, get) => ({
     return newSocket;
   },
 
-  // 断开游戏
   disconnectGame: () => {
     const { socket, pingInterval } = get();
-    if (pingInterval) {
-      clearInterval(pingInterval);
-    }
-    if (socket) {
-      socket.close();
-    }
+    if (pingInterval) clearInterval(pingInterval);
+    if (socket) socket.close();
     set({ 
       socket: null, 
       isConnected: false, 
@@ -124,7 +155,6 @@ export const useGameStore = create((set, get) => ({
     });
   },
 
-  // 发送消息
   _sendMessage: (message) => {
     const { socket, isConnected } = get();
     if (!socket || !isConnected) {
@@ -138,9 +168,12 @@ export const useGameStore = create((set, get) => ({
     socket.send(JSON.stringify(message));
   },
 
-  // 发送行动
   sendAction: (action, amount = 0) => {
     const { playerId } = get();
+    if (!playerId) {
+      console.error('playerId 未设置');
+      return;
+    }
     get()._sendMessage({
       type: 'action',
       data: {
@@ -151,7 +184,6 @@ export const useGameStore = create((set, get) => ({
     });
   },
 
-  // 发送聊天消息
   sendChat: (message) => {
     get()._sendMessage({
       type: 'chat',
@@ -166,9 +198,8 @@ export const useGameStore = create((set, get) => ({
   createGame: async (playerName, aiDifficulty = 'medium') => {
     set({ isLoading: true, error: null });
     try {
-      const response = await fetch('/api/game/create', {
+      const response = await apiFetch('/api/game/create', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           player_name: playerName,
           ai_difficulty: aiDifficulty
@@ -176,11 +207,13 @@ export const useGameStore = create((set, get) => ({
       });
 
       if (!response.ok) {
-        throw new Error('创建游戏失败');
+        const errText = await response.text();
+        throw new Error(`创建游戏失败: ${errText}`);
       }
 
       const data = await response.json();
-      const { game_id, player_id } = data.data;
+      const payload = data.data || data;
+      const { game_id, player_id } = payload;
       
       // 连接到游戏
       get().connectToGame(game_id, player_id);
@@ -196,16 +229,12 @@ export const useGameStore = create((set, get) => ({
     }
   },
 
-  // 加入游戏
   joinGame: async (gameId, playerName) => {
     set({ isLoading: true, error: null });
     try {
-      const response = await fetch(`/api/game/${gameId}/join`, {
+      const response = await apiFetch(`/api/game/${gameId}/join`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          player_name: playerName
-        })
+        body: JSON.stringify({ player_name: playerName })
       });
 
       if (!response.ok) {
@@ -213,9 +242,9 @@ export const useGameStore = create((set, get) => ({
       }
 
       const data = await response.json();
-      const { player_id } = data.data;
+      const payload = data.data || data;
+      const { player_id } = payload;
       
-      // 连接到游戏
       get().connectToGame(gameId, player_id);
       
       set({ isLoading: false });
@@ -226,11 +255,10 @@ export const useGameStore = create((set, get) => ({
     }
   },
 
-  // 开始游戏
   startGame: async (gameId) => {
     set({ isLoading: true, error: null });
     try {
-      const response = await fetch(`/api/game/${gameId}/start`, {
+      const response = await apiFetch(`/api/game/${gameId}/start`, {
         method: 'POST'
       });
 
@@ -239,7 +267,8 @@ export const useGameStore = create((set, get) => ({
       }
 
       const data = await response.json();
-      set({ gameState: data.data, isLoading: false });
+      const payload = data.data || data;
+      set({ gameState: payload, isLoading: false });
       return data;
     } catch (error) {
       set({ error: error.message, isLoading: false });
@@ -247,10 +276,9 @@ export const useGameStore = create((set, get) => ({
     }
   },
 
-  // 获取统计数据
   fetchStats: async (playerId) => {
     try {
-      const response = await fetch(`/api/stats/${playerId}`);
+      const response = await apiFetch(`/api/stats/${playerId}`);
       if (response.ok) {
         const data = await response.json();
         set({ stats: data.data });
@@ -261,6 +289,7 @@ export const useGameStore = create((set, get) => ({
     }
   },
 
-  // 重置错误
   clearError: () => set({ error: null }),
 }));
+
+export { apiFetch, API_BASE, WS_BASE };

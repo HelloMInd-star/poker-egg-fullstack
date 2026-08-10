@@ -5,18 +5,16 @@ import {
   HomeOutlined, 
   TrophyOutlined, 
   UserOutlined,
-  SettingOutlined,
   PlusOutlined,
   LoginOutlined,
   LogoutOutlined
 } from '@ant-design/icons';
-import io from 'socket.io-client';
 import PokerTable from './components/PokerTable/PokerTable';
 import Dashboard from './components/Dashboard/Dashboard';
 import GameLobby from './components/GameLobby/GameLobby';
 import Profile from './components/Profile/Profile';
 import Stats from './components/Stats/Stats';
-import { useGameStore } from './store/gameStore';
+import { useGameStore, apiFetch, API_BASE } from './store/gameStore';
 import './App.css';
 
 const { Header, Content, Footer } = Layout;
@@ -37,14 +35,30 @@ function App() {
     connectToGame,
     disconnectGame,
     currentGameId,
-    setCurrentGameId
+    setCurrentGameId,
+    playerId: gamePlayerId
   } = useGameStore();
 
-  // 登录处理
+  // 启动时从localStorage恢复登录态
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    const savedUser = localStorage.getItem('user');
+    if (token && savedUser) {
+      try {
+        const u = JSON.parse(savedUser);
+        setUser(u);
+        setIsLoggedIn(true);
+      } catch (e) {
+        localStorage.removeItem('token');
+        localStorage.removeItem('user');
+      }
+    }
+  }, []);
+
   const handleLogin = async (values) => {
     setLoading(true);
     try {
-      const response = await fetch('/api/auth/login', {
+      const response = await apiFetch('/api/auth/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(values)
@@ -52,25 +66,32 @@ function App() {
       
       if (response.ok) {
         const data = await response.json();
+        const userData = data.user;
         setIsLoggedIn(true);
-        setUser(data.user);
+        setUser(userData);
         localStorage.setItem('token', data.access_token);
+        localStorage.setItem('user', JSON.stringify(userData));
         message.success('登录成功！');
         setLoginModalVisible(false);
       } else {
-        message.error('登录失败，请检查用户名和密码');
+        let errMsg = '登录失败，请检查用户名和密码';
+        try {
+          const err = await response.json();
+          if (err.detail || err.error) errMsg = err.detail || err.error;
+        } catch (_) {}
+        message.error(errMsg);
       }
     } catch (error) {
+      console.error(error);
       message.error('网络错误，请稍后重试');
     }
     setLoading(false);
   };
 
-  // 注册处理
   const handleRegister = async (values) => {
     setLoading(true);
     try {
-      const response = await fetch('/api/auth/register', {
+      const response = await apiFetch('/api/auth/register', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(values)
@@ -81,7 +102,12 @@ function App() {
         setRegisterModalVisible(false);
         setLoginModalVisible(true);
       } else {
-        message.error('注册失败，请检查信息');
+        let errMsg = '注册失败，请检查信息';
+        try {
+          const err = await response.json();
+          if (err.detail || err.error) errMsg = err.detail || err.error;
+        } catch (_) {}
+        message.error(errMsg);
       }
     } catch (error) {
       message.error('网络错误，请稍后重试');
@@ -89,14 +115,18 @@ function App() {
     setLoading(false);
   };
 
-  // 退出登录
   const handleLogout = () => {
     setIsLoggedIn(false);
     setUser(null);
     localStorage.removeItem('token');
+    localStorage.removeItem('user');
     disconnectGame();
     message.success('已退出登录');
   };
+
+  // MVP fix: tablePlayerId 优先使用gameStore中的playerId（后端createGame/joinGame返回的真实id），
+  // 其次使用登录用户的id，不再使用'player1'这种硬编码fallback
+  const tablePlayerId = gamePlayerId || user?.id || null;
 
   return (
     <BrowserRouter>
@@ -108,7 +138,7 @@ function App() {
             </Link>
           </div>
           
-          <Menu theme="dark" mode="horizontal" className="header-menu">
+          <Menu theme="dark" mode="horizontal" className="header-menu" selectedKeys={[]}>
             <Menu.Item key="home" icon={<HomeOutlined />}>
               <Link to="/">牌桌</Link>
             </Menu.Item>
@@ -126,16 +156,11 @@ function App() {
           <div className="header-right">
             {isLoggedIn ? (
               <Space>
-                {/* 🎯 彩蛋按钮 - 已登录时显示 */}
                 <Button 
                   type="text" 
                   ghost
                   onClick={() => window.open('/easter-egg.html', '_blank')}
-                  style={{ 
-                    color: '#a78bfa',
-                    fontSize: '16px',
-                    padding: '4px 8px'
-                  }}
+                  style={{ color: '#a78bfa', fontSize: '16px', padding: '4px 8px' }}
                   title="🎯 查看经典彩蛋"
                 >
                   🥚
@@ -155,16 +180,11 @@ function App() {
               </Space>
             ) : (
               <Space>
-                {/* 🎯 彩蛋按钮 - 未登录时也显示 */}
                 <Button 
                   type="text" 
                   ghost
                   onClick={() => window.open('/easter-egg.html', '_blank')}
-                  style={{ 
-                    color: '#a78bfa',
-                    fontSize: '16px',
-                    padding: '4px 8px'
-                  }}
+                  style={{ color: '#a78bfa', fontSize: '16px', padding: '4px 8px' }}
                   title="🎯 查看经典彩蛋"
                 >
                   🥚
@@ -196,9 +216,9 @@ function App() {
                   <div className="game-container">
                     <PokerTable 
                       gameState={gameState} 
-                      playerId={user?.id || 'player1'}
+                      playerId={tablePlayerId}
                     />
-                    <Dashboard gameState={gameState} />
+                    <Dashboard gameState={gameState} playerId={tablePlayerId} />
                   </div>
                 ) : (
                   <div className="welcome-section">
@@ -216,11 +236,6 @@ function App() {
                           type="primary" 
                           size="large"
                           onClick={() => {
-                            if (!isLoggedIn) {
-                              message.warning('请先登录');
-                              setLoginModalVisible(true);
-                              return;
-                            }
                             window.location.href = '/lobby';
                           }}
                         >
@@ -232,7 +247,6 @@ function App() {
                         >
                           📊 查看战绩
                         </Button>
-                        {/* 🎯 首页也加一个彩蛋入口 */}
                         <Button 
                           size="large"
                           ghost
@@ -253,12 +267,12 @@ function App() {
                       <Card className="feature-card">
                         <div className="feature-icon">📊</div>
                         <Title level={4}>凯利公式</Title>
-                        <Text>实时计算最优投注比例</Text>
+                        <Text>实时计算最优投注比例（Demo）</Text>
                       </Card>
                       <Card className="feature-card">
                         <div className="feature-icon">🎯</div>
                         <Title level={4}>表理映射</Title>
-                        <Text>博弈状态可视化分析</Text>
+                        <Text>博弈状态可视化分析（Demo）</Text>
                       </Card>
                     </div>
                   </div>

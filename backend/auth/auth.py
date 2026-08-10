@@ -40,4 +40,4 @@ class AuthHandler:
     
     def verify_token(self, token: str) -> bool:
         """验证token"""
-        return self.decode_token(token) is not No
+        return self.decode_token(token) is not None
