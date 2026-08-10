@@ -9,10 +9,10 @@
 
   <!-- PWA / Theme -->
   <meta name="theme-color" content="#0a0a18" />
-  <link rel="manifest" href="/poker-egg-fullstack/manifest.json" />
-  <link rel="icon" type="image/svg+xml" href="/poker-egg-fullstack/favicon.svg" />
-  <link rel="apple-touch-icon" href="/poker-egg-fullstack/icon-192.png" />
-  <link rel="apple-touch-icon" sizes="512x512" href="/poker-egg-fullstack/icon-512.png" />
+  <link rel="manifest" href="./manifest.json" />
+  <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
+  <link rel="apple-touch-icon" href="./icon-192.png" />
+  <link rel="apple-touch-icon" sizes="512x512" href="./icon-512.png" />
 
   <!-- iOS PWA -->
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -25,11 +25,11 @@
   <meta property="og:title" content="Poker Face Arena · MBTI人格扑克竞技场" />
   <meta property="og:description" content="16型MBTI人格对手 × Kelly实时风控 × 三层AI架构。你的弃牌率，比你更懂你。" />
   <meta property="og:type" content="website" />
-  <meta property="og:image" content="/poker-egg-fullstack/icon-512.png" />
+  <meta property="og:image" content="./icon-512.png" />
 
   <title>♠️♥️ Poker Face Arena · MBTI人格扑克竞技场 ♦️♣️</title>
-  <script type="module" crossorigin src="/poker-egg-fullstack/assets/index-iz0A1Y8F.js"></script>
-  <link rel="stylesheet" crossorigin href="/poker-egg-fullstack/assets/index-n9sgeMvz.css">
+  <script type="module" crossorigin src="./assets/index-iz0A1Y8F.js"></script>
+  <link rel="stylesheet" crossorigin href="./assets/index-n9sgeMvz.css">
 </head>
 <body>
   <div id="root"></div>
@@ -37,7 +37,7 @@
     // Service Worker 注册（PWA 离线支持）
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', function () {
-        navigator.serviceWorker.register('/poker-egg-fullstack/sw.js').then(
+        navigator.serviceWorker.register('/sw.js').then(
           function (reg) {
             console.log('[PWA] Service Worker registered, scope:', reg.scope);
           },

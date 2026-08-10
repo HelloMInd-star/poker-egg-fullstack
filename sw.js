@@ -1,12 +1,12 @@
 // Poker Face Arena - Service Worker (极简：网络优先 + 静态资源缓存)
 const CACHE_NAME = 'poker-face-arena-v1';
 const STATIC_ASSETS = [
-  '/poker-egg-fullstack/',
-  '/poker-egg-fullstack/index.html',
-  '/poker-egg-fullstack/manifest.json',
-  '/poker-egg-fullstack/favicon.svg',
-  '/poker-egg-fullstack/icon-192.png',
-  '/poker-egg-fullstack/icon-512.png'
+  './',
+  './index.html',
+  './manifest.json',
+  './favicon.svg',
+  './icon-192.png',
+  './icon-512.png'
 ];
 
 // install: 预缓存核心静态资源
@@ -67,6 +67,6 @@ self.addEventListener('fetch', (event) => {
         }
         return networkResponse;
       })
-      .catch(() => caches.match(request).then((res) => res || caches.match('/poker-egg-fullstack/index.html')))
+      .catch(() => caches.match(request).then((res) => res || caches.match('./index.html')))
   );
 });
