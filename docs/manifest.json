@@ -1,0 +1,31 @@
+{
+  "name": "Poker Face Arena · 扑克人格竞技场",
+  "short_name": "Poker Face",
+  "description": "MBTI 16型人格对手 × Kelly公式实时风控 × 三层AI架构，博弈人格训练场。Read your opponent. Read yourself.",
+  "theme_color": "#0a0a18",
+  "background_color": "#0a0a18",
+  "display": "standalone",
+  "start_url": "/poker-egg-fullstack/",
+  "scope": "/poker-egg-fullstack/",
+  "orientation": "portrait",
+  "lang": "zh-CN",
+  "icons": [
+    {
+      "src": "/poker-egg-fullstack/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/poker-egg-fullstack/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/poker-egg-fullstack/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}

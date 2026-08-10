@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <defs>
+    <radialGradient id="bg" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#1a1333"/>
+      <stop offset="100%" stop-color="#0a0a18"/>
+    </radialGradient>
+    <linearGradient id="spadeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#C4B5FD"/>
+      <stop offset="50%" stop-color="#A78BFA"/>
+      <stop offset="100%" stop-color="#7C3AED"/>
+    </linearGradient>
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="10" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  <!-- Dark rounded background -->
+  <rect width="512" height="512" rx="96" ry="96" fill="url(#bg)"/>
+  <!-- Subtle neon cyan ring -->
+  <circle cx="256" cy="256" r="210" fill="none" stroke="#22D3EE" stroke-opacity="0.15" stroke-width="2"/>
+  <!-- Spade symbol -->
+  <g transform="translate(256,256)" filter="url(#glow)">
+    <path d="M 0 -170
+             C -80 -120, -150 -40, -150 30
+             C -150 80, -110 110, -70 100
+             C -40 90, -20 60, -20 30
+             L 0 30
+             L 20 30
+             C 20 60, 40 90, 70 100
+             C 110 110, 150 80, 150 30
+             C 150 -40, 80 -120, 0 -170 Z
+             M -45 100
+             L 45 100
+             L 0 180 Z"
+          fill="url(#spadeGrad)" stroke="#22D3EE" stroke-width="3" stroke-opacity="0.5"/>
+  </g>
+</svg>

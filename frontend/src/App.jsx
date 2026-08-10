@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter, Routes, Route, Link, useNavigate } from 'react-router-dom';
+import { HashRouter, Routes, Route, Link, useNavigate } from 'react-router-dom';
 import { Layout, Menu, Button, Space, Card, Typography, Modal, Form, Input, Select, message } from 'antd';
 import { 
   HomeOutlined, 
@@ -129,7 +129,7 @@ function App() {
   const tablePlayerId = gamePlayerId || user?.id || null;
 
   return (
-    <BrowserRouter>
+    <HashRouter>
       <Layout className="app-layout">
         <Header className="app-header">
           <div className="header-left">
@@ -391,7 +391,7 @@ function App() {
           </div>
         </Form>
       </Modal>
-    </BrowserRouter>
+    </HashRouter>
   );
 }
 
