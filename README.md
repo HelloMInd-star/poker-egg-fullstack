@@ -11,7 +11,7 @@
 [![MIT License](https://img.shields.io/badge/License-MIT-fbbf24.svg?style=for-the-badge)](https://opensource.org/licenses/MIT)
 [![React 18](https://img.shields.io/badge/React-18-61DAFB?style=for-the-badge&logo=react&logoColor=white)](https://reactjs.org/)
 [![FastAPI](https://img.shields.io/badge/FastAPI-0.104-009688?style=for-the-badge&logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com/)
-[![Vercel](https://img.shields.io/badge/Vercel-Frontend-000000?style=for-the-badge&logo=vercel)](https://vercel.com/)
+[![GitHub Pages](https://pages.github.com/)
 [![Railway](https://img.shields.io/badge/Railway-Backend-0B0D0E?style=for-the-badge&logo=railway)](https://railway.app/)
 [![Python](https://img.shields.io/badge/Python-3.11-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
 
@@ -21,7 +21,7 @@
 >
 > 所有对局均为虚拟筹码，所有行为数据仅用于人格建模研究。
 
-[🎮 在线体验](https://poker-egg-fullstack-hellomind-stars-projects.vercel.app) · [📖 API 文档](https://poker-egg-fullstack-production.up.railway.app/docs) · [🧠 三层 AI 架构](#-三层-ai-架构) · [🃏 16 型人格对手](#-四大气质组速览) · [🔌 后端 API](https://poker-egg-fullstack-production.up.railway.app/api/health)
+[🎮 在线体验](https://hellomind-star.github.io/poker-egg-fullstack/) · [📖 API 文档](https://poker-egg-fullstack-production.up.railway.app/docs) · [🧠 三层 AI 架构](#-三层-ai-架构) · [🃏 16 型人格对手](#-四大气质组速览) · [🔌 后端 API](https://poker-egg-fullstack-production.up.railway.app/api/health)
 
 </div>
 
