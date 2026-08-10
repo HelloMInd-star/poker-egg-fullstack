@@ -2,9 +2,5 @@
 nixPkgs = ["python311", "gcc"]
 aptPkgs = ["gcc", "g++"]
 
-[phases.install]
-pipInstall = true
-pipRequirements = "backend/requirements.txt"
-
 [start]
-cmd = "cd backend && python app.py"
+cmd = "python main.py"
