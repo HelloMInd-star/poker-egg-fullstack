@@ -6,17 +6,13 @@ RUN apt-get update && apt-get install -y \
     gcc g++ curl \
     && rm -rf /var/lib/apt/lists/*
 
-# 安装依赖
-COPY requirements.txt .
+# 先复制requirements安装依赖（利用缓存）
+COPY backend/requirements.txt /tmp/requirements.txt
 RUN pip install --no-cache-dir --upgrade pip && \
-    pip install --no-cache-dir -r requirements.txt
+    pip install --no-cache-dir -r /tmp/requirements.txt
 
-# 复制后端代码（从backend子目录）
-COPY backend/ai ./ai
-COPY backend/auth ./auth
-COPY backend/models ./models
-COPY backend/services ./services
-COPY backend/app.py .
+# 复制全部后端代码到/app
+COPY backend/ /app/
 
 ENV PORT=8000
 EXPOSE 8000
