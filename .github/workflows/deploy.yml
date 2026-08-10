@@ -1,7 +1,15 @@
 # .github/workflows/deploy.yml
-# 部署前端到 GitHub Pages（构建 frontend/dist 并发布到 gh-pages）
-# 注意：GitHub Pages 仅托管静态文件，API 和 WebSocket 需要单独部署后端服务
-#       部署后需要在前端配置中设置正确的 VITE_API_URL 和 VITE_WS_URL 指向你的后端地址
+# 前端构建并发布到 GitHub Pages（可选，建议优先使用 Vercel 自动部署）
+#
+# 注意：
+#  - GitHub Pages 只托管静态文件，API/WS 必须单独部署后端（Railway/Render 等）
+#  - 部署前必须在仓库 Settings → Secrets 中配置：
+#      VITE_API_URL  : https://<your-backend>.up.railway.app
+#      VITE_WS_URL   : wss://<your-backend>.up.railway.app
+#  - 若未配置，前端会使用相对路径 /api/*，在 GitHub Pages 上会 404
+#
+# Vercel 部署方式（推荐）：在 Vercel 导入本仓库，Root Directory 设为 frontend/，
+# 在 Project Settings 填好上述环境变量即可，无需此 workflow。
 
 name: Deploy Frontend to GitHub Pages
 
@@ -30,11 +38,14 @@ jobs:
           cache-dependency-path: frontend/package.json
 
       - name: Install and Build Frontend
+        working-directory: frontend
         run: |
-          cd frontend
           npm install
-          # 设置 GitHub Pages 的 base 路径
-          VITE_BASE_PATH=/poker-egg-fullstack/ npm run build
+          # GitHub Pages 项目页路径前缀；同时注入 API/WS URL（如配置了 secret 则使用，否则留空走相对路径）
+          VITE_BASE_PATH=/poker-egg-fullstack/ \
+          VITE_API_URL=${{ secrets.VITE_API_URL }} \
+          VITE_WS_URL=${{ secrets.VITE_WS_URL }} \
+          npm run build
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3

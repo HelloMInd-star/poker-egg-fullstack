@@ -1,15 +1,15 @@
-import React from 'react';
-import { Card, Progress, Tag, Space, Statistic, Row, Col } from 'antd';
+import React, { useMemo } from 'react';
+import { Card, Progress, Tag, Space, Statistic, Row, Col, Tooltip } from 'antd';
 import { 
   RiseOutlined, 
   FallOutlined, 
   WarningOutlined,
-  CheckCircleOutlined
+  InfoCircleOutlined
 } from '@ant-design/icons';
 import { motion } from 'framer-motion';
 import './Dashboard.css';
 
-const Dashboard = ({ gameState }) => {
+const Dashboard = ({ gameState, playerId }) => {
   if (!gameState) {
     return (
       <Card className="dashboard-container">
@@ -21,41 +21,55 @@ const Dashboard = ({ gameState }) => {
     );
   }
 
-  // 模拟数据（实际应从游戏状态计算）
-  const kellyIndex = Math.random() * 0.5 + 0.1;
-  const winRate = Math.random() * 0.4 + 0.3;
-  const tension = Math.random() * 0.8 + 0.2;
-  const dcf = Math.random() * 0.3 - 0.1;
+  // 从gameState里计算出真实可用的基础数据；其余高级指标暂为Demo
+  const me = gameState.players?.find(p => p.id === playerId);
+  const myChips = me?.chips ?? 0;
+  const myBet = me?.bet ?? 0;
+  const pot = gameState.pot ?? 0;
+  const stage = gameState.stage || 'preflop';
+  const activePlayers = gameState.players?.filter(p => !p.folded).length ?? 0;
+
+  // Demo 数值（未来接入真实胜率/凯利时替换）
+  const kellyIndex = useMemo(() => 0.25, [gameState.id, stage]);
+  const winRate = useMemo(() => 0.45, [gameState.id, stage]);
+  const tension = useMemo(() => 0.5, [gameState.id, stage]);
+  const dcf = useMemo(() => -0.05, [gameState.id, stage]);
 
   const getKellyStatus = (value) => {
-    if (value > 0.3) return { color: '#22c55e', text: '高', icon: <RiseOutlined /> };
-    if (value > 0.15) return { color: '#fbbf24', text: '中', icon: <WarningOutlined /> };
-    return { color: '#fca5a5', text: '低', icon: <FallOutlined /> };
+    if (value > 0.3) return { color: 'success', text: '高', icon: <RiseOutlined /> };
+    if (value > 0.15) return { color: 'warning', text: '中', icon: <WarningOutlined /> };
+    return { color: 'default', text: '低', icon: <FallOutlined /> };
   };
 
   const kellyStatus = getKellyStatus(kellyIndex);
 
   return (
     <div className="dashboard-container">
-      <Card className="dashboard-card" title="📐 凯利仪表盘">
+      <Card 
+        className="dashboard-card" 
+        title={
+          <Space>
+            <span>📐 凯利仪表盘</span>
+            <Tooltip title="Demo 数据：凯利/胜率等高级指标暂为占位，将接入真实胜率计算">
+              <Tag color="orange" style={{marginLeft: 8}}><InfoCircleOutlined /> Demo</Tag>
+            </Tooltip>
+          </Space>
+        }
+      >
         <div className="kelly-display">
           <div className="kelly-value">
             <span className="kelly-number">{(kellyIndex * 100).toFixed(1)}%</span>
-            <Tag color={kellyStatus.color === '#22c55e' ? 'success' : 'warning'}>
+            <Tag color={kellyStatus.color}>
               {kellyStatus.icon} {kellyStatus.text}
             </Tag>
           </div>
           <Progress 
             percent={kellyIndex * 100} 
-            strokeColor={{
-              '0%': '#22c55e',
-              '50%': '#fbbf24',
-              '100%': '#ef4444'
-            }}
+            strokeColor={{ '0%': '#22c55e', '50%': '#fbbf24', '100%': '#ef4444' }}
             showInfo={false}
             size="small"
           />
-          <div className="kelly-label">最优仓位</div>
+          <div className="kelly-label">最优仓位 <span style={{color: '#999', fontSize: 12}}>（Demo）</span></div>
         </div>
 
         <div className="metrics-grid">
@@ -76,7 +90,15 @@ const Dashboard = ({ gameState }) => {
         </div>
       </Card>
 
-      <Card className="dashboard-card bridge-panel" title="🔮 表理映射 · 里">
+      <Card 
+        className="dashboard-card bridge-panel" 
+        title={
+          <Space>
+            <span>🔮 表理映射 · 里</span>
+            <Tag color="orange"><InfoCircleOutlined /> Demo</Tag>
+          </Space>
+        }
+      >
         <div className="bridge-grid">
           <div className="bridge-item">
             <span className="bridge-label">🧠 凯利映射</span>
@@ -88,7 +110,7 @@ const Dashboard = ({ gameState }) => {
           </div>
           <div className="bridge-item">
             <span className="bridge-label">🔄 波动率</span>
-            <span className="bridge-value">{(Math.random() * 0.5 + 0.2).toFixed(2)}</span>
+            <span className="bridge-value">0.35</span>
           </div>
           <div className="bridge-item">
             <span className="bridge-label">📉 折价预警</span>
@@ -98,11 +120,11 @@ const Dashboard = ({ gameState }) => {
           </div>
           <div className="bridge-item">
             <span className="bridge-label">💹 期望值</span>
-            <span className="bridge-value good">+{(Math.random() * 2 + 0.5).toFixed(1)}</span>
+            <span className="bridge-value good">+1.2</span>
           </div>
           <div className="bridge-item">
             <span className="bridge-label">🎯 安全边际</span>
-            <span className="bridge-value good">{(Math.random() * 20 + 10).toFixed(0)}%</span>
+            <span className="bridge-value good">15%</span>
           </div>
         </div>
       </Card>
@@ -110,24 +132,26 @@ const Dashboard = ({ gameState }) => {
       <Card className="dashboard-card" title="📋 牌局信息">
         <div className="info-list">
           <div className="info-item">
+            <span className="info-label">我的筹码</span>
+            <span className="info-value">🪙 {myChips}</span>
+          </div>
+          <div className="info-item">
             <span className="info-label">底池</span>
-            <span className="info-value">🪙 {gameState.pot}</span>
+            <span className="info-value">🪙 {pot}</span>
+          </div>
+          <div className="info-item">
+            <span className="info-label">本轮下注</span>
+            <span className="info-value">🪙 {myBet}</span>
           </div>
           <div className="info-item">
             <span className="info-label">阶段</span>
             <span className="info-value">
-              <Tag color="purple">{gameState.stage?.toUpperCase()}</Tag>
+              <Tag color="purple">{stage?.toUpperCase()}</Tag>
             </span>
           </div>
           <div className="info-item">
-            <span className="info-label">玩家数</span>
-            <span className="info-value">{gameState.players?.length || 0}</span>
-          </div>
-          <div className="info-item">
-            <span className="info-label">AI对手</span>
-            <span className="info-value">
-              {gameState.players?.filter(p => p.is_ai).length || 0} 个
-            </span>
+            <span className="info-label">活跃玩家</span>
+            <span className="info-value">{activePlayers} 人</span>
           </div>
         </div>
       </Card>
