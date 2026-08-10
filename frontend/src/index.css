@@ -2,6 +2,13 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html {
+  /* 支持安全区（iPhone刘海屏） */
+  padding-top: env(safe-area-inset-top);
+  padding-bottom: env(safe-area-inset-bottom);
 }
 
 body {
@@ -10,10 +17,40 @@ body {
   color: #fff;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+  font-size: 16px;
 }
 
 #root {
   min-height: 100vh;
+  min-height: 100dvh;
+}
+
+/* 移动端通用按钮触控区域 */
+button,
+.ant-btn,
+input[type="button"],
+input[type="submit"],
+[role="button"] {
+  min-height: 40px;
+}
+
+@media (max-width: 768px) {
+  body {
+    font-size: 14px;
+  }
+
+  button,
+  .ant-btn,
+  input[type="button"],
+  input[type="submit"],
+  [role="button"] {
+    min-height: 48px;
+  }
+
+  input, select, textarea {
+    font-size: 16px !important; /* 防止iOS自动缩放 */
+  }
 }
 
 /* 滚动条美化 */

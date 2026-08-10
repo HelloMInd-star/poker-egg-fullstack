@@ -424,68 +424,166 @@
 }
 
 /* 响应式 */
-@media (max-width: 720px) {
+@media (max-width: 768px) {
   .poker-table {
-    border-radius: 60px;
-    padding: 40px 20px 100px;
-    min-height: 400px;
+    border-radius: 40px;
+    padding: 32px 12px 140px;
+    min-height: 380px;
+    border-width: 5px;
   }
-  
+
   .poker-table::before {
-    border-radius: 52px;
+    inset: 8px;
+    border-radius: 34px;
   }
-  
-  .card {
-    width: 48px;
-    height: 68px;
+
+  .table-stage {
+    top: 10px;
+    gap: 4px;
   }
-  
-  .card .card-rank,
-  .card .card-rank-bottom {
-    font-size: 12px;
+
+  .stage-tag {
+    font-size: 11px !important;
+    padding: 2px 10px !important;
   }
-  
-  .card .card-suit {
+
+  .pot-icon {
+    font-size: 18px;
+  }
+
+  .pot-amount {
     font-size: 20px;
   }
-  
+
+  .pot-label {
+    font-size: 9px;
+  }
+
+  .board-cards {
+    gap: 6px;
+    padding-top: 36px;
+    min-height: 80px;
+  }
+
+  .card {
+    width: 42px;
+    height: 60px;
+    padding: 4px;
+    border-radius: 6px;
+  }
+
+  .card .card-rank,
+  .card .card-rank-bottom {
+    font-size: 11px;
+  }
+
+  .card .card-rank {
+    top: 3px;
+    left: 5px;
+  }
+
+  .card .card-rank-bottom {
+    bottom: 3px;
+    right: 5px;
+  }
+
+  .card .card-suit {
+    font-size: 18px;
+  }
+
   .card-slot {
-    width: 48px;
-    height: 68px;
+    width: 42px;
+    height: 60px;
+    border-radius: 6px;
+    font-size: 16px;
   }
-  
+
   .player-seat {
-    width: 120px;
+    width: 96px;
   }
-  
+
   .player-seat .player-avatar {
     width: 32px;
     height: 32px;
     font-size: 16px;
+    margin-bottom: 4px;
   }
-  
+
   .player-seat .player-info {
     font-size: 10px;
+    padding: 2px 6px;
   }
-  
+
+  .player-seat .player-name {
+    font-size: 11px;
+  }
+
+  .player-seat .player-chips {
+    font-size: 10px;
+  }
+
+  .player-seat .player-bet {
+    font-size: 9px;
+  }
+
   .player-seat .card-small {
     font-size: 9px;
     padding: 1px 4px;
   }
-  
-  .action-btn {
-    min-width: 60px;
-    height: 32px;
-    font-size: 12px !important;
-    padding: 0 12px !important;
+
+  /* 行动按钮：移动端垂直排列 + 48px 触控高度 */
+  .action-buttons {
+    bottom: 12px;
+    left: 12px;
+    right: 12px;
+    transform: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    width: calc(100% - 24px);
   }
-  
+
+  .action-buttons .ant-btn-group,
+  .action-buttons .ant-space {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 8px;
+    width: 100%;
+  }
+
+  .action-btn {
+    min-width: 0 !important;
+    width: 100% !important;
+    height: 48px !important;
+    font-size: 14px !important;
+    padding: 0 12px !important;
+    border-radius: 12px !important;
+  }
+
   .hand-result {
-    padding: 8px 16px;
+    padding: 8px 14px;
+    font-size: 13px;
+    bottom: 120px;
+    gap: 8px;
+  }
+
+  .result-text {
+    font-size: 14px;
+  }
+
+  .waiting-message {
     font-size: 13px;
   }
-  
+
+  .ai-thinking {
+    font-size: 11px;
+  }
+
   .raise-presets {
     grid-template-columns: repeat(2, 1fr);
+  }
+
+  .raise-presets button {
+    min-height: 44px;
   }
 }

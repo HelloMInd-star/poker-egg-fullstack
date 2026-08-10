@@ -95,13 +95,49 @@
   border-color: rgba(167, 139, 250, 0.4) !important;
 }
 
-@media (max-width: 720px) {
+@media (max-width: 768px) {
+  .game-lobby {
+    padding: 12px 0;
+  }
+
   .lobby-header {
     flex-direction: column;
     gap: 12px;
+    align-items: flex-start;
+    margin-bottom: 16px;
   }
-  
+
+  .lobby-header h2 {
+    font-size: 20px;
+  }
+
+  .lobby-header .ant-btn {
+    width: 100%;
+    min-height: 48px;
+  }
+
+  .lobby-stats {
+    padding: 16px !important;
+  }
+
   .stat-item {
     flex: 1;
+  }
+
+  .stat-number {
+    font-size: 22px;
+  }
+
+  .stat-label {
+    font-size: 11px;
+  }
+
+  .lobby-table {
+    border-radius: 12px !important;
+    overflow-x: auto;
+  }
+
+  .lobby-table .ant-table {
+    font-size: 13px;
   }
 }

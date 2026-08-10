@@ -153,18 +153,61 @@
   border-bottom: 1px solid rgba(167, 139, 250, 0.05) !important;
 }
 
-@media (max-width: 720px) {
+@media (max-width: 768px) {
+  .stats-page {
+    padding: 12px 0;
+  }
+
   .stats-header {
     flex-direction: column;
     gap: 12px;
     align-items: stretch;
+    margin-bottom: 16px;
   }
-  
+
+  .stats-header h2 {
+    font-size: 20px;
+  }
+
   .stats-controls {
     flex-wrap: wrap;
+    gap: 8px;
   }
-  
+
+  .stats-controls .ant-btn,
+  .stats-controls .ant-select {
+    min-height: 40px;
+  }
+
+  .stat-card,
+  .chart-card,
+  .stats-detail,
+  .recent-games {
+    border-radius: 12px !important;
+  }
+
+  .stat-card .ant-statistic-content {
+    font-size: 20px !important;
+  }
+
   .detail-grid {
     grid-template-columns: 1fr;
+    gap: 4px;
+  }
+
+  .detail-label {
+    font-size: 12px;
+  }
+
+  .detail-value {
+    font-size: 13px;
+  }
+
+  .achievement-item {
+    padding: 10px 12px;
+  }
+
+  .recent-games .ant-table {
+    font-size: 12px;
   }
 }

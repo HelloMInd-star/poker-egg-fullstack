@@ -2,18 +2,50 @@
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=1" />
   <meta name="description" content="Poker Face Arena · 扑克人格竞技场 — Game-OS V2.5 决策AI中台首个公开可玩 Demo。MBTI 16型人格对手 × Kelly公式实时风控 × 三层AI架构，博弈人格训练场。Read your opponent. Read yourself." />
   <meta name="keywords" content="Poker Face Arena, 扑克人格竞技场, 德州扑克, MBTI, AI陪练, Kelly公式, Game-OS, 博弈AI, 人格建模" />
   <meta name="author" content="Hello.Mind-star (Y.MINE)" />
-  <meta name="theme-color" content="#0f0f1a" />
+
+  <!-- PWA / Theme -->
+  <meta name="theme-color" content="#0a0a18" />
+  <link rel="manifest" href="/manifest.json" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="apple-touch-icon" href="/icon-192.png" />
+  <link rel="apple-touch-icon" sizes="512x512" href="/icon-512.png" />
+
+  <!-- iOS PWA -->
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="Poker Face" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="format-detection" content="telephone=no" />
+
+  <!-- Open Graph -->
   <meta property="og:title" content="Poker Face Arena · MBTI人格扑克竞技场" />
   <meta property="og:description" content="16型MBTI人格对手 × Kelly实时风控 × 三层AI架构。你的弃牌率，比你更懂你。" />
   <meta property="og:type" content="website" />
+  <meta property="og:image" content="/icon-512.png" />
+
   <title>♠️♥️ Poker Face Arena · MBTI人格扑克竞技场 ♦️♣️</title>
 </head>
 <body>
   <div id="root"></div>
   <script type="module" src="/src/main.jsx"></script>
+  <script>
+    // Service Worker 注册（PWA 离线支持）
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', function () {
+        navigator.serviceWorker.register('/sw.js').then(
+          function (reg) {
+            console.log('[PWA] Service Worker registered, scope:', reg.scope);
+          },
+          function (err) {
+            console.warn('[PWA] Service Worker registration failed:', err);
+          }
+        );
+      });
+    }
+  </script>
 </body>
 </html>
