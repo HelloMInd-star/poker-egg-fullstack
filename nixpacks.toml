@@ -1,6 +1,0 @@
-[phases.setup]
-nixPkgs = ["python311", "gcc"]
-aptPkgs = ["gcc", "g++"]
-
-[start]
-cmd = "python main.py"
