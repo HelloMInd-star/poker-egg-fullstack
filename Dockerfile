@@ -31,4 +31,5 @@ USER appuser
 ENV PORT=5000
 EXPOSE 5000
 
-CMD uvicorn app:app --host 0.0.0.0 --port ${PORT:-5000} --workers 1
+# 直接用python启动，不依赖shell展开$PORT
+CMD ["python", "app.py"]
