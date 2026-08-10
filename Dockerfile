@@ -12,11 +12,11 @@ RUN pip install --no-cache-dir --upgrade pip && \
     pip install --no-cache-dir -r requirements.txt
 
 # 复制后端代码（从backend子目录）
-COPY ai ./ai
-COPY auth ./auth
-COPY models ./models
-COPY services ./services
-COPY app.py .
+COPY backend/ai ./ai
+COPY backend/auth ./auth
+COPY backend/models ./models
+COPY backend/services ./services
+COPY backend/app.py .
 
 ENV PORT=8000
 EXPOSE 8000
