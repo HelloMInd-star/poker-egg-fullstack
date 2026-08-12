@@ -159,7 +159,7 @@ function App() {
                 <Button 
                   type="text" 
                   ghost
-                  onClick={() => window.open('/easter-egg.html', '_blank')}
+                  onClick={() => window.open(import.meta.env.BASE_URL + 'easter-egg.html', '_blank')}
                   style={{ color: '#a78bfa', fontSize: '16px', padding: '4px 8px' }}
                   title="🎯 查看经典彩蛋"
                 >
@@ -183,7 +183,7 @@ function App() {
                 <Button 
                   type="text" 
                   ghost
-                  onClick={() => window.open('/easter-egg.html', '_blank')}
+                  onClick={() => window.open(import.meta.env.BASE_URL + 'easter-egg.html', '_blank')}
                   style={{ color: '#a78bfa', fontSize: '16px', padding: '4px 8px' }}
                   title="🎯 查看经典彩蛋"
                 >
@@ -236,21 +236,21 @@ function App() {
                           type="primary" 
                           size="large"
                           onClick={() => {
-                            window.location.href = '/lobby';
+                            window.location.hash = '#/lobby';
                           }}
                         >
                           🎯 开始游戏
                         </Button>
                         <Button 
                           size="large"
-                          onClick={() => window.location.href = '/stats'}
+                          onClick={() => window.location.hash = '#/stats'}
                         >
                           📊 查看战绩
                         </Button>
                         <Button 
                           size="large"
                           ghost
-                          onClick={() => window.open('/easter-egg.html', '_blank')}
+                          onClick={() => window.open(import.meta.env.BASE_URL + 'easter-egg.html', '_blank')}
                           style={{ color: '#a78bfa' }}
                         >
                           🥚 彩蛋
