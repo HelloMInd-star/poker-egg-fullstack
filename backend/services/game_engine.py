@@ -73,6 +73,7 @@ class Player:
     has_acted: bool = False
     is_ai: bool = False
     ai_difficulty: str = "medium"
+    ai_personality: str = ""  # MBTI人格类型
     # 盲注位标记
     is_sb: bool = False
     is_bb: bool = False
@@ -102,6 +103,7 @@ class Player:
             "all_in": self.all_in,
             "has_acted": self.has_acted,
             "is_ai": self.is_ai,
+            "ai_personality": self.ai_personality,
             "is_sb": self.is_sb,
             "is_bb": self.is_bb,
             "is_dealer": self.is_dealer,
@@ -336,14 +338,15 @@ class GameEngine:
         self.dealer_index = 0  # 庄位索引（1v1中SB=BTN）
         self.last_raiser_index: Optional[int] = None  # 最后加注者索引
     
-    def add_player(self, name: str, is_ai: bool = False, ai_difficulty: str = "medium") -> Player:
+    def add_player(self, name: str, is_ai: bool = False, ai_difficulty: str = "medium", ai_personality: str = "") -> Player:
         """添加玩家"""
         player = Player(
             id=str(uuid.uuid4())[:8],
             name=name,
             chips=1000,
             is_ai=is_ai,
-            ai_difficulty=ai_difficulty
+            ai_difficulty=ai_difficulty,
+            ai_personality=ai_personality
         )
         self.players.append(player)
         return player

@@ -195,14 +195,15 @@ export const useGameStore = create((set, get) => ({
   },
 
   // 创建游戏
-  createGame: async (playerName, aiDifficulty = 'medium') => {
+  createGame: async (playerName, aiDifficulty = 'medium', aiPersonality = null) => {
     set({ isLoading: true, error: null });
     try {
       const response = await apiFetch('/api/game/create', {
         method: 'POST',
         body: JSON.stringify({
           player_name: playerName,
-          ai_difficulty: aiDifficulty
+          ai_difficulty: aiDifficulty,
+          ai_personality: aiPersonality
         })
       });
 

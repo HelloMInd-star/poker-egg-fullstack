@@ -32,6 +32,7 @@ class GameCreate(BaseModel):
     """创建游戏"""
     player_name: Optional[str] = "Player"
     ai_difficulty: Optional[str] = "medium"
+    ai_personality: Optional[str] = None  # MBTI人格类型(如INTJ)，优先于ai_difficulty
 
 
 class GameJoin(BaseModel):

@@ -60,7 +60,8 @@ const GameLobby = () => {
     try {
       const result = await createGame(
         values.playerName || 'Player',
-        values.aiDifficulty || 'medium'
+        'medium',
+        values.aiPersonality || 'INTJ'
       );
       setCreateModalVisible(false);
       form.resetFields();
@@ -223,7 +224,7 @@ const GameLobby = () => {
           layout="vertical"
           initialValues={{
             playerName: 'Player',
-            aiDifficulty: 'medium'
+            aiPersonality: 'INTJ'
           }}
         >
           <Form.Item
@@ -234,14 +235,27 @@ const GameLobby = () => {
             <Input prefix={<UserOutlined />} placeholder="输入你的名字" />
           </Form.Item>
           <Form.Item
-            name="aiDifficulty"
-            label="AI难度"
+            name="aiPersonality"
+            label="选择对手人格（MBTI × 打法风格）"
             rules={[{ required: true }]}
           >
-            <Select>
-              <Option value="easy">😊 简单</Option>
-              <Option value="medium">🤔 中等</Option>
-              <Option value="hard">😈 困难</Option>
+            <Select showSearch optionFilterProp="children">
+              <Option value="INTJ">🧠 INTJ · 算度大师 — 紧凶精算 · 长考型</Option>
+              <Option value="INTP">🔬 INTP · 算度大师 — 长考分析 · 收局犹豫</Option>
+              <Option value="ENTJ">👑 ENTJ · 算度大师 — 高进攻统帅 · 果断</Option>
+              <Option value="ENTP">🃏 ENTP · 算度大师 — 施压辩论 · 花式打法</Option>
+              <Option value="INFJ">🌙 INFJ · 诗意弈者 — 直觉先行 · 高频诈唬</Option>
+              <Option value="INFP">🌸 INFP · 诗意弈者 — 感性浪漫 · 高频诈唬</Option>
+              <Option value="ENFJ">🎭 ENFJ · 诗意弈者 — 主动社交 · 情绪激励</Option>
+              <Option value="ENFP">🔥 ENFP · 诗意弈者 — 松凶进攻 · 全下频繁</Option>
+              <Option value="ISTJ">🛡️ ISTJ · 阵地守将 — 稳扎稳打 · 极少诈唬</Option>
+              <Option value="ISFJ">🧸 ISFJ · 阵地守将 — 保守紧弱 · 极少加注</Option>
+              <Option value="ESTJ">📋 ESTJ · 阵地守将 — 紧凶管理 · 高进攻</Option>
+              <Option value="ESFJ">🤝 ESFJ · 阵地守将 — 跟注为主 · 社交导向</Option>
+              <Option value="ISTP">🗡️ ISTP · 战术猎手 — 战术敏锐 · 高频诈唬</Option>
+              <Option value="ISFP">🎨 ISFP · 战术猎手 — 感觉先行 · 灵活松弱</Option>
+              <Option value="ESTP">⚡ ESTP · 战术猎手 — 最高进攻 · 超松凶</Option>
+              <Option value="ESFP">🎉 ESFP · 战术猎手 — 最高诈唬 · 情绪驱动</Option>
             </Select>
           </Form.Item>
           <Form.Item>

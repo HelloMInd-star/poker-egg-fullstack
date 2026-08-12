@@ -17,6 +17,8 @@ import logging
 
 from services.game_engine import GameEngine, Player, Card
 from ai.ai_engine import PokerAI, AIDecisionMaker
+from ai.personalities import MBTI_PERSONALITIES
+import random
 from models.database import Database
 from models.schemas import (
     UserCreate, GameCreate, GameJoin,
@@ -98,11 +100,19 @@ class GameManager:
         self.ai_decision_maker = AIDecisionMaker()
         self._ai_tasks: Dict[str, asyncio.Task] = {}
     
-    def create_game(self, player_name: str, ai_difficulty: str = "medium") -> Dict:
-        """创建新游戏（1v1: 玩家 + AI）"""
+    def create_game(self, player_name: str, ai_difficulty: str = "medium", ai_personality: str = None) -> Dict:
+        """创建新游戏（1v1: 玩家 + AI），支持MBTI人格AI"""
         game = GameEngine()
         player = game.add_player(player_name, is_ai=False)
-        ai_player = game.add_player("AI Bot", is_ai=True, ai_difficulty=ai_difficulty)
+        persona = MBTI_PERSONALITIES.get(ai_personality) if ai_personality else None
+        if persona:
+            ai_name = f"{ai_personality} · {persona['archetype']}"
+            agg = persona.get("aggressionLevel", 0.5)
+            ai_difficulty = "hard" if agg >= 0.6 else ("medium" if agg >= 0.35 else "easy")
+        else:
+            ai_name = "AI Bot"
+            ai_personality = ""
+        ai_player = game.add_player(ai_name, is_ai=True, ai_difficulty=ai_difficulty, ai_personality=ai_personality)
         self.games[game.id] = game
         return {
             "game_id": game.id,
@@ -193,8 +203,13 @@ class GameManager:
             if not ai_player:
                 break
             
-            # 思考延迟
-            think_time = {"easy": 0.5, "medium": 1.0, "hard": 1.5}.get(ai_player.ai_difficulty, 1.0)
+            # 思考延迟：优先按MBTI人格thinkingMs，回退难度映射
+            persona = MBTI_PERSONALITIES.get(getattr(ai_player, "ai_personality", "") or "")
+            if persona and persona.get("thinkingMs"):
+                lo, hi = persona["thinkingMs"]
+                think_time = random.uniform(lo, hi) / 1000.0
+            else:
+                think_time = {"easy": 0.5, "medium": 1.0, "hard": 1.5}.get(ai_player.ai_difficulty, 1.0)
             await asyncio.sleep(think_time)
             
             # 再检查一次，可能中途结束
@@ -347,7 +362,8 @@ async def create_game(request: GameCreate):
     try:
         result = game_manager.create_game(
             player_name=request.player_name or "Player",
-            ai_difficulty=request.ai_difficulty or "medium"
+            ai_difficulty=request.ai_difficulty or "medium",
+            ai_personality=request.ai_personality
         )
         return {"success": True, "data": result}
     except Exception as e:

@@ -232,8 +232,22 @@ function App() {
                       </Text>
                       <div className="welcome-divider" />
                       <Space size="large" className="welcome-actions">
+                        <Button
+                          type="primary"
+                          size="large"
+                          onClick={async () => {
+                            const pool = ['INTJ','ENTJ','ENTP','ESTP','ESFP','ISTP','ENFP','ISFJ','INFJ','ISTJ'];
+                            const pick = pool[Math.floor(Math.random() * pool.length)];
+                            try {
+                              await useGameStore.getState().createGame('玩家' + Math.floor(Math.random() * 900 + 100), 'medium', pick);
+                            } catch (e) {
+                              message.error('快速开局失败：' + (e.message || '网络错误'));
+                            }
+                          }}
+                        >
+                          ⚡ 快速对战 · 随机人格AI
+                        </Button>
                         <Button 
-                          type="primary" 
                           size="large"
                           onClick={() => {
                             window.location.hash = '#/lobby';
