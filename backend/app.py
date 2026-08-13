@@ -671,8 +671,8 @@ async def general_exception_handler(request, exc):
 
 if __name__ == "__main__":
     import uvicorn
-    # MVP fix: 默认端口 5000，读取 PORT 环境变量（适配 Vercel/Railway/Render）
-    port = int(os.getenv("PORT", "5000"))
+    # 默认端口 8080（对齐 Railway 代理转发端口），读取 PORT 环境变量（适配 Vercel/Railway/Render）
+    port = int(os.getenv("PORT", "8080"))
     uvicorn.run(
         "app:app",
         host="0.0.0.0",
