@@ -1,4 +1,6 @@
-https://github.com/HelloMInd‑star/poker‑egg‑fullstack/raw/main/github‑poker‑background.jpg
+![Game‑OS Y.Mine Midnight Tavern](./github-poker-background.jpg)
+# Game‑OS · Y.Mine
+> Midnight Tavern｜智能体记忆闭环 · 博弈推演世界观
 
 <div align="center">
 
