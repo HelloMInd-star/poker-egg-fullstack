@@ -1,6 +1,8 @@
 .app-layout {
   min-height: 100vh;
-  background: linear-gradient(160deg, #0f0c24 0%, #1a1333 50%, #0d0a1e 100%);
+  background:
+    linear-gradient(160deg, rgba(15, 12, 36, 0.78) 0%, rgba(26, 19, 51, 0.72) 50%, rgba(13, 10, 30, 0.82) 100%),
+    url('/poker-egg-fullstack/bg/bg_tavern.jpg') center / cover no-repeat fixed;
 }
 
 .app-header {

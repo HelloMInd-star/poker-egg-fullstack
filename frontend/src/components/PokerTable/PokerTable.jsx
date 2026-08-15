@@ -203,8 +203,8 @@ const PokerTable = ({ gameState, playerId }) => {
               </div>
             )) : (
               <>
-                <div className="card-small card-back"><span>🂠</span></div>
-                <div className="card-small card-back"><span>🂠</span></div>
+                <div className="card-small card-back"><img src={import.meta.env.BASE_URL + 'stickers/card_back.jpg'} alt="牌背" /></div>
+                <div className="card-small card-back"><img src={import.meta.env.BASE_URL + 'stickers/card_back.jpg'} alt="牌背" /></div>
               </>
             )}
           </div>
@@ -229,6 +229,11 @@ const PokerTable = ({ gameState, playerId }) => {
   return (
     <div className="poker-table-container">
       <div className="poker-table">
+        {/* 桌面涂鸦贴花（低透明度点缀） */}
+        <div className="table-graffiti" aria-hidden="true">
+          <span className="g1">✦</span><span className="g2">✕</span><span className="g3">♪</span>
+          <span className="g4">★</span><span className="g5">✧</span>
+        </div>
         {/* 午夜酒馆荷官 */}
         <div className="dealer-seat">
           <div className="dealer-avatar">
@@ -244,7 +249,7 @@ const PokerTable = ({ gameState, playerId }) => {
         </div>
 
         <div className="table-pot">
-          <span className="pot-icon">🪙</span>
+          <img className="pot-icon-img" src={import.meta.env.BASE_URL + 'stickers/chips_stack.jpg'} alt="筹码堆" />
           <span className="pot-amount">{pot}</span>
           <span className="pot-label">底池</span>
         </div>
