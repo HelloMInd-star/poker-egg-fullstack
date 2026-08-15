@@ -474,3 +474,26 @@ body {
   color: rgba(255, 255, 255, 0.55);
   pointer-events: none;
 }
+
+/* ===== 酒馆房间导航 ===== */
+.tavern-rooms { max-width: 1080px; margin: 36px auto 0; }
+.tavern-rooms-title { text-align: center; letter-spacing: 6px; color: rgba(240,198,116,.85); font-size: 13px; margin-bottom: 18px; text-shadow: 0 0 10px rgba(240,198,116,.4); }
+.tavern-rooms-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+@media (max-width: 900px) { .tavern-rooms-grid { grid-template-columns: 1fr; } }
+.room-card { cursor: pointer; text-align: center; background: rgba(20,14,40,.72) !important; border: 1px solid rgba(168,85,247,.28) !important; border-radius: 16px !important; transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease; }
+.room-card:hover { transform: translateY(-4px); border-color: rgba(168,85,247,.65) !important; box-shadow: 0 8px 30px rgba(168,85,247,.25); }
+.room-icon { font-size: 40px; margin-bottom: 8px; }
+.room-card h4 { color: #fff !important; margin-bottom: 10px !important; }
+.room-badge { display: inline-block; font-size: 12px; letter-spacing: 2px; padding: 3px 12px; border-radius: 999px; margin-bottom: 10px; }
+.badge-live { color: #7CFFB2; border: 1px solid rgba(124,255,178,.5); background: rgba(124,255,178,.08); }
+.badge-beta { color: #F0C674; border: 1px solid rgba(240,198,116,.5); background: rgba(240,198,116,.08); }
+.badge-soon { color: #b39df5; border: 1px solid rgba(179,157,245,.5); background: rgba(179,157,245,.08); }
+.room-card .ant-typography { color: rgba(255,255,255,.72) !important; }
+
+/* ===== 黑胶点唱机预告页 ===== */
+.jukebox-page { min-height: 70vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 48px 20px; }
+.jukebox-vinyl { width: min(300px, 60vw); animation: vinylSpin 3.2s linear infinite; filter: drop-shadow(0 0 40px rgba(168,85,247,.45)); margin-bottom: 34px; }
+.jukebox-title { font-size: clamp(26px, 4vw, 42px); font-weight: 900; font-style: italic; letter-spacing: .05em; color: #fff; text-shadow: 0 0 12px rgba(168,85,247,.9), 0 0 36px rgba(168,85,247,.5); }
+.jukebox-badge { margin: 16px 0 14px; font-size: 13px; letter-spacing: 4px; color: #b39df5; border: 1px solid rgba(179,157,245,.55); padding: 5px 18px; border-radius: 999px; background: rgba(179,157,245,.08); }
+.jukebox-desc { font-size: 16px; color: rgba(255,255,255,.85); margin-bottom: 8px; }
+.jukebox-sub { font-size: 12px; letter-spacing: 2px; color: rgba(255,255,255,.45); margin-bottom: 30px; }

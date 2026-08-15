@@ -15,6 +15,20 @@ import SideDrawer from './components/SideDrawer/SideDrawer';
 import AnalysisPanel from './components/AnalysisPanel/AnalysisPanel';
 import GameLobby from './components/GameLobby/GameLobby';
 import MidnightTavern from './components/MidnightTavern/MidnightTavern';
+
+// 黑胶点唱机 · 敬请期待预告页
+function JukeboxTeaser() {
+  return (
+    <div className="jukebox-page">
+      <img src={import.meta.env.BASE_URL + 'bg/vinyl_disc.webp'} className="jukebox-vinyl" alt="黑胶唱片" />
+      <div className="jukebox-title">黑胶点唱机 · VINYL JUKEBOX</div>
+      <div className="jukebox-badge">敬 请 期 待 · COMING SOON</div>
+      <div className="jukebox-desc">当 16 种人格都有了主题曲，酒馆的夜晚就有了声音。</div>
+      <div className="jukebox-sub">黑胶正在压片 · 母带已过审 · 出厂质检中</div>
+      <Button size="large" onClick={() => { window.location.hash = '#/'; }}>返回酒馆大厅</Button>
+    </div>
+  );
+}
 import Profile from './components/Profile/Profile';
 import Stats from './components/Stats/Stats';
 import { useGameStore, apiFetch, API_BASE } from './store/gameStore';
@@ -343,6 +357,30 @@ function App() {
                       </div>
                     </Card>
 
+                    <div className="tavern-rooms">
+                      <div className="tavern-rooms-title">酒 馆 房 间 · ROOMS</div>
+                      <div className="tavern-rooms-grid">
+                        <Card className="room-card" onClick={() => { window.location.hash = '#/lobby'; }}>
+                          <div className="room-icon">♠️</div>
+                          <Title level={4}>Poker Egg 人格牌桌</Title>
+                          <div><span className="room-badge badge-live">V1 · 营业中</span></div>
+                          <Text>16 型人格 AI 对手 · Kelly 仓位 · 三层决策</Text>
+                        </Card>
+                        <Card className="room-card" onClick={() => { window.location.hash = '#/tavern'; }}>
+                          <div className="room-icon">🍸</div>
+                          <Title level={4}>MBTI 调酒吧台</Title>
+                          <div><span className="room-badge badge-beta">Beta · 四型先行</span></div>
+                          <Text>报上人格，主理人为你调一杯本命酒</Text>
+                        </Card>
+                        <Card className="room-card" onClick={() => { window.location.hash = '#/jukebox'; }}>
+                          <div className="room-icon">🎵</div>
+                          <Title level={4}>黑胶点唱机</Title>
+                          <div><span className="room-badge badge-soon">规划中</span></div>
+                          <Text>当 16 种人格有了主题曲</Text>
+                        </Card>
+                      </div>
+                    </div>
+
                     <div className="features-grid">
                       <Card className="feature-card">
                         <div className="feature-icon">🤖</div>
@@ -366,6 +404,7 @@ function App() {
             } />
             <Route path="/lobby" element={<GameLobby />} />
             <Route path="/tavern" element={<MidnightTavern />} />
+            <Route path="/jukebox" element={<JukeboxTeaser />} />
             <Route path="/stats" element={<Stats />} />
             <Route path="/profile" element={<Profile />} />
           </Routes>
