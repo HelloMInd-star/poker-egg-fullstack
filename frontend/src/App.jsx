@@ -20,12 +20,14 @@ import MidnightTavern from './components/MidnightTavern/MidnightTavern';
 function JukeboxTeaser() {
   return (
     <div className="jukebox-page">
-      <img src={import.meta.env.BASE_URL + 'bg/vinyl_disc.webp'} className="jukebox-vinyl" alt="黑胶唱片" />
+      <img src={import.meta.env.BASE_URL + 'bg/jukebox_bg.webp'} className="jukebox-bg" alt="黑胶点唱机背景" />
+      <div className="jukebox-panel">
       <div className="jukebox-title">黑胶点唱机 · VINYL JUKEBOX</div>
       <div className="jukebox-badge">敬 请 期 待 · COMING SOON</div>
       <div className="jukebox-desc">当 16 种人格都有了主题曲，酒馆的夜晚就有了声音。</div>
       <div className="jukebox-sub">黑胶正在压片 · 母带已过审 · 出厂质检中</div>
       <Button size="large" onClick={() => { window.location.hash = '#/'; }}>返回酒馆大厅</Button>
+      </div>
     </div>
   );
 }
