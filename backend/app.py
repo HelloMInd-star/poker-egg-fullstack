@@ -18,6 +18,8 @@ import logging
 from services.game_engine import GameEngine, Player, Card
 from ai.ai_engine import PokerAI, AIDecisionMaker
 from ai.personalities import MBTI_PERSONALITIES
+from ai.personality_engine import personality_ai_manager
+from ai.analysis import kelly_analysis
 import random
 from models.database import Database
 from models.schemas import (
@@ -216,13 +218,11 @@ class GameManager:
             if game.hand_over or ai_player.folded or ai_player.all_in:
                 break
             
-            ai = self.ai_decision_maker.get_ai(ai_player.ai_difficulty)
-            
             # 当前最大下注
             active_bets = [p.bet for p in game.players if not p.folded]
             current_bet_for_ai = max(active_bets) if active_bets else 0
             call_amount = current_bet_for_ai - ai_player.bet
-            
+
             game_state_ai = {
                 "hole_cards": [c.to_dict() for c in ai_player.hole_cards],
                 "board_cards": [c.to_dict() for c in game.board],
@@ -233,9 +233,16 @@ class GameManager:
                 "position": "late",
                 "stage": game.stage.value
             }
-            
+
             try:
-                decision = ai.decide_action(game_state_ai)
+                mbti_name = getattr(ai_player, "ai_personality", "") or ""
+                if mbti_name:
+                    # MBTI 人格引擎：客观牌力 × 人格滤镜，决策附带人格化理由
+                    pai = personality_ai_manager.get(game_id, mbti_name)
+                    decision = pai.decide_action(game_state_ai)
+                else:
+                    ai = self.ai_decision_maker.get_ai(ai_player.ai_difficulty)
+                    decision = ai.decide_action(game_state_ai)
             except Exception as e:
                 logger.error(f"AI决策错误: {e}")
                 # 出错就check/fold
@@ -275,7 +282,8 @@ class GameManager:
                         "player_id": ai_player.id,
                         "action": action,
                         "amount": result.get("amount", 0),
-                        "message": result["message"]
+                        "message": result["message"],
+                        "reason": decision.get("reason", "")
                     }
                 })
                 await self.broadcast(game_id, {
@@ -387,6 +395,38 @@ async def get_game_state(game_id: str):
     if not game:
         raise HTTPException(status_code=404, detail="游戏不存在")
     return {"success": True, "data": game.get_state()}
+
+
+@app.get("/api/game/{game_id}/analysis")
+async def get_hand_analysis(game_id: str, player_id: str = Query(...)):
+    """
+    Kelly 实时决策面板：真胜率（蒙特卡洛逐街重算）+ 牌型识别 + 底池赔率 + Kelly 注额。
+    仅返回请求玩家本人手牌的分析（不向他人泄露底牌信息）。
+    """
+    game = game_manager.get_game(game_id)
+    if not game:
+        raise HTTPException(status_code=404, detail="游戏不存在")
+
+    player = next((p for p in game.players if p.id == player_id), None)
+    if not player:
+        raise HTTPException(status_code=404, detail="玩家不存在")
+    if player.is_ai:
+        raise HTTPException(status_code=400, detail="仅支持人类玩家查询")
+
+    try:
+        call_amount = game._get_call_amount(player)
+        data = kelly_analysis(
+            hole_dicts=[c.to_dict() for c in player.hole_cards],
+            board_dicts=[c.to_dict() for c in game.board],
+            pot=game.pot,
+            call_amount=max(call_amount, 0),
+            my_chips=player.chips,
+        )
+        data["stage"] = game.stage.value
+        return {"success": True, "data": data}
+    except Exception as e:
+        logger.error(f"分析失败: {e}", exc_info=True)
+        raise HTTPException(status_code=500, detail=f"分析失败: {e}")
 
 
 @app.post("/api/game/{game_id}/ai/add")

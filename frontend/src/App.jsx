@@ -11,6 +11,7 @@ import {
 } from '@ant-design/icons';
 import PokerTable from './components/PokerTable/PokerTable';
 import Dashboard from './components/Dashboard/Dashboard';
+import AnalysisPanel from './components/AnalysisPanel/AnalysisPanel';
 import GameLobby from './components/GameLobby/GameLobby';
 import Profile from './components/Profile/Profile';
 import Stats from './components/Stats/Stats';
@@ -214,10 +215,11 @@ function App() {
               <div className="home-page fade-in">
                 {gameState ? (
                   <div className="game-container">
-                    <PokerTable 
-                      gameState={gameState} 
+                    <PokerTable
+                      gameState={gameState}
                       playerId={tablePlayerId}
                     />
+                    <AnalysisPanel gameState={gameState} playerId={tablePlayerId} />
                     <Dashboard gameState={gameState} playerId={tablePlayerId} />
                   </div>
                 ) : (

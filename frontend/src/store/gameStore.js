@@ -55,6 +55,7 @@ export const useGameStore = create((set, get) => ({
   error: null,
   history: [],
   stats: null,
+  lastAiAction: null,
   pingInterval: null,
   apiBase: API_BASE,
   wsBase: WS_BASE,
@@ -100,6 +101,8 @@ export const useGameStore = create((set, get) => ({
             break;
           case 'ai_action':
             console.log('AI行动:', data);
+            // 记录AI最近行动（含人格化决策理由 reason），供分析面板展示
+            set({ lastAiAction: data });
             break;
           case 'system_message':
             console.log('系统消息:', data);
