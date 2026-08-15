@@ -66,11 +66,11 @@ function App() {
     if (!coverVisible) return;
     const calc = () => {
       const cw = window.innerWidth, ch = window.innerHeight;
-      const posX = cw <= 768 ? 0.32 : 0.5;
-      const scale = Math.max(cw / 2880, ch / 1308);
-      const offX = (cw - 2880 * scale) * posX;
+      const mobile = cw <= 768;
+      const scale = mobile ? Math.max(cw / 2880, ch / 1308) : Math.min(cw / 2880, ch / 1308);
+      const offX = (cw - 2880 * scale) * (mobile ? 0.32 : 0.5);
       const offY = (ch - 1308 * scale) * 0.5;
-      setSpinOrigin(`${1108.7 * scale + offX}px ${689.7 * scale + offY}px`);
+      setSpinOrigin(`${1093.3 * scale + offX}px ${699.9 * scale + offY}px`);
     };
     calc();
     window.addEventListener('resize', calc);
