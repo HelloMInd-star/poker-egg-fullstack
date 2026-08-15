@@ -590,3 +590,105 @@
     min-height: 44px;
   }
 }
+
+/* ===== L3：荷官位 · 午夜酒馆 ===== */
+.dealer-seat {
+  position: relative;
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: fit-content;
+  margin: 0 auto 4px;
+}
+
+.dealer-avatar {
+  width: 68px;
+  height: 68px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 4px solid #f5f2ea;
+  transform: rotate(-2deg);
+  box-shadow:
+    0 0 18px rgba(167, 139, 250, 0.45),
+    0 6px 16px rgba(0, 0, 0, 0.5);
+}
+
+.dealer-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.dealer-label {
+  margin-top: 5px;
+  font-size: 11px;
+  letter-spacing: 1.5px;
+  color: rgba(196, 181, 253, 0.75);
+  background: rgba(20, 14, 42, 0.75);
+  border: 1px solid rgba(167, 139, 250, 0.3);
+  border-radius: 999px;
+  padding: 2px 10px;
+}
+
+/* ===== L3：试炼总结入口 ===== */
+.hand-over-actions {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+.trial-end-btn {
+  border: 1px solid rgba(167, 139, 250, 0.45);
+  cursor: pointer;
+  border-radius: 999px;
+  padding: 9px 26px;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  color: #e9e2ff;
+  background: linear-gradient(135deg, rgba(124, 58, 237, 0.85), rgba(168, 85, 247, 0.85));
+  box-shadow:
+    0 0 16px rgba(147, 51, 234, 0.35),
+    0 4px 12px rgba(0, 0, 0, 0.4);
+  transition: transform 0.15s ease, box-shadow 0.2s ease;
+}
+.trial-end-btn:hover {
+  transform: translateY(-2px);
+  box-shadow:
+    0 0 24px rgba(167, 139, 250, 0.5),
+    0 8px 18px rgba(0, 0, 0, 0.45);
+}
+
+/* ===== L3：操作按钮统一深紫霓虹（参照整体效果稿）===== */
+.action-btn {
+  border-radius: 999px !important;
+  font-weight: 600 !important;
+  letter-spacing: 2px !important;
+  border: 1px solid rgba(167, 139, 250, 0.35) !important;
+}
+
+.action-btn.fold {
+  background: linear-gradient(135deg, #6d28d9, #8b5cf6) !important;
+  color: #fff !important;
+  box-shadow: 0 0 14px rgba(139, 92, 246, 0.35);
+}
+
+.action-btn.call,
+.action-btn:not(.fold):not(.raise):not(.allin) {
+  background: rgba(255, 255, 255, 0.08) !important;
+  color: rgba(236, 232, 250, 0.9) !important;
+}
+
+.action-btn.raise {
+  background: linear-gradient(135deg, #a855f7, #d946ef) !important;
+  color: #fff !important;
+  box-shadow: 0 0 16px rgba(217, 70, 239, 0.4);
+}
+
+.action-btn.allin {
+  background: linear-gradient(135deg, #b45309, #f59e0b) !important;
+  color: #fff !important;
+  box-shadow: 0 0 14px rgba(245, 158, 11, 0.35);
+}

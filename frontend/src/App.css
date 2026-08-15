@@ -73,10 +73,28 @@
   padding: 20px 0;
 }
 
+/* 游戏页三段式：牌桌全宽 + 下方三栏卡片区 */
 .game-container {
-  display: grid;
-  grid-template-columns: 1fr 320px;
+  display: flex;
+  flex-direction: column;
   gap: 24px;
+}
+
+.game-table-zone {
+  width: 100%;
+}
+
+.game-panels {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
+  align-items: start;
+}
+
+.game-panels .analysis-panel {
+  max-width: none;
+  margin: 0;
+  width: 100%;
 }
 
 .welcome-section {
@@ -207,9 +225,12 @@
 }
 
 /* 响应式 */
-@media (max-width: 1024px) {
-  .game-container {
+@media (max-width: 1100px) {
+  .game-panels {
     grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  .game-container {
     gap: 16px;
   }
 }

@@ -1,18 +1,34 @@
-import React, { useMemo } from 'react';
-import { Card, Progress, Tag, Space, Statistic, Row, Col, Tooltip } from 'antd';
-import { 
-  RiseOutlined, 
-  FallOutlined, 
-  WarningOutlined,
-  InfoCircleOutlined
-} from '@ant-design/icons';
-import { motion } from 'framer-motion';
+import React from 'react';
+import { Card, Tag } from 'antd';
+import { useGameStore } from '../../store/gameStore';
 import './Dashboard.css';
 
+const STAGE_CN = {
+  preflop: '翻牌前', flop: '翻牌圈', turn: '转牌圈', river: '河牌圈', showdown: '摊牌'
+};
+
+/** 读取午夜酒馆人格修正系数（无档案返回 null） */
+const readCoef = () => {
+  try {
+    const p = JSON.parse(localStorage.getItem('midnight_tavern_profile') || 'null');
+    const c = Number(p?.kellyCoefficient);
+    return c > 0 && c <= 2 ? c : null;
+  } catch {
+    return null;
+  }
+};
+
+/**
+ * 局势面板 · 六维局势 + 牌局信息
+ * 全部为真实数据：胜率/赔率/凯利来自后端蒙特卡洛分析接口，
+ * 修正凯利 = 原始 × 午夜酒馆人格系数，码量与张力由 gameState 实时推导
+ */
 const Dashboard = ({ gameState, playerId }) => {
+  const { lastAnalysis } = useGameStore();
+
   if (!gameState) {
     return (
-      <Card className="dashboard-container">
+      <Card className="dashboard-card panel-card">
         <div className="dashboard-empty">
           <span>📊</span>
           <p>等待游戏数据...</p>
@@ -21,115 +37,56 @@ const Dashboard = ({ gameState, playerId }) => {
     );
   }
 
-  // 从gameState里计算出真实可用的基础数据；其余高级指标暂为Demo
   const me = gameState.players?.find(p => p.id === playerId);
   const myChips = me?.chips ?? 0;
   const myBet = me?.bet ?? 0;
   const pot = gameState.pot ?? 0;
   const stage = gameState.stage || 'preflop';
-  const activePlayers = gameState.players?.filter(p => !p.folded).length ?? 0;
+  const bigBlind = gameState.big_blind || 20;
+  const activePlayers = gameState.players?.filter(p => !p.folded) || [];
 
-  // Demo 数值（未来接入真实胜率/凯利时替换）
-  const kellyIndex = useMemo(() => 0.25, [gameState.id, stage]);
-  const winRate = useMemo(() => 0.45, [gameState.id, stage]);
-  const tension = useMemo(() => 0.5, [gameState.id, stage]);
-  const dcf = useMemo(() => -0.05, [gameState.id, stage]);
+  // 真实推导：码量 BB 与博弈张力（底池占活跃总筹码比）
+  const bbCount = myChips / bigBlind;
+  const activeChips = activePlayers.reduce((s, p) => s + (p.chips || 0), 0);
+  const tension = pot + activeChips > 0 ? pot / (pot + activeChips) : 0;
 
-  const getKellyStatus = (value) => {
-    if (value > 0.3) return { color: 'success', text: '高', icon: <RiseOutlined /> };
-    if (value > 0.15) return { color: 'warning', text: '中', icon: <WarningOutlined /> };
-    return { color: 'default', text: '低', icon: <FallOutlined /> };
-  };
+  // 分析接口真值
+  const winPct = lastAnalysis ? Math.round(lastAnalysis.win_rate * 100) : null;
+  const oddsPct = lastAnalysis ? Math.round(lastAnalysis.pot_odds * 100) : null;
+  const kellyPct = lastAnalysis ? Math.round(lastAnalysis.kelly_fraction * 100) : null;
+  const coef = readCoef();
+  const adjPct = kellyPct !== null && coef ? Math.round(kellyPct * coef) : null;
 
-  const kellyStatus = getKellyStatus(kellyIndex);
+  const six = [
+    { icon: '📈', label: '蒙特卡洛胜率', value: winPct !== null ? `${winPct}%` : '…', cls: 'violet' },
+    { icon: '⚖️', label: '底池赔率', value: oddsPct !== null ? `${oddsPct}%` : '…', cls: 'cyan' },
+    { icon: '📐', label: '原始凯利', value: kellyPct !== null ? `${kellyPct}%` : '…', cls: 'gold' },
+    { icon: '🧬', label: '人格修正凯利', value: adjPct !== null ? `${adjPct}%` : '—', cls: 'violet' },
+    { icon: '🪙', label: '我的码量', value: `${bbCount.toFixed(0)}BB`, cls: 'gold' },
+    { icon: '⚡', label: '博弈张力', value: `${Math.round(tension * 100)}%`, cls: 'pink' },
+  ];
 
   return (
-    <div className="dashboard-container">
-      <Card 
-        className="dashboard-card" 
-        title={
-          <Space>
-            <span>📐 凯利仪表盘</span>
-            <Tooltip title="Demo 数据：凯利/胜率等高级指标暂为占位，将接入真实胜率计算">
-              <Tag color="orange" style={{marginLeft: 8}}><InfoCircleOutlined /> Demo</Tag>
-            </Tooltip>
-          </Space>
-        }
-      >
-        <div className="kelly-display">
-          <div className="kelly-value">
-            <span className="kelly-number">{(kellyIndex * 100).toFixed(1)}%</span>
-            <Tag color={kellyStatus.color}>
-              {kellyStatus.icon} {kellyStatus.text}
-            </Tag>
-          </div>
-          <Progress 
-            percent={kellyIndex * 100} 
-            strokeColor={{ '0%': '#22c55e', '50%': '#fbbf24', '100%': '#ef4444' }}
-            showInfo={false}
-            size="small"
-          />
-          <div className="kelly-label">最优仓位 <span style={{color: '#999', fontSize: 12}}>（Demo）</span></div>
+    <>
+      {/* 六维局势卡 */}
+      <Card className="dashboard-card panel-card six-card" title={<span>📐 六维局势</span>}>
+        <div className="six-grid">
+          {six.map((it) => (
+            <div key={it.label} className="six-item">
+              <span className={`six-value ${it.cls}`}>{it.value}</span>
+              <span className="six-label">{it.icon} {it.label}</span>
+            </div>
+          ))}
         </div>
-
-        <div className="metrics-grid">
-          <div className="metric-item">
-            <span className="metric-label">📈 胜率</span>
-            <span className="metric-value win">{(winRate * 100).toFixed(0)}%</span>
-          </div>
-          <div className="metric-item">
-            <span className="metric-label">⚡ 博弈张力</span>
-            <span className="metric-value tension">{(tension * 100).toFixed(0)}%</span>
-          </div>
-          <div className="metric-item">
-            <span className="metric-label">⚠️ DCF折价</span>
-            <span className={`metric-value ${dcf < 0 ? 'bad' : 'good'}`}>
-              {(dcf * 100).toFixed(1)}%
-            </span>
-          </div>
+        <div className="six-foot">
+          {coef
+            ? `修正系数 ×${coef} · 来自午夜酒馆人格档案`
+            : '未建立人格档案 · 修正凯利待解锁'}
         </div>
       </Card>
 
-      <Card 
-        className="dashboard-card bridge-panel" 
-        title={
-          <Space>
-            <span>🔮 表理映射 · 里</span>
-            <Tag color="orange"><InfoCircleOutlined /> Demo</Tag>
-          </Space>
-        }
-      >
-        <div className="bridge-grid">
-          <div className="bridge-item">
-            <span className="bridge-label">🧠 凯利映射</span>
-            <span className="bridge-value">{(kellyIndex * 100).toFixed(1)}%</span>
-          </div>
-          <div className="bridge-item">
-            <span className="bridge-label">📊 博弈势能</span>
-            <span className="bridge-value">{(tension * 100).toFixed(0)}%</span>
-          </div>
-          <div className="bridge-item">
-            <span className="bridge-label">🔄 波动率</span>
-            <span className="bridge-value">0.35</span>
-          </div>
-          <div className="bridge-item">
-            <span className="bridge-label">📉 折价预警</span>
-            <span className={`bridge-value ${dcf < -0.05 ? 'bad' : 'good'}`}>
-              {(dcf * 100).toFixed(1)}%
-            </span>
-          </div>
-          <div className="bridge-item">
-            <span className="bridge-label">💹 期望值</span>
-            <span className="bridge-value good">+1.2</span>
-          </div>
-          <div className="bridge-item">
-            <span className="bridge-label">🎯 安全边际</span>
-            <span className="bridge-value good">15%</span>
-          </div>
-        </div>
-      </Card>
-
-      <Card className="dashboard-card" title="📋 牌局信息">
+      {/* 牌局信息卡 */}
+      <Card className="dashboard-card panel-card" title={<span>📋 牌局信息</span>}>
         <div className="info-list">
           <div className="info-item">
             <span className="info-label">我的筹码</span>
@@ -146,16 +103,20 @@ const Dashboard = ({ gameState, playerId }) => {
           <div className="info-item">
             <span className="info-label">阶段</span>
             <span className="info-value">
-              <Tag color="purple">{stage?.toUpperCase()}</Tag>
+              <Tag color="purple">{STAGE_CN[stage] || stage}</Tag>
             </span>
           </div>
           <div className="info-item">
             <span className="info-label">活跃玩家</span>
-            <span className="info-value">{activePlayers} 人</span>
+            <span className="info-value">{activePlayers.length} 人</span>
+          </div>
+          <div className="info-item">
+            <span className="info-label">盲注</span>
+            <span className="info-value">{gameState.small_blind ?? 10}/{bigBlind}</span>
           </div>
         </div>
       </Card>
-    </div>
+    </>
   );
 };
 

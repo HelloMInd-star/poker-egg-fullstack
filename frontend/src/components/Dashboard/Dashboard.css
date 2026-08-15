@@ -1,195 +1,111 @@
-.dashboard-container {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
+/* ===== 局势面板 · 深紫霓虹（六维局势 + 牌局信息）===== */
 
 .dashboard-card {
-  background: rgba(255, 255, 255, 0.03) !important;
-  border: 1px solid rgba(167, 139, 250, 0.1) !important;
+  background: linear-gradient(160deg, #1b1436 0%, #120c26 100%) !important;
+  border: 1px solid rgba(167, 139, 250, 0.28) !important;
   border-radius: 16px !important;
+  box-shadow:
+    0 0 20px rgba(147, 51, 234, 0.14),
+    0 8px 24px rgba(0, 0, 0, 0.45);
 }
 
 .dashboard-card .ant-card-head {
-  border-bottom: 1px solid rgba(167, 139, 250, 0.08) !important;
+  border-bottom: 1px dashed rgba(167, 139, 250, 0.22) !important;
+  min-height: 44px !important;
 }
 
 .dashboard-card .ant-card-head-title {
-  color: rgba(255, 255, 255, 0.8) !important;
+  color: #c4b5fd !important;
   font-size: 14px !important;
-  font-weight: 600 !important;
+  font-weight: 700 !important;
+  letter-spacing: 1px !important;
+  padding: 10px 0 !important;
 }
+
+.dashboard-card .ant-card-body { padding: 16px !important; }
 
 .dashboard-empty {
   text-align: center;
   padding: 20px;
   color: rgba(255, 255, 255, 0.3);
 }
+.dashboard-empty span { font-size: 32px; display: block; margin-bottom: 8px; }
 
-.dashboard-empty span {
-  font-size: 32px;
-  display: block;
-  margin-bottom: 8px;
+/* 六维局势：2列×3行 */
+.six-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
 }
 
-.kelly-display {
-  padding: 8px 0;
-}
-
-.kelly-value {
+.six-item {
+  background: rgba(147, 51, 234, 0.08);
+  border: 1px solid rgba(167, 139, 250, 0.18);
+  border-radius: 10px;
+  padding: 10px 8px;
+  text-align: center;
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 8px;
+  flex-direction: column;
+  gap: 3px;
 }
 
-.kelly-number {
-  font-size: 28px;
+.six-value {
+  font-size: 19px;
   font-weight: 700;
-  color: #a78bfa;
+  font-variant-numeric: tabular-nums;
+  line-height: 1.1;
 }
+.six-value.violet { color: #c084fc; text-shadow: 0 0 12px rgba(192, 132, 252, 0.45); }
+.six-value.gold { color: #f0c674; text-shadow: 0 0 12px rgba(240, 198, 116, 0.35); }
+.six-value.cyan { color: #7dd3fc; text-shadow: 0 0 12px rgba(125, 211, 252, 0.35); }
+.six-value.pink { color: #f0abfc; text-shadow: 0 0 12px rgba(240, 171, 252, 0.4); }
 
-.kelly-label {
-  text-align: center;
-  font-size: 11px;
-  color: rgba(255, 255, 255, 0.3);
-  margin-top: 4px;
-  letter-spacing: 1px;
-}
-
-.metrics-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 12px;
-  margin-top: 16px;
-  padding-top: 16px;
-  border-top: 1px solid rgba(167, 139, 250, 0.08);
-}
-
-.metric-item {
-  text-align: center;
-}
-
-.metric-label {
-  display: block;
+.six-label {
   font-size: 10px;
-  color: rgba(255, 255, 255, 0.3);
+  color: rgba(236, 232, 250, 0.5);
   letter-spacing: 0.5px;
-  margin-bottom: 4px;
 }
 
-.metric-value {
-  font-size: 18px;
-  font-weight: 600;
-}
-
-.metric-value.win {
-  color: #22c55e;
-}
-
-.metric-value.tension {
-  color: #fbbf24;
-}
-
-.metric-value.good {
-  color: #22c55e;
-}
-
-.metric-value.bad {
-  color: #fca5a5;
-}
-
-/* Bridge Panel */
-.bridge-panel {
-  border-color: rgba(167, 139, 250, 0.2) !important;
-}
-
-.bridge-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 8px;
-}
-
-.bridge-item {
-  background: rgba(0, 0, 0, 0.3);
-  border-radius: 8px;
-  padding: 8px 12px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.bridge-label {
+.six-foot {
+  margin-top: 12px;
+  padding-top: 10px;
+  border-top: 1px dashed rgba(167, 139, 250, 0.18);
   font-size: 11px;
-  color: rgba(255, 255, 255, 0.4);
+  color: rgba(196, 181, 253, 0.6);
+  text-align: center;
+  letter-spacing: 0.5px;
 }
 
-.bridge-value {
-  font-size: 13px;
-  font-weight: 600;
-  color: #fff;
-}
-
-.bridge-value.good {
-  color: #86efac;
-}
-
-.bridge-value.bad {
-  color: #fca5a5;
-}
-
-/* Info List */
+/* 牌局信息 */
 .info-list {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 6px;
 }
 
 .info-item {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 4px 0;
+  padding: 7px 10px;
+  background: rgba(147, 51, 234, 0.06);
+  border: 1px solid rgba(167, 139, 250, 0.12);
+  border-radius: 8px;
 }
 
 .info-label {
   font-size: 12px;
-  color: rgba(255, 255, 255, 0.4);
+  color: rgba(236, 232, 250, 0.5);
 }
 
 .info-value {
   font-size: 13px;
-  font-weight: 500;
-  color: #fff;
+  font-weight: 600;
+  color: #ece8fa;
+  font-variant-numeric: tabular-nums;
 }
 
 @media (max-width: 768px) {
-  .dashboard-container {
-    gap: 12px;
-  }
-
-  .dashboard-card {
-    border-radius: 12px !important;
-  }
-
-  .kelly-number {
-    font-size: 22px;
-  }
-
-  .metrics-grid {
-    grid-template-columns: 1fr 1fr 1fr;
-    gap: 8px;
-  }
-
-  .metric-label {
-    font-size: 9px;
-  }
-
-  .metric-value {
-    font-size: 15px;
-  }
-
-  .bridge-grid {
-    grid-template-columns: 1fr;
-  }
+  .dashboard-card { border-radius: 12px !important; }
+  .six-value { font-size: 16px; }
 }

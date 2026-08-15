@@ -60,6 +60,33 @@ export const useGameStore = create((set, get) => ({
   apiBase: API_BASE,
   wsBase: WS_BASE,
 
+  // ===== 决策记录（试炼总结数据源）=====
+  lastAnalysis: null,   // AnalysisPanel 最近一次拉取的凯利分析
+  decisions: [],        // 本局玩家决策：{action, amount, suggested, coef, ratio, ts}
+
+  setLastAnalysis: (analysis) => set({ lastAnalysis: analysis }),
+
+  resetDecisions: () => set({ decisions: [], lastAnalysis: null }),
+
+  // 记录一次玩家决策；ratio = 实际投入 / 人格修正后建议注额
+  recordDecision: (action, amount = 0) => {
+    const { lastAnalysis, decisions } = get();
+    let coef = 1;
+    try {
+      const p = JSON.parse(localStorage.getItem('midnight_tavern_profile') || 'null');
+      const c = Number(p?.kellyCoefficient);
+      if (c > 0 && c <= 2) coef = c;
+    } catch { /* ignore */ }
+    const kellyAmount = Number(lastAnalysis?.kelly_amount);
+    const suggested = Number.isFinite(kellyAmount) && kellyAmount > 0
+      ? Math.max(1, Math.round(kellyAmount * coef))
+      : null;
+    const moneyAction = action === 'call' || action === 'raise' || action === 'allin';
+    const ratio = suggested && moneyAction ? amount / suggested : null;
+    const next = [...decisions, { action, amount, suggested, coef, ratio, ts: Date.now() }];
+    set({ decisions: next.slice(-200) });
+  },
+
   // 连接游戏
   connectToGame: (gameId, playerId) => {
     const { disconnectGame } = get();
@@ -148,13 +175,15 @@ export const useGameStore = create((set, get) => ({
     const { socket, pingInterval } = get();
     if (pingInterval) clearInterval(pingInterval);
     if (socket) socket.close();
-    set({ 
-      socket: null, 
-      isConnected: false, 
+    set({
+      socket: null,
+      isConnected: false,
       currentGameId: null,
       gameState: null,
       playerId: null,
-      pingInterval: null
+      pingInterval: null,
+      decisions: [],
+      lastAnalysis: null
     });
   },
 
@@ -218,7 +247,10 @@ export const useGameStore = create((set, get) => ({
       const data = await response.json();
       const payload = data.data || data;
       const { game_id, player_id } = payload;
-      
+
+      // 新开局：清空上一局决策记录
+      get().resetDecisions();
+
       // 连接到游戏
       get().connectToGame(game_id, player_id);
       

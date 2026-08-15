@@ -219,12 +219,16 @@ function App() {
               <div className="home-page fade-in">
                 {gameState ? (
                   <div className="game-container">
-                    <PokerTable
-                      gameState={gameState}
-                      playerId={tablePlayerId}
-                    />
-                    <AnalysisPanel gameState={gameState} playerId={tablePlayerId} />
-                    <Dashboard gameState={gameState} playerId={tablePlayerId} />
+                    <div className="game-table-zone">
+                      <PokerTable
+                        gameState={gameState}
+                        playerId={tablePlayerId}
+                      />
+                    </div>
+                    <div className="game-panels">
+                      <AnalysisPanel gameState={gameState} playerId={tablePlayerId} />
+                      <Dashboard gameState={gameState} playerId={tablePlayerId} />
+                    </div>
                   </div>
                 ) : (
                   <div className="welcome-section">
@@ -299,12 +303,12 @@ function App() {
                       <Card className="feature-card">
                         <div className="feature-icon">📊</div>
                         <Title level={4}>凯利公式</Title>
-                        <Text>实时计算最优投注比例（Demo）</Text>
+                        <Text>蒙特卡洛真胜率 × 最优仓位实时计算</Text>
                       </Card>
                       <Card className="feature-card">
                         <div className="feature-icon">🎯</div>
                         <Title level={4}>表理映射</Title>
-                        <Text>博弈状态可视化分析（Demo）</Text>
+                        <Text>博弈状态六维局势可视化</Text>
                       </Card>
                     </div>
                   </div>

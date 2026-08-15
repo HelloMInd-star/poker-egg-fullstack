@@ -44,7 +44,7 @@ const bbTierOf = (bb) => BB_TIERS.find(t => bb < t.max) || BB_TIERS[BB_TIERS.len
  *     + 启用人格修正开关 + BB 码量梯度自动识别与战略提示
  */
 const AnalysisPanel = ({ gameState, playerId }) => {
-  const { apiBase, currentGameId, lastAiAction } = useGameStore();
+  const { apiBase, currentGameId, lastAiAction, setLastAnalysis } = useGameStore();
   const [analysis, setAnalysis] = useState(null);
   const [tavern, setTavern] = useState(readTavernProfile);
   const [kellyAdjustOn, setKellyAdjustOn] = useState(true);
@@ -81,7 +81,10 @@ const AnalysisPanel = ({ gameState, playerId }) => {
           `${apiBase}/api/game/${currentGameId}/analysis?player_id=${playerId}`
         );
         const json = await resp.json();
-        if (json.success) setAnalysis(json.data);
+        if (json.success) {
+          setAnalysis(json.data);
+          setLastAnalysis(json.data); // 同步到全局：决策记录与六维局势共用
+        }
       } catch (e) {
         console.warn('分析拉取失败:', e);
       }

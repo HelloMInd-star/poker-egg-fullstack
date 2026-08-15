@@ -1,19 +1,61 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect, useRef } from 'react';
 import { Button, Space, Card, Tag, Tooltip, Modal, Slider } from 'antd';
 import { motion, AnimatePresence } from 'framer-motion';
-import { 
-  ThunderboltOutlined, 
-  FireOutlined, 
+import {
+  ThunderboltOutlined,
+  FireOutlined,
   SafetyOutlined,
-  TrophyOutlined 
+  TrophyOutlined
 } from '@ant-design/icons';
 import { useGameStore } from '../../store/gameStore';
+import ResultModal from '../ResultModal/ResultModal';
 import './PokerTable.css';
 
 const PokerTable = ({ gameState, playerId }) => {
   const [raiseAmount, setRaiseAmount] = useState(40);
   const [showRaiseModal, setShowRaiseModal] = useState(false);
-  const { sendAction, isConnected } = useGameStore();
+  const [resultModal, setResultModal] = useState(null); // 'win'|'push'|'fold'|'raise'|'trial'
+  const prevHandOverRef = useRef(false);
+  const { sendAction, isConnected, recordDecision, decisions } = useGameStore();
+
+  // 试炼总结统计：风险偏好 = 实际投入 / 修正建议 的均值分档
+  const trialStats = useMemo(() => {
+    const ratios = decisions.filter(d => d.ratio !== null && d.ratio !== undefined).map(d => d.ratio);
+    const avgRatio = ratios.length ? ratios.reduce((a, b) => a + b, 0) / ratios.length : 0;
+    const avgCoef = decisions.length
+      ? decisions.reduce((a, b) => a + (b.coef || 1), 0) / decisions.length
+      : 1;
+    let risk = '均衡';
+    if (!ratios.length || avgRatio < 0.6) risk = '保守';
+    else if (avgRatio > 1.4) risk = '激进';
+    return { risk, avgCoef: avgCoef.toFixed(2) };
+  }, [decisions]);
+
+  // 摊牌结果弹窗：胜利 / 平局（分池）/ 有人打光 → 试炼结束
+  useEffect(() => {
+    if (!gameState) return;
+    const wasOver = prevHandOverRef.current;
+    const isOver = !!gameState.hand_over;
+    if (isOver && !wasOver) {
+      const winners = gameState.winners || (gameState.winner ? [gameState.winner] : []);
+      const meName = gameState.players?.find(p => p.id === playerId)?.name;
+      const iWon = winners.some(w =>
+        (w.id && w.id === playerId) ||
+        (w.player_id && w.player_id === playerId) ||
+        (meName && w.name === meName)
+      );
+      const someoneBusted = (gameState.players || []).some(p => (p.chips ?? 1) <= 0);
+      if (iWon && winners.length > 1) {
+        setResultModal('push');
+      } else if (iWon) {
+        setResultModal('win');
+      }
+      if (someoneBusted) {
+        setTimeout(() => setResultModal('trial'), iWon ? 2000 : 600);
+      }
+    }
+    prevHandOverRef.current = isOver;
+  }, [gameState, playerId]);
 
   if (!gameState) {
     return (
@@ -48,6 +90,15 @@ const PokerTable = ({ gameState, playerId }) => {
 
   const handleAction = (action, amount = 0) => {
     if (!isMyTurn) return;
+    // 决策记录：弃牌立即给结果弹窗，跟注/全下静默记录
+    if (action === 'fold') {
+      recordDecision('fold', 0);
+      setResultModal('fold');
+    } else if (action === 'call') {
+      recordDecision('call', myCallAmount);
+    } else if (action === 'allin') {
+      recordDecision('allin', me?.chips || 0);
+    }
     sendAction(action, amount);
   };
 
@@ -56,8 +107,10 @@ const PokerTable = ({ gameState, playerId }) => {
     // raise action的amount是加注增量（超出call的部分）
     let inc = raiseAmount - myCallAmount;
     if (inc < big_blind) inc = big_blind;
+    recordDecision('raise', raiseAmount);
     sendAction('raise', inc);
     setShowRaiseModal(false);
+    setResultModal('raise');
   };
 
   const renderCard = (card, index) => {
@@ -165,6 +218,14 @@ const PokerTable = ({ gameState, playerId }) => {
   return (
     <div className="poker-table-container">
       <div className="poker-table">
+        {/* 午夜酒馆荷官 */}
+        <div className="dealer-seat">
+          <div className="dealer-avatar">
+            <img src={import.meta.env.BASE_URL + 'characters/dealer.jpg'} alt="午夜酒馆荷官" />
+          </div>
+          <span className="dealer-label">荷官 · 午夜酒馆</span>
+        </div>
+
         <div className="table-stage">
           <Tag color={stageInfo.color} className="stage-tag">{stageInfo.label}</Tag>
           {hand_over && <Tag color="gold">牌局结束</Tag>}
@@ -228,7 +289,27 @@ const PokerTable = ({ gameState, playerId }) => {
             </span>
           </div>
         )}
+
+        {hand_over && (
+          <div className="hand-over-actions">
+            <button
+              type="button"
+              className="trial-end-btn"
+              onClick={() => setResultModal('trial')}
+            >
+              🏁 查看本局试炼总结
+            </button>
+          </div>
+        )}
       </div>
+
+      {/* 对局结果弹窗（胜利/平局/弃牌/加注/试炼结束） */}
+      <ResultModal
+        type={resultModal}
+        open={!!resultModal}
+        onClose={() => setResultModal(null)}
+        trialStats={trialStats}
+      />
 
       <Modal
         title="加注"

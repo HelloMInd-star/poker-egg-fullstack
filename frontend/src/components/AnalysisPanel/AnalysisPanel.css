@@ -1,13 +1,15 @@
-/* Kelly 决策面板 · 赌场深绿金风格，与牌桌统一 */
+/* Kelly 决策面板 · 深紫霓虹风格，与午夜酒馆统一 */
 .analysis-panel {
-  background: linear-gradient(160deg, #0d2b22 0%, #081f19 100%);
-  border: 1px solid rgba(240, 198, 116, 0.25);
+  background: linear-gradient(160deg, #1b1436 0%, #120c26 100%);
+  border: 1px solid rgba(167, 139, 250, 0.35);
   border-radius: 16px;
   padding: 16px 18px;
   margin: 0 auto 20px;
   max-width: 560px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
-  color: #e8e4d8;
+  box-shadow:
+    0 0 22px rgba(147, 51, 234, 0.16),
+    0 8px 24px rgba(0, 0, 0, 0.45);
+  color: #e6e1f5;
   font-size: 14px;
 }
 
@@ -16,7 +18,7 @@
   align-items: center;
   gap: 8px;
   margin-bottom: 12px;
-  border-bottom: 1px dashed rgba(240, 198, 116, 0.2);
+  border-bottom: 1px dashed rgba(167, 139, 250, 0.25);
   padding-bottom: 8px;
 }
 
@@ -25,14 +27,14 @@
 .analysis-title {
   font-weight: 700;
   letter-spacing: 1px;
-  color: #f0c674;
+  color: #c4b5fd;
 }
 
 .analysis-stage {
   margin-left: auto;
   font-size: 12px;
-  color: #9db8a8;
-  background: rgba(255, 255, 255, 0.06);
+  color: #b7a6e8;
+  background: rgba(167, 139, 250, 0.10);
   padding: 2px 10px;
   border-radius: 999px;
 }
@@ -45,7 +47,7 @@
   margin-bottom: 12px;
 }
 
-.hand-label { color: #9db8a8; font-size: 12px; }
+.hand-label { color: rgba(230, 225, 245, 0.45); font-size: 12px; }
 
 .hand-cards { display: flex; gap: 4px; }
 
@@ -73,8 +75,8 @@
   font-size: 44px;
   font-weight: 800;
   line-height: 1;
-  color: #ffd700;
-  text-shadow: 0 0 18px rgba(255, 215, 0, 0.35);
+  color: #c084fc;
+  text-shadow: 0 0 20px rgba(192, 132, 252, 0.5);
   font-variant-numeric: tabular-nums;
 }
 .winrate-number .pct { font-size: 22px; margin-left: 2px; }
@@ -82,7 +84,7 @@
 .winrate-label {
   margin-top: 4px;
   font-size: 11px;
-  color: #9db8a8;
+  color: rgba(230, 225, 245, 0.45);
   letter-spacing: 1px;
 }
 
@@ -110,7 +112,7 @@
 
 .grid-label {
   font-size: 11px;
-  color: #9db8a8;
+  color: rgba(230, 225, 245, 0.45);
   margin-top: 2px;
 }
 
@@ -124,7 +126,7 @@
 }
 .kelly-bar-fill {
   height: 100%;
-  background: linear-gradient(90deg, #8fa86b, #ffd700);
+  background: linear-gradient(90deg, #b8860b, #ffd700);
   border-radius: 999px;
   transition: width 0.4s ease;
 }
@@ -199,7 +201,7 @@
 
 .bb-item { border: 1px solid rgba(240, 198, 116, 0.28); }
 .grid-value.bb { color: #f0c674; }
-.bb-unit { font-size: 11px; margin-left: 3px; color: #9db8a8; font-weight: 500; }
+.bb-unit { font-size: 11px; margin-left: 3px; color: rgba(230, 225, 245, 0.45); font-weight: 500; }
 
 /* BB 梯度战略提示 */
 .bb-tip {
