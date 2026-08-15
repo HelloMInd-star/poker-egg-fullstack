@@ -229,6 +229,8 @@ function App() {
                 ) : (
                   <div className="welcome-section">
                     <Card className="welcome-card">
+                      <div className="welcome-hero">
+                        <div className="welcome-hero-text">
                       <div className="welcome-icon">♠️</div>
                       <Title level={1} className="welcome-title">
                         ♠️♥️ Poker Face Arena ♦️♣️
@@ -276,6 +278,16 @@ function App() {
                           🥚 彩蛋
                         </Button>
                       </Space>
+                        </div>
+                        <div className="welcome-hero-art">
+                          <img
+                            src={import.meta.env.BASE_URL + 'arena/host_suit_poker.jpg'}
+                            alt="午夜酒馆主理人 · 酒与牌"
+                            className="welcome-hero-img"
+                          />
+                          <div className="welcome-hero-caption">🍸 主理人已就位 · 酒与牌都备好了</div>
+                        </div>
+                      </div>
                     </Card>
 
                     <div className="features-grid">

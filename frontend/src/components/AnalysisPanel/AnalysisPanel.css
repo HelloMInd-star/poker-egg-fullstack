@@ -184,3 +184,79 @@
   .analysis-panel { padding: 12px 14px; margin-bottom: 14px; }
   .winrate-number { font-size: 36px; }
 }
+
+/* ===== L2：人格修正 Kelly（电光紫）+ BB 码量梯度 ===== */
+.grid-value.violet {
+  color: #c084fc;
+  text-shadow: 0 0 14px rgba(192, 132, 252, 0.45);
+}
+
+.kelly-adj-item {
+  border: 1px solid rgba(192, 132, 252, 0.35);
+  background: rgba(147, 51, 234, 0.10);
+}
+.kelly-adj-item.off { opacity: 0.45; }
+
+.bb-item { border: 1px solid rgba(240, 198, 116, 0.28); }
+.grid-value.bb { color: #f0c674; }
+.bb-unit { font-size: 11px; margin-left: 3px; color: #9db8a8; font-weight: 500; }
+
+/* BB 梯度战略提示 */
+.bb-tip {
+  font-size: 12px;
+  line-height: 1.5;
+  border-radius: 8px;
+  padding: 6px 10px;
+  margin-bottom: 10px;
+  border: 1px solid transparent;
+}
+.bb-tip.critical {
+  background: rgba(192, 57, 43, 0.12);
+  border-color: rgba(192, 57, 43, 0.35);
+  color: #f0a9a0;
+}
+.bb-tip.short {
+  background: rgba(230, 162, 60, 0.12);
+  border-color: rgba(230, 162, 60, 0.35);
+  color: #f3cf9a;
+}
+.bb-tip.mid {
+  background: rgba(93, 173, 226, 0.10);
+  border-color: rgba(93, 173, 226, 0.30);
+  color: #aed6f1;
+}
+.bb-tip.deep {
+  background: rgba(143, 168, 107, 0.12);
+  border-color: rgba(143, 168, 107, 0.35);
+  color: #cfe0b8;
+}
+
+/* 午夜酒馆人格修正开关 */
+.tavern-adjust {
+  border: 1px dashed rgba(192, 132, 252, 0.4);
+  background: rgba(147, 51, 234, 0.08);
+  border-radius: 10px;
+  padding: 8px 12px;
+  margin-bottom: 12px;
+}
+.tavern-adjust-row { display: flex; align-items: center; gap: 8px; }
+.tavern-adjust-name { font-size: 13px; color: #e6dcf0; font-weight: 600; }
+.tavern-adjust .ant-switch-checked { background: #7c3aed; }
+.tavern-adjust-src {
+  margin-top: 4px;
+  font-size: 11px;
+  color: #c9a7e0;
+  letter-spacing: 0.5px;
+}
+.tavern-adjust.empty {
+  cursor: pointer;
+  color: #c9a7e0;
+  font-size: 12px;
+  text-align: center;
+  transition: background 0.2s;
+}
+.tavern-adjust.empty:hover { background: rgba(147, 51, 234, 0.16); }
+
+/* 修正 Kelly 仓位条（电光紫，叠在金色原始条之下） */
+.kelly-bar-track.adj { margin-top: -8px; height: 5px; }
+.kelly-bar-fill.adj { background: linear-gradient(90deg, #7c3aed, #c084fc); }

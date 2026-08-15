@@ -1,18 +1,21 @@
 .poker-table-container {
-  background: transparent;
+  background: radial-gradient(ellipse at 50% 0%, rgba(88, 60, 160, 0.20) 0%, rgba(23, 15, 46, 0.35) 45%, rgba(8, 5, 20, 0.55) 100%);
+  border-radius: 28px;
+  padding: 26px 18px 6px;
 }
 
 .poker-table {
   position: relative;
-  background: radial-gradient(ellipse at center, #0f4c3a 0%, #0a3328 60%, #051e18 100%);
-  border: 8px solid #5c3a1e;
+  background: radial-gradient(ellipse at center, #0e4232 0%, #082a20 60%, #03120d 100%);
+  border: 6px solid rgba(167, 139, 250, 0.55);
   border-radius: 180px;
   padding: 60px 40px 80px;
   min-height: 520px;
-  box-shadow: 
+  box-shadow:
+    0 0 0 3px rgba(240, 198, 116, 0.35),
+    0 0 44px rgba(167, 139, 250, 0.35),
     0 20px 60px rgba(0, 0, 0, 0.8),
-    inset 0 0 60px rgba(0, 0, 0, 0.3),
-    0 0 0 2px rgba(255, 215, 0, 0.05) inset;
+    inset 0 0 60px rgba(0, 0, 0, 0.35);
   margin-bottom: 20px;
 }
 
@@ -21,7 +24,7 @@
   content: '';
   position: absolute;
   inset: 12px;
-  border: 1px dashed rgba(255, 255, 255, 0.05);
+  border: 1px dashed rgba(240, 198, 116, 0.16);
   border-radius: 170px;
   pointer-events: none;
 }

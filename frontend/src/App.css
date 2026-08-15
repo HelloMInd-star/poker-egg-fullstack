@@ -278,3 +278,55 @@
     margin: 4px 0 !important;
   }
 }
+
+/* ===== 大厅 Hero · 主理人插画（酒×扑克，L2） ===== */
+.welcome-hero {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 48px;
+}
+
+.welcome-hero-text {
+  flex: 1 1 520px;
+  min-width: 0;
+  text-align: center;
+}
+
+.welcome-hero-art {
+  flex: 0 0 300px;
+  transform: rotate(1.5deg);
+  border-radius: 20px;
+  padding: 10px 10px 6px;
+  background: linear-gradient(150deg, rgba(167, 139, 250, 0.35), rgba(240, 198, 116, 0.28));
+  box-shadow:
+    0 16px 48px rgba(167, 139, 250, 0.25),
+    0 4px 16px rgba(0, 0, 0, 0.5);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.welcome-hero-art:hover {
+  transform: rotate(0deg) translateY(-4px);
+  box-shadow:
+    0 24px 60px rgba(167, 139, 250, 0.35),
+    0 6px 20px rgba(0, 0, 0, 0.5);
+}
+
+.welcome-hero-img {
+  width: 100%;
+  display: block;
+  border-radius: 14px;
+}
+
+.welcome-hero-caption {
+  margin-top: 8px;
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.78);
+  letter-spacing: 1px;
+  text-align: center;
+}
+
+@media (max-width: 900px) {
+  .welcome-hero { flex-direction: column; gap: 28px; }
+  .welcome-hero-art { flex: 0 0 auto; width: min(300px, 78vw); }
+}
