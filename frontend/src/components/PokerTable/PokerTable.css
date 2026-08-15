@@ -1,7 +1,7 @@
 .poker-table-container {
   background: radial-gradient(ellipse at 50% 0%, rgba(88, 60, 160, 0.20) 0%, rgba(23, 15, 46, 0.35) 45%, rgba(8, 5, 20, 0.55) 100%);
   border-radius: 28px;
-  padding: 26px 18px 6px;
+  padding: 52px 18px 6px;
 }
 
 .poker-table {
@@ -10,7 +10,10 @@
   border: 6px solid rgba(167, 139, 250, 0.55);
   border-radius: 180px;
   padding: 60px 40px 80px;
-  min-height: 520px;
+  min-height: 620px;
+  max-width: 1280px;
+  margin-left: auto;
+  margin-right: auto;
   box-shadow:
     0 0 0 3px rgba(240, 198, 116, 0.35),
     0 0 44px rgba(167, 139, 250, 0.35),
@@ -33,8 +36,7 @@
 .table-stage {
   position: absolute;
   top: 16px;
-  left: 50%;
-  transform: translateX(-50%);
+  left: 24px;
   display: flex;
   gap: 8px;
   align-items: center;
@@ -50,7 +52,7 @@
 /* 底池 */
 .table-pot {
   position: absolute;
-  top: 50%;
+  top: 34%;
   left: 50%;
   transform: translate(-50%, -50%);
   text-align: center;
@@ -177,11 +179,15 @@
 
 /* 公共牌区 */
 .board-cards {
+  position: absolute;
+  top: 53%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
   display: flex;
   gap: 12px;
   justify-content: center;
   align-items: center;
-  padding-top: 20px;
   min-height: 120px;
 }
 
@@ -593,8 +599,11 @@
 
 /* ===== L3：荷官位 · 午夜酒馆 ===== */
 .dealer-seat {
-  position: relative;
-  z-index: 3;
+  position: absolute;
+  top: -30px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 4;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -769,6 +778,8 @@
 .table-graffiti .g4 { bottom: 30%; right: 20%; font-size: 18px; transform: rotate(17deg); }
 .table-graffiti .g5 { top: 46%; left: 8%; font-size: 16px; color: #f0abfc; transform: rotate(-20deg); }
 .card-small.card-back {
+  width: 36px;
+  height: 50px;
   padding: 0 !important;
   overflow: hidden;
   background: #2b1a52;

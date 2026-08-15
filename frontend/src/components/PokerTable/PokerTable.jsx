@@ -140,12 +140,14 @@ const PokerTable = ({ gameState, playerId }) => {
   const playerCount = players?.length || 2;
   const getSeatStyle = (index) => {
     const angleStep = 360 / Math.max(playerCount, 2);
-    const angle = index * angleStep - 90; // 从顶部开始
+    const rad = (index * angleStep - 90) * Math.PI / 180; // 从顶部开始
+    const rx = 40; // 椭圆横向半径（占桌面宽度%）
+    const ry = 30; // 椭圆纵向半径（占桌面高度%）
     return {
       position: 'absolute',
-      left: '50%',
-      top: '50%',
-      transform: `rotate(${angle}deg) translateY(-200px) rotate(-${angle}deg) translate(-50%, -50%)`
+      left: `${50 + rx * Math.cos(rad)}%`,
+      top: `${50 + ry * Math.sin(rad)}%`,
+      transform: 'translate(-50%, -50%)'
     };
   };
 
