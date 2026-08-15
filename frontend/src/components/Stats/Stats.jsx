@@ -61,11 +61,11 @@ const Stats = () => {
 
   // 最近对局
   const recentGames = [
-    { id: 1, date: '2024-01-05', opponent: 'AI Bot', result: 'win', profit: 120, hand: 'Straight' },
-    { id: 2, date: '2024-01-05', opponent: 'AI Bot', result: 'lose', profit: -50, hand: 'High Card' },
-    { id: 3, date: '2024-01-04', opponent: 'AI Bot', result: 'win', profit: 80, hand: 'Two Pair' },
-    { id: 4, date: '2024-01-04', opponent: 'AI Bot', result: 'win', profit: 200, hand: 'Flush' },
-    { id: 5, date: '2024-01-03', opponent: 'AI Bot', result: 'lose', profit: -30, hand: 'One Pair' }
+    { id: 1, date: '2026-08-14', opponent: 'AI Bot', result: 'win', profit: 120, hand: 'Straight' },
+    { id: 2, date: '2026-08-14', opponent: 'AI Bot', result: 'lose', profit: -50, hand: 'High Card' },
+    { id: 3, date: '2026-08-13', opponent: 'AI Bot', result: 'win', profit: 80, hand: 'Two Pair' },
+    { id: 4, date: '2026-08-13', opponent: 'AI Bot', result: 'win', profit: 200, hand: 'Flush' },
+    { id: 5, date: '2026-08-12', opponent: 'AI Bot', result: 'lose', profit: -30, hand: 'One Pair' }
   ];
 
   const columns = [
@@ -270,22 +270,22 @@ const Stats = () => {
               <div className="achievement-item">
                 <CheckCircleOutlined style={{ color: '#22c55e' }} />
                 <span>首次胜利</span>
-                <Tag color="gold">2024-01-01</Tag>
+                <Tag color="gold">2026-08-10</Tag>
               </div>
               <div className="achievement-item">
                 <CheckCircleOutlined style={{ color: '#22c55e' }} />
                 <span>10连胜</span>
-                <Tag color="gold">2024-01-03</Tag>
+                <Tag color="gold">2026-08-12</Tag>
               </div>
               <div className="achievement-item">
                 <CheckCircleOutlined style={{ color: '#22c55e' }} />
                 <span>赢得 500 筹码</span>
-                <Tag color="gold">2024-01-04</Tag>
+                <Tag color="gold">2026-08-13</Tag>
               </div>
               <div className="achievement-item">
                 <CheckCircleOutlined style={{ color: '#22c55e' }} />
                 <span>击败困难AI</span>
-                <Tag color="gold">2024-01-05</Tag>
+                <Tag color="gold">2026-08-14</Tag>
               </div>
             </div>
           </Card>

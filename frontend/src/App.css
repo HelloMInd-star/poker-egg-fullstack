@@ -85,10 +85,7 @@
 }
 
 .game-panels {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 20px;
-  align-items: start;
+  display: block;
 }
 
 .game-panels .analysis-panel {
@@ -226,10 +223,6 @@
 
 /* 响应式 */
 @media (max-width: 1100px) {
-  .game-panels {
-    grid-template-columns: 1fr;
-    gap: 16px;
-  }
   .game-container {
     gap: 16px;
   }

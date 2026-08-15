@@ -10,7 +10,8 @@ import {
   LogoutOutlined
 } from '@ant-design/icons';
 import PokerTable from './components/PokerTable/PokerTable';
-import Dashboard from './components/Dashboard/Dashboard';
+import { SixDimPanel, GameInfoPanel } from './components/Dashboard/Dashboard';
+import SideDrawer from './components/SideDrawer/SideDrawer';
 import AnalysisPanel from './components/AnalysisPanel/AnalysisPanel';
 import GameLobby from './components/GameLobby/GameLobby';
 import MidnightTavern from './components/MidnightTavern/MidnightTavern';
@@ -227,8 +228,13 @@ function App() {
                     </div>
                     <div className="game-panels">
                       <AnalysisPanel gameState={gameState} playerId={tablePlayerId} />
-                      <Dashboard gameState={gameState} playerId={tablePlayerId} />
                     </div>
+                    <SideDrawer items={[
+                      { key: 'six', icon: '📐', label: '局势', title: '六维局势',
+                        content: <SixDimPanel gameState={gameState} playerId={tablePlayerId} /> },
+                      { key: 'info', icon: '📋', label: '信息', title: '牌局信息',
+                        content: <GameInfoPanel gameState={gameState} playerId={tablePlayerId} /> }
+                    ]} />
                   </div>
                 ) : (
                   <div className="welcome-section">
@@ -324,7 +330,7 @@ function App() {
 
         <Footer className="app-footer">
           <Text type="secondary">
-            © 2024 Poker Face Arena · Made with ❤️ by Hello.Mind-star (Y.MINE)
+            © 2026 Poker Face Arena · Made with ❤️ by Hello.Mind-star (Y.MINE)
           </Text>
         </Footer>
       </Layout>

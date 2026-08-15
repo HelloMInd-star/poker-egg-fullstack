@@ -31,7 +31,7 @@ const GameLobby = () => {
         maxPlayers: 6,
         status: 'waiting',
         aiDifficulty: 'easy',
-        createdAt: '2024-01-01 10:00'
+        createdAt: '2026-08-15 10:00'
       },
       {
         id: 'DEF456',
@@ -40,7 +40,7 @@ const GameLobby = () => {
         maxPlayers: 6,
         status: 'playing',
         aiDifficulty: 'medium',
-        createdAt: '2024-01-01 09:30'
+        createdAt: '2026-08-15 09:30'
       },
       {
         id: 'GHI789',
@@ -49,7 +49,7 @@ const GameLobby = () => {
         maxPlayers: 6,
         status: 'waiting',
         aiDifficulty: 'hard',
-        createdAt: '2024-01-01 09:00'
+        createdAt: '2026-08-15 09:00'
       }
     ];
     setGameList(mockGames);

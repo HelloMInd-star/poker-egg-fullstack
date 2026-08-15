@@ -692,3 +692,45 @@
   color: #fff !important;
   box-shadow: 0 0 14px rgba(245, 158, 11, 0.35);
 }
+
+/* ===== 座位贴纸头像：白边圆形人物贴纸 ===== */
+.player-seat .player-avatar {
+  padding: 0;
+}
+.player-seat .avatar-emoji {
+  font-size: 22px;
+  line-height: 1;
+}
+.player-seat .avatar-img {
+  position: absolute;
+  inset: -2px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 2px solid rgba(255, 255, 255, 0.95);
+  box-shadow: 0 0 12px rgba(168, 85, 247, 0.45), 0 3px 8px rgba(0, 0, 0, 0.5);
+  background: #1a0f38;
+}
+.player-seat .avatar-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.player-seat.me .avatar-img {
+  border-color: #f0c674;
+  box-shadow: 0 0 14px rgba(240, 198, 116, 0.5), 0 3px 8px rgba(0, 0, 0, 0.5);
+}
+
+/* ===== 牌桌内标签贴纸化：深紫底+白边小贴纸 ===== */
+.poker-table .ant-tag,
+.poker-table-container .ant-tag {
+  background: rgba(43, 26, 82, 0.88) !important;
+  border: 1.5px solid rgba(255, 255, 255, 0.85) !important;
+  border-radius: 999px !important;
+  color: #f3efff !important;
+  font-weight: 600;
+  font-size: 10px;
+  line-height: 1.7;
+  padding: 0 9px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.35);
+}

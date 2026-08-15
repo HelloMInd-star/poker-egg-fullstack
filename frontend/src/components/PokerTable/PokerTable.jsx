@@ -149,6 +149,10 @@ const PokerTable = ({ gameState, playerId }) => {
     };
   };
 
+  // 座位贴纸头像：本人固定西装款，AI 按座位轮转人物
+  const SEAT_AI_AVATARS = ['seat_bunny', 'seat_wine', 'modal_win', 'modal_push', 'modal_fold', 'modal_raise'];
+  const seatAvatar = (me, idx) => me ? 'seat_hero' : SEAT_AI_AVATARS[idx % SEAT_AI_AVATARS.length];
+
   const renderPlayer = (player, index) => {
     const isCurrent = players[current_player]?.id === player.id;
     const isMe = player.id === playerId;
@@ -165,7 +169,14 @@ const PokerTable = ({ gameState, playerId }) => {
         style={getSeatStyle(index)}
       >
         <div className="player-avatar">
-          {isAI ? '🤖' : (isMe ? '🧑‍💻' : '👤')}
+          <span className="avatar-emoji">{isAI ? '🤖' : (isMe ? '🧑‍💻' : '👤')}</span>
+          <span className="avatar-img">
+            <img
+              src={import.meta.env.BASE_URL + 'characters/' + seatAvatar(isMe, index) + '.jpg'}
+              alt=""
+              onError={(e) => { e.currentTarget.style.display = 'none'; }}
+            />
+          </span>
           {isCurrent && <div className="active-indicator">●</div>}
         </div>
         <div className="player-info">

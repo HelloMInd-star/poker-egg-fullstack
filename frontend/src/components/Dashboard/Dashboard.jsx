@@ -18,24 +18,10 @@ const readCoef = () => {
   }
 };
 
-/**
- * 局势面板 · 六维局势 + 牌局信息
- * 全部为真实数据：胜率/赔率/凯利来自后端蒙特卡洛分析接口，
- * 修正凯利 = 原始 × 午夜酒馆人格系数，码量与张力由 gameState 实时推导
- */
-const Dashboard = ({ gameState, playerId }) => {
+/** 两卡共用的真实数据源：API 分析值 + gameState 推导 + 酒馆系数 */
+const usePanelData = (gameState, playerId) => {
   const { lastAnalysis } = useGameStore();
-
-  if (!gameState) {
-    return (
-      <Card className="dashboard-card panel-card">
-        <div className="dashboard-empty">
-          <span>📊</span>
-          <p>等待游戏数据...</p>
-        </div>
-      </Card>
-    );
-  }
+  if (!gameState) return null;
 
   const me = gameState.players?.find(p => p.id === playerId);
   const myChips = me?.chips ?? 0;
@@ -66,58 +52,89 @@ const Dashboard = ({ gameState, playerId }) => {
     { icon: '⚡', label: '博弈张力', value: `${Math.round(tension * 100)}%`, cls: 'pink' },
   ];
 
-  return (
-    <>
-      {/* 六维局势卡 */}
-      <Card className="dashboard-card panel-card six-card" title={<span>📐 六维局势</span>}>
-        <div className="six-grid">
-          {six.map((it) => (
-            <div key={it.label} className="six-item">
-              <span className={`six-value ${it.cls}`}>{it.value}</span>
-              <span className="six-label">{it.icon} {it.label}</span>
-            </div>
-          ))}
-        </div>
-        <div className="six-foot">
-          {coef
-            ? `修正系数 ×${coef} · 来自午夜酒馆人格档案`
-            : '未建立人格档案 · 修正凯利待解锁'}
-        </div>
-      </Card>
+  return { me, myChips, myBet, pot, stage, bigBlind, activePlayers, coef, six };
+};
 
-      {/* 牌局信息卡 */}
-      <Card className="dashboard-card panel-card" title={<span>📋 牌局信息</span>}>
-        <div className="info-list">
-          <div className="info-item">
-            <span className="info-label">我的筹码</span>
-            <span className="info-value">🪙 {myChips}</span>
+const EmptyCard = () => (
+  <Card className="dashboard-card panel-card">
+    <div className="dashboard-empty">
+      <span>📊</span>
+      <p>等待游戏数据...</p>
+    </div>
+  </Card>
+);
+
+/** 六维局势卡（独立导出，可进侧边抽屉） */
+export const SixDimPanel = ({ gameState, playerId }) => {
+  const d = usePanelData(gameState, playerId);
+  if (!d) return <EmptyCard />;
+  return (
+    <Card className="dashboard-card panel-card six-card" title={<span>📐 六维局势</span>}>
+      <div className="six-grid">
+        {d.six.map((it) => (
+          <div key={it.label} className="six-item">
+            <span className={`six-value ${it.cls}`}>{it.value}</span>
+            <span className="six-label">{it.icon} {it.label}</span>
           </div>
-          <div className="info-item">
-            <span className="info-label">底池</span>
-            <span className="info-value">🪙 {pot}</span>
-          </div>
-          <div className="info-item">
-            <span className="info-label">本轮下注</span>
-            <span className="info-value">🪙 {myBet}</span>
-          </div>
-          <div className="info-item">
-            <span className="info-label">阶段</span>
-            <span className="info-value">
-              <Tag color="purple">{STAGE_CN[stage] || stage}</Tag>
-            </span>
-          </div>
-          <div className="info-item">
-            <span className="info-label">活跃玩家</span>
-            <span className="info-value">{activePlayers.length} 人</span>
-          </div>
-          <div className="info-item">
-            <span className="info-label">盲注</span>
-            <span className="info-value">{gameState.small_blind ?? 10}/{bigBlind}</span>
-          </div>
-        </div>
-      </Card>
-    </>
+        ))}
+      </div>
+      <div className="six-foot">
+        {d.coef
+          ? `修正系数 ×${d.coef} · 来自午夜酒馆人格档案`
+          : '未建立人格档案 · 修正凯利待解锁'}
+      </div>
+    </Card>
   );
 };
+
+/** 牌局信息卡（独立导出，可进侧边抽屉） */
+export const GameInfoPanel = ({ gameState, playerId }) => {
+  const d = usePanelData(gameState, playerId);
+  if (!d) return <EmptyCard />;
+  return (
+    <Card className="dashboard-card panel-card" title={<span>📋 牌局信息</span>}>
+      <div className="info-list">
+        <div className="info-item">
+          <span className="info-label">我的筹码</span>
+          <span className="info-value">🪙 {d.myChips}</span>
+        </div>
+        <div className="info-item">
+          <span className="info-label">底池</span>
+          <span className="info-value">🪙 {d.pot}</span>
+        </div>
+        <div className="info-item">
+          <span className="info-label">本轮下注</span>
+          <span className="info-value">🪙 {d.myBet}</span>
+        </div>
+        <div className="info-item">
+          <span className="info-label">阶段</span>
+          <span className="info-value">
+            <Tag color="purple">{STAGE_CN[d.stage] || d.stage}</Tag>
+          </span>
+        </div>
+        <div className="info-item">
+          <span className="info-label">活跃玩家</span>
+          <span className="info-value">{d.activePlayers.length} 人</span>
+        </div>
+        <div className="info-item">
+          <span className="info-label">盲注</span>
+          <span className="info-value">{gameState.small_blind ?? 10}/{d.bigBlind}</span>
+        </div>
+      </div>
+    </Card>
+  );
+};
+
+/**
+ * 兼容入口：局势面板组合（六维局势 + 牌局信息）
+ * 全部为真实数据：胜率/赔率/凯利来自后端蒙特卡洛分析接口，
+ * 修正凯利 = 原始 × 午夜酒馆人格系数，码量与张力由 gameState 实时推导
+ */
+const Dashboard = ({ gameState, playerId }) => (
+  <>
+    <SixDimPanel gameState={gameState} playerId={playerId} />
+    <GameInfoPanel gameState={gameState} playerId={playerId} />
+  </>
+);
 
 export default Dashboard;

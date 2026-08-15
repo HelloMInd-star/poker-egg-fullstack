@@ -25,7 +25,7 @@ const Profile = () => {
     totalHands: 156,
     handsWon: 78,
     winRate: 50,
-    joinDate: '2024-01-01'
+    joinDate: '2026-08-10'
   };
 
   useEffect(() => {
@@ -73,11 +73,11 @@ const Profile = () => {
 
   // 模拟历史数据
   const mockHistory = [
-    { date: '2024-01-01', hands: 12, result: 'win', change: 150 },
-    { date: '2024-01-02', hands: 8, result: 'lose', change: -80 },
-    { date: '2024-01-03', hands: 15, result: 'win', change: 200 },
-    { date: '2024-01-04', hands: 5, result: 'lose', change: -40 },
-    { date: '2024-01-05', hands: 10, result: 'win', change: 120 }
+    { date: '2026-08-10', hands: 12, result: 'win', change: 150 },
+    { date: '2026-08-11', hands: 8, result: 'lose', change: -80 },
+    { date: '2026-08-12', hands: 15, result: 'win', change: 200 },
+    { date: '2026-08-13', hands: 5, result: 'lose', change: -40 },
+    { date: '2026-08-14', hands: 10, result: 'win', change: 120 }
   ];
 
   return (
