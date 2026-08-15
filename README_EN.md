@@ -2,9 +2,9 @@
 
 <div align="center">
 
-# ♠️ Poker Face Arena · V1 "Midnight Tavern"
+# 🌃 MIDNIGHT TAVERN
 
-### Poker Personality Arena — 16 MBTI Opponents × Real-time Kelly Risk Control × Three-Layer AI Architecture
+### A Personality-Driven Entertainment Universe — Room V1 "Poker Egg" Now Open · MBTI × Kelly × Three-Layer AI
 
 **The first public release (V1) of the Game-OS V2.5 Decision-AI Platform**
 
@@ -35,15 +35,27 @@
 
 ## 🔮 What Is This
 
-**Poker Face Arena V1 "Midnight Tavern"** is not another online poker game — it is a **training ground for adversarial personalities**.
+**MIDNIGHT TAVERN** is not a game demo — it is a growing **personality-driven entertainment universe**.
 
-Push open the tavern door. The vinyl is spinning, neon glints off the glassware. Across the table sit not cold random-number AIs, but virtual opponents driven by **16 MBTI personalities**: NF Dreamers bait you with a 62%~66% bluff frequency; NT Analysts read the board with 87%~89% noise resistance; SJ Guardians build walls with a 72%~83% fold rate; SP Explorers hunt you with 66%~81% aggression.
+Every room runs on the same engine: **personality modeling + decision mathematics**. Poker, cocktails, music — just different costumes on the same core.
+
+Push open the tavern door. The vinyl is spinning, neon glints off the glassware. The first room, **Poker Egg**, is already open — across the table sit not cold random-number AIs, but virtual opponents driven by **16 MBTI personalities**: NF Dreamers bait you with a 62%~66% bluff frequency; NT Analysts read the board with 87%~89% noise resistance; SJ Guardians build walls with a 72%~83% fold rate; SP Explorers hunt you with 66%~81% aggression.
 
 Every all-in, every fold, every bluff you fall for is a mirror held up to your own decision-making. **It doesn't teach you to play cards. It teaches you to see yourself.**
 
+### 🚪 Rooms in the Tavern
+
+| Room | Status | One-liner |
+|---|---|---|
+| ♠️ **Poker Egg** | ✅ V1 live | An adversarial training ground against 16 MBTI personas |
+| 🍸 **MBTI Mixology Bar** | 🧪 Beta (4-type preview on the in-app Tavern page) | Answer questions, get your pour — your personality picks your glass |
+| 🎵 **Vinyl Jukebox** | 📋 Planned | Persona theme songs — every type gets its own BGM |
+
+> Three rooms, one engine — **personality modeling + decision mathematics**, transferred across entertainment domains.
+
 ### Why It's Different
 
-| Typical Poker AI | Poker Face Arena V1 |
+| Typical Poker AI | Poker Egg V1 |
 |---|---|
 | One difficulty slider for "smartness" | **Three-layer AI architecture**: decoupled Math / Persona / Performer layers |
 | Random or rule-tree behavior, predictable style | **8-dim persona params × 12-dim behavior vectors** — 16 distinct playstyles, millisecond config switching, zero LLM latency |
@@ -54,7 +66,7 @@ Every all-in, every fold, every bluff you fall for is a mirror held up to your o
 
 ### Its Place in Game-OS
 
-Poker Face Arena V1 is the first public release of the **Game-OS V2.5 Decision-AI Platform** — it validates the platform's core hypothesis:
+Midnight Tavern is the public showcase layer of the **Game-OS V2.5 Decision-AI Platform**, and Poker Egg is its first open room — it validates the platform's core hypothesis:
 
 > **"Personality modeling + decision mathematics" transfers across domains.**
 >
@@ -330,7 +342,7 @@ poker-egg-fullstack/
 
 ## 🗺️ Roadmap
 
-### ✅ V1.0 "Midnight Tavern" (2026-08, current)
+### ✅ V1.0 "Poker Egg" (2026-08, current)
 - [x] Full Texas Hold'em flow: preflop → flop → turn → river → showdown
 - [x] Real-time WebSocket table + adaptive elliptical seat layout
 - [x] **16-persona opponent engine**: 8-dim persona params + in-character rationale + tilt memory
@@ -344,6 +356,8 @@ poker-egg-fullstack/
 - [ ] 16 persona cocktail-card visual set (crossover with the Y.Mine mixology line)
 - [ ] Opponent picker (choose MBTI types to seat)
 - [ ] Post-game decision-personality report (generated from your action sequence)
+- [ ] 🍸 Full 16-type MBTI Mixology Bar (current in-app Beta covers four types)
+- [ ] 🎵 Vinyl Jukebox (persona theme songs, crossover with the Y.Mine music line)
 
 ### 🔮 V2 (planned)
 - [ ] 🎭 LLM Performer layer (persona lines/taunts/emotion, async & non-blocking)

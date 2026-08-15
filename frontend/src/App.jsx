@@ -31,6 +31,7 @@ function App() {
   const [loading, setLoading] = useState(false);
   const [coverVisible, setCoverVisible] = useState(true);
   const [coverLeaving, setCoverLeaving] = useState(false);
+  const [spinOrigin, setSpinOrigin] = useState('50% 50%');
   
   const { 
     gameState, 
@@ -59,6 +60,22 @@ function App() {
       }
     }
   }, []);
+
+  // 封面黑胶标签旋转轴心：按 cover 裁切实时换算标签圆心在容器中的坐标
+  useEffect(() => {
+    if (!coverVisible) return;
+    const calc = () => {
+      const cw = window.innerWidth, ch = window.innerHeight;
+      const posX = cw <= 768 ? 0.32 : 0.5;
+      const scale = Math.max(cw / 2880, ch / 1308);
+      const offX = (cw - 2880 * scale) * posX;
+      const offY = (ch - 1308 * scale) * 0.5;
+      setSpinOrigin(`${1108.7 * scale + offX}px ${689.7 * scale + offY}px`);
+    };
+    calc();
+    window.addEventListener('resize', calc);
+    return () => window.removeEventListener('resize', calc);
+  }, [coverVisible]);
 
   const handleLogin = async (values) => {
     setLoading(true);
@@ -143,6 +160,8 @@ function App() {
             setTimeout(() => setCoverVisible(false), 650);
           }}
         >
+          <img src={import.meta.env.BASE_URL + 'bg/vinyl_spin.webp'} className="cover-layer cover-spin" style={{ transformOrigin: spinOrigin }} alt="" />
+          <img src={import.meta.env.BASE_URL + 'bg/cover_top.webp'} className="cover-layer cover-top" alt="" />
           <div className="cover-enter">
             <span className="cover-enter-btn">点击进入酒馆</span>
             <span className="cover-enter-sub">POKER EGG · V1</span>
@@ -153,7 +172,7 @@ function App() {
         <Header className="app-header">
           <div className="header-left">
             <Link to="/" className="logo-link">
-              <span className="logo">♠️ Poker Face Arena</span>
+              <span className="logo">MIDNIGHT TAVERN</span>
             </Link>
           </div>
           
@@ -257,12 +276,11 @@ function App() {
                     <Card className="welcome-card">
                       <div className="welcome-hero">
                         <div className="welcome-hero-text">
-                      <div className="welcome-icon">♠️</div>
                       <Title level={1} className="welcome-title">
-                        ♠️♥️ Poker Face Arena ♦️♣️
+                        午夜酒馆 · MIDNIGHT TAVERN
                       </Title>
                       <Text className="welcome-subtitle">
-                        扑克人格竞技场 · MBTI × Kelly × 三层AI
+                        Poker Egg 人格牌桌 · MBTI × Kelly × 三层AI
                       </Text>
                       <div className="welcome-divider" />
                       <Space size="large" className="welcome-actions">
