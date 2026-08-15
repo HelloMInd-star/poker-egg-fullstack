@@ -29,6 +29,8 @@ function App() {
   const [loginModalVisible, setLoginModalVisible] = useState(false);
   const [registerModalVisible, setRegisterModalVisible] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [coverVisible, setCoverVisible] = useState(true);
+  const [coverLeaving, setCoverLeaving] = useState(false);
   
   const { 
     gameState, 
@@ -133,6 +135,20 @@ function App() {
 
   return (
     <HashRouter>
+      {coverVisible && (
+        <div
+          className={coverLeaving ? 'app-cover cover-leaving' : 'app-cover'}
+          onClick={() => {
+            setCoverLeaving(true);
+            setTimeout(() => setCoverVisible(false), 650);
+          }}
+        >
+          <div className="cover-enter">
+            <span className="cover-enter-btn">点击进入酒馆</span>
+            <span className="cover-enter-sub">POKER EGG · V1</span>
+          </div>
+        </div>
+      )}
       <Layout className="app-layout">
         <Header className="app-header">
           <div className="header-left">
