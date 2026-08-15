@@ -1,0 +1,390 @@
+/* 午夜酒馆・决策者试炼 —— 暗紫深空 × 电光紫金 */
+
+.tavern-page {
+  position: relative;
+  min-height: calc(100vh - 64px - 70px);
+  background: #0b0817;
+  overflow: hidden;
+}
+
+.tavern-bg {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, rgba(11, 8, 23, 0.82) 0%, rgba(23, 15, 46, 0.9) 55%, rgba(11, 8, 23, 0.96) 100%),
+    radial-gradient(ellipse at 20% 10%, rgba(168, 85, 247, 0.18), transparent 55%),
+    radial-gradient(ellipse at 85% 85%, rgba(245, 197, 66, 0.10), transparent 50%);
+  pointer-events: none;
+}
+
+.tavern-inner {
+  position: relative;
+  z-index: 1;
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 48px 20px 72px;
+}
+
+.tavern-stage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+/* 开场场景图 */
+.tavern-scene-wrap {
+  position: relative;
+  width: 100%;
+  max-width: 560px;
+  height: 240px;
+  border-radius: 16px;
+  overflow: hidden;
+  margin-bottom: 28px;
+  border: 1px solid rgba(168, 85, 247, 0.35);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.55), 0 0 28px rgba(168, 85, 247, 0.22);
+}
+.tavern-scene-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.tavern-scene-mask {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(11, 8, 23, 0.1) 40%, rgba(11, 8, 23, 0.85) 100%);
+}
+
+.tavern-eyebrow {
+  letter-spacing: 6px;
+  font-size: 12px;
+  color: #a855f7;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+
+.tavern-title {
+  font-size: 38px;
+  font-weight: 700;
+  color: #f3edff;
+  margin: 0 0 8px;
+  text-shadow: 0 0 24px rgba(168, 85, 247, 0.45);
+}
+
+.tavern-title-sm {
+  font-size: 28px;
+  font-weight: 700;
+  color: #f3edff;
+  margin: 0 0 20px;
+  text-shadow: 0 0 20px rgba(168, 85, 247, 0.4);
+}
+
+.tavern-divider {
+  width: 120px;
+  height: 2px;
+  margin: 16px 0 28px;
+  background: linear-gradient(90deg, transparent, #a855f7, #f5c542, transparent);
+}
+
+/* 叙事文本：逐行浮现 */
+.tavern-prose { max-width: 640px; margin: 0 auto 32px; }
+
+.tavern-line {
+  font-family: "Noto Serif SC", "Songti SC", "SimSun", serif;
+  font-size: 17px;
+  line-height: 2;
+  color: #d8cff0;
+  margin: 4px 0;
+  opacity: 0;
+  animation: tavern-line-in 0.8s ease forwards;
+}
+
+@keyframes tavern-line-in {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.fade-in { animation: tavern-fade 0.5s ease; }
+@keyframes tavern-fade {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* 主按钮 */
+.tavern-cta {
+  background: linear-gradient(135deg, #7c3aed, #a855f7) !important;
+  border: 1px solid rgba(245, 197, 66, 0.55) !important;
+  color: #fff !important;
+  font-weight: 600;
+  letter-spacing: 1px;
+  height: 48px;
+  padding: 0 36px !important;
+  box-shadow: 0 0 24px rgba(168, 85, 247, 0.35);
+  opacity: 0;
+  animation: tavern-line-in 0.8s ease forwards;
+}
+.tavern-cta:hover {
+  box-shadow: 0 0 36px rgba(168, 85, 247, 0.6);
+  transform: translateY(-1px);
+}
+
+.tavern-ghost-btn {
+  border-color: rgba(168, 85, 247, 0.6) !important;
+  color: #c4b5fd !important;
+}
+
+.tavern-link { color: #a78bfa !important; }
+
+.tavern-history {
+  margin-top: 22px;
+  font-size: 13px;
+  color: #8f84b8;
+  opacity: 0;
+  animation: tavern-line-in 0.8s ease forwards;
+}
+
+/* 进度圆点 */
+.tavern-progress {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 30px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.tavern-dot {
+  padding: 4px 14px;
+  border-radius: 999px;
+  font-size: 13px;
+  color: #8f84b8;
+  border: 1px solid rgba(168, 85, 247, 0.25);
+  transition: all 0.3s;
+}
+.tavern-dot.done {
+  color: #f5c542;
+  border-color: rgba(245, 197, 66, 0.5);
+}
+.tavern-dot.active {
+  color: #fff;
+  background: rgba(168, 85, 247, 0.28);
+  border-color: #a855f7;
+  box-shadow: 0 0 14px rgba(168, 85, 247, 0.4);
+}
+
+/* 题目 */
+.tavern-q-title {
+  font-size: 24px;
+  color: #f3edff;
+  margin: 0 0 10px;
+}
+.tavern-q-scene {
+  font-family: "Noto Serif SC", "Songti SC", "SimSun", serif;
+  font-size: 17px;
+  color: #c4b5fd;
+  max-width: 560px;
+  line-height: 1.9;
+  margin: 0 0 30px;
+}
+.tavern-q-count { margin-top: 26px; color: #6f6599; font-size: 13px; letter-spacing: 2px; }
+
+/* 选项卡 */
+.tavern-options {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  width: 100%;
+  max-width: 640px;
+}
+.tavern-option {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  text-align: left;
+  padding: 16px 20px;
+  background: rgba(30, 22, 58, 0.72);
+  border: 1px solid rgba(168, 85, 247, 0.22);
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.25s;
+  color: #e6dffc;
+  font-size: 15px;
+  line-height: 1.7;
+}
+.tavern-option:hover {
+  border-color: #a855f7;
+  background: rgba(52, 34, 96, 0.85);
+  transform: translateX(6px);
+  box-shadow: -4px 0 0 #f5c542, 0 0 18px rgba(168, 85, 247, 0.25);
+}
+.tavern-option.picked {
+  border-color: #f5c542;
+  background: rgba(76, 52, 120, 0.9);
+  box-shadow: 0 0 24px rgba(245, 197, 66, 0.35);
+}
+.tavern-option-label {
+  flex: none;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  color: #f5c542;
+  border: 1px solid rgba(245, 197, 66, 0.5);
+}
+
+/* 选酒卡 */
+.tavern-drinks {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 18px;
+  width: 100%;
+  margin-top: 10px;
+}
+.tavern-drink-card {
+  position: relative;
+  background: rgba(24, 17, 48, 0.85);
+  border: 1px solid rgba(168, 85, 247, 0.25);
+  border-radius: 14px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: all 0.28s;
+}
+.tavern-drink-card:hover {
+  transform: translateY(-6px);
+  border-color: #a855f7;
+  box-shadow: 0 12px 36px rgba(168, 85, 247, 0.35);
+}
+.tavern-drink-card.suggested {
+  border-color: #f5c542;
+  box-shadow: 0 0 0 1px #f5c542, 0 8px 30px rgba(245, 197, 66, 0.25);
+}
+.tavern-suggest-badge {
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+  background: linear-gradient(135deg, #f5c542, #eab308);
+  color: #231a05;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 3px 12px;
+  border-radius: 999px;
+  white-space: nowrap;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.45);
+}
+.tavern-drink-img-wrap { height: 190px; overflow: hidden; }
+.tavern-drink-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s;
+}
+.tavern-drink-card:hover .tavern-drink-img { transform: scale(1.06); }
+.tavern-drink-body { padding: 14px 16px 18px; text-align: left; }
+.tavern-drink-name { font-size: 18px; font-weight: 700; color: #f3edff; }
+.tavern-drink-en { font-size: 13px; color: #8f84b8; font-weight: 400; margin-left: 6px; }
+.tavern-drink-type {
+  margin: 8px 0;
+  background: rgba(168, 85, 247, 0.2);
+  border-color: rgba(168, 85, 247, 0.5);
+  color: #c4b5fd;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+.tavern-drink-desc { font-size: 13px; color: #bdb3e0; line-height: 1.7; margin: 0 0 8px; }
+.tavern-drink-kelly { font-size: 12px; color: #f5c542; margin: 0; }
+
+/* 分享卡 */
+.tavern-share-card {
+  position: relative;
+  width: 320px;
+  border-radius: 18px;
+  overflow: hidden;
+  border: 1px solid rgba(245, 197, 66, 0.55);
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.6), 0 0 32px rgba(168, 85, 247, 0.3);
+}
+.tavern-share-img { width: 100%; height: 380px; object-fit: cover; display: block; }
+.tavern-share-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 22px;
+  background: linear-gradient(180deg, rgba(11, 8, 23, 0.05) 30%, rgba(11, 8, 23, 0.88) 78%);
+  text-align: left;
+}
+.tavern-share-brand { font-size: 11px; letter-spacing: 3px; color: #c4b5fd; margin-bottom: 6px; }
+.tavern-share-drink { font-size: 24px; font-weight: 700; color: #fff; }
+.tavern-share-drink span { font-size: 13px; color: #a89cc9; font-weight: 400; margin-left: 6px; }
+.tavern-share-mbti {
+  font-size: 30px;
+  font-weight: 800;
+  letter-spacing: 4px;
+  margin: 4px 0;
+  background: linear-gradient(135deg, #c4b5fd, #a855f7);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.tavern-share-kelly { font-size: 15px; color: #f5c542; font-weight: 700; }
+.tavern-share-mode { font-size: 12px; color: #bdb3e0; margin-top: 2px; }
+.tavern-share-hint { margin: 12px 0 28px; font-size: 13px; color: #8f84b8; }
+
+/* 结算明细 */
+.tavern-result-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 16px;
+  width: 100%;
+  max-width: 640px;
+  margin-bottom: 20px;
+}
+.tavern-result-block {
+  background: rgba(24, 17, 48, 0.8);
+  border: 1px solid rgba(168, 85, 247, 0.3);
+  border-radius: 12px;
+  padding: 18px 20px;
+}
+.tavern-result-label { font-size: 13px; color: #8f84b8; letter-spacing: 1px; margin-bottom: 8px; }
+.tavern-result-value { font-size: 26px; font-weight: 800; color: #c4b5fd; letter-spacing: 2px; }
+.tavern-result-value.tavern-gold { color: #f5c542; }
+.tavern-result-note { font-size: 12px; color: #8f84b8; margin-top: 6px; line-height: 1.6; }
+
+.tavern-report {
+  max-width: 640px;
+  text-align: left;
+  background: rgba(24, 17, 48, 0.6);
+  border-left: 3px solid #a855f7;
+  border-radius: 0 12px 12px 0;
+  padding: 18px 22px;
+  margin-bottom: 20px;
+}
+.tavern-report p {
+  font-size: 14px;
+  color: #d8cff0;
+  line-height: 1.9;
+  margin: 8px 0;
+}
+
+.tavern-sync-note {
+  font-size: 14px;
+  color: #4ade80;
+  margin-bottom: 26px;
+}
+
+.tavern-result-actions {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.tavern-result-actions .tavern-cta { opacity: 1; animation: none; }
+
+@media (max-width: 640px) {
+  .tavern-title { font-size: 28px; }
+  .tavern-share-card { width: 280px; }
+  .tavern-share-img { height: 330px; }
+}

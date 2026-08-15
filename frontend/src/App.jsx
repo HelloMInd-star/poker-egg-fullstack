@@ -13,6 +13,7 @@ import PokerTable from './components/PokerTable/PokerTable';
 import Dashboard from './components/Dashboard/Dashboard';
 import AnalysisPanel from './components/AnalysisPanel/AnalysisPanel';
 import GameLobby from './components/GameLobby/GameLobby';
+import MidnightTavern from './components/MidnightTavern/MidnightTavern';
 import Profile from './components/Profile/Profile';
 import Stats from './components/Stats/Stats';
 import { useGameStore, apiFetch, API_BASE } from './store/gameStore';
@@ -145,6 +146,9 @@ function App() {
             </Menu.Item>
             <Menu.Item key="lobby" icon={<PlusOutlined />}>
               <Link to="/lobby">大厅</Link>
+            </Menu.Item>
+            <Menu.Item key="tavern" icon={<span style={{ marginRight: 4 }}>🍸</span>}>
+              <Link to="/tavern">午夜酒馆</Link>
             </Menu.Item>
             <Menu.Item key="stats" icon={<TrophyOutlined />}>
               <Link to="/stats">战绩</Link>
@@ -296,6 +300,7 @@ function App() {
               </div>
             } />
             <Route path="/lobby" element={<GameLobby />} />
+            <Route path="/tavern" element={<MidnightTavern />} />
             <Route path="/stats" element={<Stats />} />
             <Route path="/profile" element={<Profile />} />
           </Routes>
