@@ -1,3 +1,5 @@
+https://github.com/HelloMInd‑star/poker‑egg‑fullstack/raw/main/github‑poker‑background.jpg
+
 <div align="center">
 
 # ♠️♥️ Poker Face Arena ♦️♣️
