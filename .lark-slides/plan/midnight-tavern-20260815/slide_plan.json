@@ -1,17 +1,26 @@
 {
   "presentation_goal": "介绍午夜酒馆项目：AI行为人格分析引擎的产品定位、技术架构、核心差异与路线图",
   "audience": "对项目感兴趣的合作者、投资人，了解基本技术概念但非深度技术人员",
-  "theme_style": "暗色调酒馆风格，深棕底色，琥珀金点缀，神秘优雅",
+  "theme_style": "深夜酒馆霓虹风格，深紫黑底，霓虹紫与洋红点缀，神秘炫酷",
   "visual_system": {
-    "background_strategy": "内容页统一深棕渐变背景；封面/结尾使用更深色调带琥珀金氛围光；转场页使用全幅深色",
-    "motif": "左侧琥珀金细竖线 + 右下角酒馆标记；卡片用半透明深色面板",
+    "background_strategy": "内容页统一深紫黑渐变背景；封面/结尾使用更深紫色带霓虹紫光晕；转场页使用全幅紫色渐变",
+    "motif": "左侧霓虹紫细竖线 + 右下角酒馆装饰标记；卡片用半透明紫色面板带霓虹边框",
     "color_roles": {
-      "primary": "深棕背景 rgb(26,15,10)，承担60-70%视觉权重",
-      "secondary": "琥珀金 rgb(200,164,92)，用于标题、边框、图标",
-      "accent": "暖橙 rgb(220,140,60)，用于关键数字、强调结论"
+      "primary": "深紫黑背景 rgba(20,10,40,1)，承担60-70%视觉权重",
+      "secondary": "霓虹紫 rgba(139,92,246,1)，用于标题、边框、图标、装饰元素",
+      "accent": "洋紫发光 rgba(168,85,247,1)，用于关键数字、强调结论、霓虹灯效果",
+      "text": "浅紫白 rgba(230,220,255,1)，用于正文文字",
+      "text-secondary": "淡紫灰 rgba(180,170,200,1)，用于次要文字"
     },
-    "cover_content_relationship": "封面使用更深的渐变背景，居中大标题琥珀金色；内容页用统一深棕渐变加左侧金色竖线",
-    "closing_relationship": "尾页镜像封面，但用更简洁的布局"
+    "cover_content_relationship": "封面使用更深的紫色渐变背景，居中大标题霓虹紫发光；右侧装饰黑胶唱片/鸡尾酒/扑克牌轮廓",
+    "closing_relationship": "尾页镜像封面，霓虹紫色调，但用更简洁的布局"
+  },
+  "decoration_elements": {
+    "vinyl_record": "黑胶唱片圆形轮廓，深色带紫色光泽",
+    "cocktail": "鸡尾酒杯轮廓，紫色液体高光",
+    "poker_cards": "扑克牌(A、K)轮廓，紫色描边",
+    "neon_lines": "霓虹光线条，紫色发光效果",
+    "sparkles": "细小星光点缀，增强神秘感"
   },
   "typography_constraints": {
     "title_max_lines": 2,
@@ -31,12 +40,12 @@
       "title": "午夜酒馆 Midnight Tavern",
       "key_message": "人格化AI行为分析引擎 — 以博弈场景为数据采集入口的行为人格分析引擎",
       "layout_type": "title-cover",
-      "visual_focus": "大标题 + 副标题 + 琥珀金氛围光",
+      "visual_focus": "大标题 + 副标题 + 霓虹紫光晕 + 右侧装饰（黑胶/鸡尾酒/扑克）",
       "asset_need": {
         "asset_type": "none",
-        "purpose": "封面纯文字排版，无需外部素材",
+        "purpose": "封面纯文字排版 + SVG装饰元素",
         "suggested_query": "",
-        "fallback_if_missing": "使用大标题居中排版，琥珀金文字，深棕渐变背景"
+        "fallback_if_missing": "使用大标题居中排版，霓虹紫发光文字，深紫黑渐变背景，右侧装饰黑胶唱片/鸡尾酒/扑克SVG轮廓"
       },
       "text_density": "low",
       "speaker_intent": "建立项目第一印象，点明定位"
@@ -46,12 +55,12 @@
       "title": "问题：问卷测不准人格",
       "key_message": "MBTI自评信度仅50-75%，40%的人重测结果会变；自评受情绪、社会期望、自我认知偏差三重干扰",
       "layout_type": "image-right-text-left",
-      "visual_focus": "右侧三个问题卡片：情绪干扰、社会期望、自我认知偏差",
+      "visual_focus": "右侧三个问题卡片：情绪干扰、社会期望、自我认知偏差，带霓虹紫边框",
       "asset_need": {
         "asset_type": "infographic",
         "purpose": "展示三个核心问题，用视觉化方式呈现问卷的缺陷",
         "suggested_query": "questionnaire accuracy problem infographic",
-        "fallback_if_missing": "使用三个纵向排列的深色卡片，各带琥珀金图标和简短文字"
+        "fallback_if_missing": "使用三个纵向排列的深紫色半透明卡片，各带霓虹紫边框和图标"
       },
       "text_density": "medium",
       "speaker_intent": "建立痛点共识，让听众理解为什么需要新的方案"
@@ -61,12 +70,12 @@
       "title": "解法：用行为替代问卷",
       "key_message": "人在博弈中的真实决策比自我描述更接近本质 — 不是「问你是谁」，而是「看你做什么」",
       "layout_type": "comparison",
-      "visual_focus": "左右对比：问卷方式 vs 行为方式",
+      "visual_focus": "左右对比：问卷方式 vs 行为方式，左侧灰暗右侧霓虹紫",
       "asset_need": {
         "asset_type": "infographic",
         "purpose": "直观对比问卷自评与行为决策两种数据采集方式的差异",
         "suggested_query": "questionnaire vs behavior data comparison",
-        "fallback_if_missing": "左右两个面板，左侧灰色调（问卷），右侧琥珀金色调（行为），各有3行对比标签"
+        "fallback_if_missing": "左右两个面板，左侧暗灰紫色调（问卷），右侧霓虹紫色调（行为），各有3行对比标签"
       },
       "text_density": "medium",
       "speaker_intent": "展示核心方法论差异，建立产品价值主张"
@@ -76,12 +85,12 @@
       "title": "产品架构",
       "key_message": "两个数据采集入口 → AI分析引擎 → 人格画像输出",
       "layout_type": "architecture-diagram",
-      "visual_focus": "架构流程图：调酒吧台 + 人格牌桌 → AI引擎 → 人格画像",
+      "visual_focus": "架构流程图：调酒吧台 + 人格牌桌 → AI引擎 → 人格画像，霓虹紫连线",
       "asset_need": {
         "asset_type": "architecture_diagram",
         "purpose": "展示产品整体架构和数据流",
         "suggested_query": "data collection analysis engine pipeline architecture",
-        "fallback_if_missing": "使用whiteboard绘制：上方两个入口框（调酒吧台、人格牌桌），箭头向下汇聚到中央AI引擎框，再向下输出人格画像框"
+        "fallback_if_missing": "使用whiteboard绘制：上方两个入口框（调酒吧台、人格牌桌）带图标，箭头向下汇聚到中央AI引擎框，再向下输出人格画像框，霓虹紫色调"
       },
       "text_density": "low",
       "speaker_intent": "用一张图让听众理解整体架构"
@@ -91,12 +100,12 @@
       "title": "入口一：调酒吧台",
       "key_message": "5道情景抉择题 → 4位调酒师推4杯本命酒 → 鸡尾酒×Kelly系数隐喻 → 用户自己选择归属",
       "layout_type": "image-left-text-right",
-      "visual_focus": "左侧展示4杯鸡尾酒卡片：尼格罗尼/马天尼/古典/血腥玛丽",
+      "visual_focus": "左侧展示4杯鸡尾酒卡片：尼格罗尼/马天尼/古典/血腥玛丽，带霓虹紫边框",
       "asset_need": {
         "asset_type": "infographic",
         "purpose": "展示4杯鸡尾酒与人格的对应关系",
         "suggested_query": "cocktail personality mapping infographic",
-        "fallback_if_missing": "4个横向排列的小卡片，各含酒名、人格标签、Kelly系数，用琥珀金边框"
+        "fallback_if_missing": "4个横向排列的小卡片，各含鸡尾酒名、人格标签、Kelly系数，霓虹紫边框带发光效果"
       },
       "text_density": "medium",
       "speaker_intent": "展示调酒吧台的体验设计和数据采集机制"
@@ -106,12 +115,12 @@
       "title": "入口二：人格牌桌",
       "key_message": "德州扑克为载体，16型人格AI对手，每局采集30+决策数据点，六维雷达图实时反馈",
       "layout_type": "image-right-text-left",
-      "visual_focus": "右侧展示六维雷达图示意",
+      "visual_focus": "右侧展示六维雷达图示意，霓虹紫配色",
       "asset_need": {
         "asset_type": "chart",
         "purpose": "展示六维雷达图示意人格分析维度",
         "suggested_query": "six dimension radar chart personality",
-        "fallback_if_missing": "使用原生chart雷达图，6个维度（风险偏好/情绪稳定/决策一致/攻击性/适应性/自我认知准确度），带模拟数据"
+        "fallback_if_missing": "使用原生chart雷达图，6个维度（风险偏好/情绪稳定/决策一致/攻击性/适应性/自我认知准确度），霓虹紫配色，带模拟数据"
       },
       "text_density": "medium",
       "speaker_intent": "展示牌桌的数据采集能力"
@@ -121,12 +130,12 @@
       "title": "AI分析引擎：核心",
       "key_message": "三层架构：牌力评估 → 人格滤镜 → 可解释输出；蒙特卡洛胜率 + Kelly风控 + 行为参数提取",
       "layout_type": "process-flow",
-      "visual_focus": "三层架构流程图",
+      "visual_focus": "三层架构流程图，霓虹紫色调",
       "asset_need": {
         "asset_type": "flow_diagram",
         "purpose": "展示AI分析引擎的三层处理流程",
         "suggested_query": "three layer AI analysis pipeline flow",
-        "fallback_if_missing": "使用whiteboard绘制三层横向流程：牌力评估→人格滤镜→可解释输出，每层下方标注技术方法"
+        "fallback_if_missing": "使用whiteboard绘制三层横向流程：牌力评估→人格滤镜→可解释输出，每层下方标注技术方法，霓虹紫色调"
       },
       "text_density": "medium",
       "speaker_intent": "展示核心技术架构"
@@ -136,12 +145,12 @@
       "title": "分析什么",
       "key_message": "9维数据采集：操作频率、弃牌阈值、诈唬频率、Kelly偏离度、tilt曲线、阶段适应性、对手类型适应、胜率评估准确度、自我认知偏差",
       "layout_type": "two-column",
-      "visual_focus": "左右两列数据维度卡片",
+      "visual_focus": "左右两列数据维度卡片，霓虹紫边框",
       "asset_need": {
         "asset_type": "infographic",
         "purpose": "展示9个数据采集维度",
         "suggested_query": "data dimension cards infographic",
-        "fallback_if_missing": "3x3网格排列9个琥珀金边框卡片，各含维度名称和简短说明"
+        "fallback_if_missing": "3x3网格排列9个霓虹紫边框卡片，各含维度名称和简短说明"
       },
       "text_density": "high",
       "speaker_intent": "展示数据采集的深度和广度"
@@ -151,12 +160,12 @@
       "title": "独特价值：偏差金矿",
       "key_message": "唯一同时采集「自我认知」与「真实行为」的产品；两者的偏差值是最有价值的洞察",
       "layout_type": "big-number",
-      "visual_focus": "大号偏差值概念：两个数据源的交集区域",
+      "visual_focus": "大号偏差值概念：两个数据源的交集区域，霓虹紫发光",
       "asset_need": {
         "asset_type": "infographic",
         "purpose": "展示自我认知vs真实行为的偏差分析概念",
         "suggested_query": "self perception vs behavior gap analysis",
-        "fallback_if_missing": "使用两个交叠的圆（维恩图风格），左侧标「我以为我是谁」，右侧标「我实际上是谁」，交叠区域用琥珀金高亮标注「偏差金矿」"
+        "fallback_if_missing": "使用两个交叠的圆（维恩图风格），左侧标「我以为我是谁」，右侧标「我实际上是谁」，交叠区域用霓虹紫高亮标注「偏差金矿」"
       },
       "text_density": "low",
       "speaker_intent": "点明核心差异化价值"
@@ -166,12 +175,12 @@
       "title": "竞品格局",
       "key_message": "跨五个赛道但无直接竞品：行为评估(Pymetrics)、问卷(16Personalities)、语言分析、扑克游戏、决策评估",
       "layout_type": "comparison",
-      "visual_focus": "竞品对比矩阵",
+      "visual_focus": "竞品对比矩阵，霓虹紫表头",
       "asset_need": {
         "asset_type": "infographic",
         "purpose": "展示竞品对比矩阵",
         "suggested_query": "competitive landscape matrix comparison",
-        "fallback_if_missing": "使用表格展示：行=午夜酒馆/Pymetrics/16Personalities/Crystal Knows，列=数据质量/分析深度/用户体验/人格独立性"
+        "fallback_if_missing": "使用表格展示：行=午夜酒馆/Pymetrics/16Personalities/Crystal Knows，列=数据质量/分析深度/用户体验/人格独立性，霓虹紫配色"
       },
       "text_density": "high",
       "speaker_intent": "展示市场定位和竞争格局"
@@ -181,12 +190,12 @@
       "title": "路线图",
       "key_message": "Phase 1:安全加固+上线验证 → Phase 2:引擎迭代+独立人格模型 → Phase 3:多房间扩展+商业化",
       "layout_type": "timeline",
-      "visual_focus": "三阶段时间线",
+      "visual_focus": "三阶段时间线，霓虹紫节点",
       "asset_need": {
         "asset_type": "infographic",
         "purpose": "展示三阶段路线图",
         "suggested_query": "three phase roadmap timeline",
-        "fallback_if_missing": "横向时间线，3个节点：Phase1(安全加固)、Phase2(引擎迭代)、Phase3(多房间扩展)，各带简短描述"
+        "fallback_if_missing": "横向时间线，3个节点：Phase1(安全加固)、Phase2(引擎迭代)、Phase3(多房间扩展)，各带简短描述，霓虹紫色调"
       },
       "text_density": "medium",
       "speaker_intent": "展示项目规划和未来方向"
@@ -196,12 +205,12 @@
       "title": "谢谢",
       "key_message": "午夜酒馆 Midnight Tavern · 人格化AI行为分析引擎",
       "layout_type": "conclusion",
-      "visual_focus": "居中感谢语 + 仓库地址",
+      "visual_focus": "居中感谢语 + 仓库地址 + 装饰元素",
       "asset_need": {
         "asset_type": "none",
-        "purpose": "尾页纯文字",
+        "purpose": "尾页纯文字 + SVG装饰",
         "suggested_query": "",
-        "fallback_if_missing": "居中大号「谢谢」琥珀金字，下方仓库地址"
+        "fallback_if_missing": "居中大号「谢谢」霓虹紫发光字，下方仓库地址，两侧装饰黑胶/鸡尾酒/扑克SVG轮廓"
       },
       "text_density": "low",
       "speaker_intent": "结尾致谢，留下联系方式"
