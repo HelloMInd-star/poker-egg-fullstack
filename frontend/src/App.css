@@ -352,7 +352,7 @@ body {
   .welcome-hero-art { flex: 0 0 auto; width: min(300px, 78vw); }
 }
 
-/* ===== 开场封面层（MIDNIGHT TAVERN 海报开场） ===== */
+/* ===== 开场封面层（MIDNIGHT TAVERN 四幕开场） ===== */
 .app-cover {
   position: fixed;
   inset: 0;
@@ -360,67 +360,117 @@ body {
   background: #0a0810;
   overflow: hidden;
   cursor: pointer;
-  display: flex;
-  align-items: flex-end;
-  justify-content: flex-end;
-  padding: 0 6vw 6vh 0;
   opacity: 1;
   transition: opacity 0.6s ease;
 }
-.app-cover.cover-leaving {
-  opacity: 0;
-  pointer-events: none;
+.app-cover.cover-leaving { opacity: 0; pointer-events: none; }
+
+/* 第一幕：黑胶独舞 */
+.cover-vinyl-wrap {
+  position: absolute;
+  left: 50%; top: 44%;
+  transform: translate(-50%, -50%);
+  transition: transform 0.9s cubic-bezier(.22,.8,.3,1), opacity 0.9s ease;
+  z-index: 1;
 }
-.cover-enter {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 10px;
-  animation: coverBreathe 2.2s ease-in-out infinite;
+.cover-vinyl {
+  width: min(56vh, 76vw);
+  display: block;
+  animation: vinylSpin 3.2s linear infinite;
+  filter: drop-shadow(0 0 46px rgba(168, 85, 247, 0.45));
+  will-change: transform;
 }
-.cover-enter-btn {
-  font-size: 20px;
-  font-weight: 800;
-  letter-spacing: 6px;
-  color: #fff;
-  background: rgba(10, 8, 16, 0.82);
-  border: 3px solid #fff;
-  border-radius: 14px;
-  padding: 12px 34px 12px 40px;
-  box-shadow: 0 0 18px rgba(168, 85, 247, 0.75), 0 0 42px rgba(168, 85, 247, 0.35);
-  backdrop-filter: blur(4px);
-}
-.cover-enter-sub {
-  font-size: 12px;
-  letter-spacing: 4px;
-  color: rgba(255, 255, 255, 0.85);
-  text-shadow: 0 0 8px rgba(168, 85, 247, 0.9);
-}
-@keyframes coverBreathe {
-  0%, 100% { transform: scale(1); opacity: 1; }
-  50% { transform: scale(1.045); opacity: 0.88; }
-}
-@media (max-width: 768px) {
-  .cover-layer { object-fit: cover; object-position: 32% center; }
-  .cover-enter-btn { font-size: 17px; letter-spacing: 4px; padding: 10px 26px 10px 30px; }
+@keyframes vinylSpin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
 }
 
-/* 封面图层：旋转黑胶标签 + 挖洞封面 */
-.cover-layer {
+/* 第二幕：品牌字浮现 */
+.cover-brand {
+  position: absolute;
+  left: 50%; top: 70%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  z-index: 2;
+  opacity: 0;
+  filter: blur(12px);
+  transition: opacity 0.8s ease, filter 0.8s ease;
+  pointer-events: none;
+  white-space: nowrap;
+}
+.cover-stage-2 .cover-vinyl-wrap { transform: translate(-50%, -50%) scale(0.55) translateY(-24vh); }
+.cover-stage-2 .cover-brand { opacity: 1; filter: blur(0); }
+.cover-brand-main {
+  font-size: clamp(40px, 7.5vw, 104px);
+  font-weight: 900;
+  font-style: italic;
+  letter-spacing: 0.04em;
+  color: #fff;
+  text-shadow: 0 0 12px rgba(168, 85, 247, 0.95), 0 0 36px rgba(168, 85, 247, 0.55), 0 0 90px rgba(168, 85, 247, 0.35);
+}
+.cover-brand-sub {
+  margin-top: 12px;
+  font-size: clamp(12px, 1.5vw, 18px);
+  letter-spacing: 0.5em;
+  color: rgba(240, 198, 116, 0.95);
+  text-shadow: 0 0 10px rgba(240, 198, 116, 0.5);
+}
+
+/* 第三幕：海报分层渐入 + 321 倒计时 */
+.cover-stage-3 .cover-vinyl-wrap,
+.cover-stage-3 .cover-brand { opacity: 0; }
+.cover-poster-wrap {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+}
+.cover-poster {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
   object-fit: contain;
   object-position: center;
+  opacity: 0;
+  transition: opacity 1.1s ease;
 }
-.cover-spin {
-  animation: vinylSpin 7s linear infinite;
-  will-change: transform;
+.cover-stage-3 .cover-poster { opacity: 1; }
+.cover-poster-girl {
+  transition: opacity 0.9s ease 0.35s, transform 0.9s cubic-bezier(.22,.8,.3,1) 0.35s;
+  transform: translateY(16px);
 }
-.cover-top { pointer-events: none; }
-.cover-enter { position: relative; z-index: 2; }
-@keyframes vinylSpin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+.cover-poster-glass {
+  transition: opacity 0.9s ease 0.65s, transform 0.9s cubic-bezier(.22,.8,.3,1) 0.65s;
+  transform: translateY(10px);
+}
+.cover-stage-3 .cover-poster-girl,
+.cover-stage-3 .cover-poster-glass { transform: translateY(0); }
+.cover-count {
+  position: absolute;
+  right: 7vw; bottom: 9vh;
+  z-index: 4;
+  font-size: clamp(56px, 8vw, 96px);
+  font-weight: 900;
+  font-style: italic;
+  color: #fff;
+  text-shadow: 0 0 14px rgba(168, 85, 247, 0.95), 0 0 48px rgba(168, 85, 247, 0.5);
+  opacity: 0;
+  pointer-events: none;
+}
+.cover-stage-3 .cover-count { opacity: 1; animation: countPulse 0.95s ease; }
+@keyframes countPulse {
+  0% { transform: scale(1.55); opacity: 0; }
+  30% { transform: scale(1); opacity: 1; }
+  100% { transform: scale(0.94); opacity: 0.85; }
+}
+.cover-skip {
+  position: absolute;
+  left: 50%; bottom: 3vh;
+  transform: translateX(-50%);
+  z-index: 4;
+  font-size: 12px;
+  letter-spacing: 3px;
+  color: rgba(255, 255, 255, 0.55);
+  pointer-events: none;
 }

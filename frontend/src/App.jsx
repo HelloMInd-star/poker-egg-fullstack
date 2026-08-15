@@ -31,7 +31,8 @@ function App() {
   const [loading, setLoading] = useState(false);
   const [coverVisible, setCoverVisible] = useState(true);
   const [coverLeaving, setCoverLeaving] = useState(false);
-  const [spinOrigin, setSpinOrigin] = useState('50% 50%');
+  const [coverStage, setCoverStage] = useState(1);
+  const [coverCount, setCoverCount] = useState(3);
   
   const { 
     gameState, 
@@ -61,20 +62,20 @@ function App() {
     }
   }, []);
 
-  // 封面黑胶标签旋转轴心：按 cover 裁切实时换算标签圆心在容器中的坐标
+  // 开场序列：黑胶独舞(1.5s) → 品牌字浮现(2.9s) → 海报渐入+321倒计时 → 进入主页
   useEffect(() => {
     if (!coverVisible) return;
-    const calc = () => {
-      const cw = window.innerWidth, ch = window.innerHeight;
-      const mobile = cw <= 768;
-      const scale = mobile ? Math.max(cw / 2880, ch / 1308) : Math.min(cw / 2880, ch / 1308);
-      const offX = (cw - 2880 * scale) * (mobile ? 0.32 : 0.5);
-      const offY = (ch - 1308 * scale) * 0.5;
-      setSpinOrigin(`${1093.3 * scale + offX}px ${699.9 * scale + offY}px`);
-    };
-    calc();
-    window.addEventListener('resize', calc);
-    return () => window.removeEventListener('resize', calc);
+    const timers = [
+      setTimeout(() => setCoverStage(2), 1500),
+      setTimeout(() => setCoverStage(3), 2900),
+      setTimeout(() => setCoverCount(2), 3900),
+      setTimeout(() => setCoverCount(1), 4900),
+      setTimeout(() => {
+        setCoverLeaving(true);
+        setTimeout(() => setCoverVisible(false), 650);
+      }, 5900),
+    ];
+    return () => timers.forEach(clearTimeout);
   }, [coverVisible]);
 
   const handleLogin = async (values) => {
@@ -154,18 +155,26 @@ function App() {
     <HashRouter>
       {coverVisible && (
         <div
-          className={coverLeaving ? 'app-cover cover-leaving' : 'app-cover'}
+          className={`app-cover cover-stage-${coverStage}${coverLeaving ? ' cover-leaving' : ''}`}
           onClick={() => {
             setCoverLeaving(true);
             setTimeout(() => setCoverVisible(false), 650);
           }}
         >
-          <img src={import.meta.env.BASE_URL + 'bg/vinyl_spin.webp'} className="cover-layer cover-spin" style={{ transformOrigin: spinOrigin }} alt="" />
-          <img src={import.meta.env.BASE_URL + 'bg/cover_top.webp'} className="cover-layer cover-top" alt="" />
-          <div className="cover-enter">
-            <span className="cover-enter-btn">点击进入酒馆</span>
-            <span className="cover-enter-sub">POKER EGG · V1</span>
+          <div className="cover-vinyl-wrap">
+            <img src={import.meta.env.BASE_URL + 'bg/vinyl_disc.webp'} className="cover-vinyl" alt="" />
           </div>
+          <div className="cover-brand">
+            <div className="cover-brand-main">MIDNIGHT TAVERN</div>
+            <div className="cover-brand-sub">午 夜 酒 馆 · POKER EGG V1</div>
+          </div>
+          <div className="cover-poster-wrap">
+            <img src={import.meta.env.BASE_URL + 'bg/cover.jpg'} className="cover-poster" alt="" />
+            <img src={import.meta.env.BASE_URL + 'bg/cover_girl.webp'} className="cover-poster cover-poster-girl" alt="" />
+            <img src={import.meta.env.BASE_URL + 'bg/cover_glass.webp'} className="cover-poster cover-poster-glass" alt="" />
+          </div>
+          <div className="cover-count" key={coverCount}>{coverCount}</div>
+          <div className="cover-skip">点 击 任 意 处 直 接 进 入</div>
         </div>
       )}
       <Layout className="app-layout">
