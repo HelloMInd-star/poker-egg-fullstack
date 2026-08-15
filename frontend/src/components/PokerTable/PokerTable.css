@@ -6,7 +6,7 @@
 
 .poker-table {
   position: relative;
-  background: radial-gradient(ellipse at center, #0e4232 0%, #082a20 60%, #03120d 100%);
+  background: radial-gradient(ellipse at center, #2b1a52 0%, #1a0f38 60%, #0c0618 100%);
   border: 6px solid rgba(167, 139, 250, 0.55);
   border-radius: 180px;
   padding: 60px 40px 80px;
@@ -118,7 +118,7 @@
   position: absolute;
   top: -4px;
   right: -4px;
-  color: #22c55e;
+  color: #f0c674;
   font-size: 12px;
   animation: pulse 1s ease-in-out infinite;
 }
