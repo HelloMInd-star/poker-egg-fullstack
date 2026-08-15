@@ -1,31 +1,33 @@
-![Game‑OS Y.Mine Midnight Tavern](./github-poker-background.jpg)
-# Game‑OS · Y.Mine
-> Midnight Tavern｜智能体记忆闭环 · 博弈推演世界观
+![Game-OS Y.Mine · Midnight Tavern](./github-poker-background.jpg)
 
 <div align="center">
 
-# ♠️♥️ Poker Face Arena ♦️♣️
+# ♠️ Poker Face Arena · V1「午夜酒馆」
 
-### 扑克人格竞技场 · Game-OS V2.5 决策AI中台 · 首个公开可玩 Demo
+### 扑克人格竞技场 — MBTI 16 型人格对手 × Kelly 实时风控 × 三层 AI 架构
+
+**Game-OS V2.5 决策AI中台 · 首个公开版本 V1**
 
 > **Read your opponent. Read yourself.**
 >
 > *你的弃牌率，比你更懂你。*
 
+**[简体中文](./README.md)** · [English](./README_EN.md)
+
+[![Version](https://img.shields.io/badge/Version-V1.0.0-a78bfa?style=for-the-badge)](https://github.com/HelloMInd-star/poker-egg-fullstack/releases)
 [![MIT License](https://img.shields.io/badge/License-MIT-fbbf24.svg?style=for-the-badge)](https://opensource.org/licenses/MIT)
 [![React 18](https://img.shields.io/badge/React-18-61DAFB?style=for-the-badge&logo=react&logoColor=white)](https://reactjs.org/)
 [![FastAPI](https://img.shields.io/badge/FastAPI-0.104-009688?style=for-the-badge&logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com/)
-[![GitHub Pages](https://pages.github.com/)
-[![Railway](https://img.shields.io/badge/Railway-Backend-0B0D0E?style=for-the-badge&logo=railway)](https://railway.app/)
 [![Python](https://img.shields.io/badge/Python-3.11-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
-
-<br/>
+[![GitHub Pages](https://img.shields.io/badge/GitHub_Pages-Live-22d3ee?style=for-the-badge&logo=github&logoColor=white)](https://hellomind-star.github.io/poker-egg-fullstack/)
+[![Railway](https://img.shields.io/badge/Railway-Backend-0B0D0E?style=for-the-badge&logo=railway)](https://railway.app/)
+[![MBTI](https://img.shields.io/badge/MBTI-16_Personas-ef4444?style=for-the-badge)](./README_EN.md)
 
 > ⚠️ **Entertainment Only / 本项目仅用于 AI 行为模拟演示，不涉及真实货币博弈。**
 >
 > 所有对局均为虚拟筹码，所有行为数据仅用于人格建模研究。
 
-[🎮 在线体验](https://hellomind-star.github.io/poker-egg-fullstack/) · [📖 API 文档](https://poker-egg-fullstack-production.up.railway.app/docs) · [🧠 三层 AI 架构](#-三层-ai-架构) · [🃏 16 型人格对手](#-四大气质组速览) · [🔌 后端 API](https://poker-egg-fullstack-production.up.railway.app/api/health)
+[🎮 在线体验](https://hellomind-star.github.io/poker-egg-fullstack/) · [📖 API 文档](https://poker-egg-fullstack-production.up.railway.app/docs) · [🧠 三层 AI 架构](#-三层-ai-架构) · [🃏 四大气质组](#-四大气质组速览) · [🗺️ 路线图](#️-路线图-roadmap)
 
 </div>
 
@@ -33,25 +35,26 @@
 
 ## 🔮 这是什么
 
-**Poker Face Arena（扑克人格竞技场）** 不是一个普通的在线扑克游戏——它是一座**博弈人格训练场**。
+**Poker Face Arena（扑克人格竞技场）V1「午夜酒馆」** 不是一个普通的在线扑克游戏——它是一座**博弈人格训练场**。
 
-在牌桌上，你面对的不是冷冰冰的随机数 AI，而是 **16 种 MBTI 人格** 驱动的虚拟对手：紫人（NF）会用 62%~66% 的诈唬频率诱你上钩，黄人（NT）以 87%~89% 的抗噪能力冷静读牌，蓝人（SJ）用 72%~83% 的弃牌率构筑铜墙铁壁，绿人（SP）则以 66%~81% 的激进度对你穷追猛打。
+推开午夜酒馆的门，黑胶唱片在转，霓虹在杯壁上反光。你坐下的这张牌桌，对面不是冷冰冰的随机数 AI，而是 **16 种 MBTI 人格**驱动的虚拟对手：紫人（NF）用 62%~66% 的诈唬频率诱你上钩，黄人（NT）以 87%~89% 的抗噪能力冷静读牌，蓝人（SJ）用 72%~83% 的弃牌率构筑铜墙铁壁，绿人（SP）以 66%~81% 的激进度穷追猛打。
 
 每一次 all-in、每一次弃牌、每一次被诈唬，都是一次人格照镜子。**它不是在教你打牌，而是在教你看清自己。**
 
 ### 为什么不一样
 
-| 普通扑克 AI | Poker Face Arena |
+| 普通扑克 AI | Poker Face Arena V1 |
 |---|---|
 | 单一难度滑块，调整"聪明度" | **三层 AI 架构**：数学层 + 人格层 + 表演层解耦 |
-| 行为随机/规则树，风格可预测 | **12 维行为向量**驱动 16 型差异化打法，毫秒级配置切换，不依赖 LLM |
-| 盲注/赔率靠玩家心算 | **Kelly Criterion 实时最优投注比例**，三基准风控（0.48 保本 / 0.50 稳态 / 0.68 熔断）|
-| 筹码归零无提醒 | **Game-OS 风控层**实时介入，EV 触线即熔断 |
-| 单机 Demo，不可玩 | **WebSocket 实时对战**、Vercel + Railway 零成本部署，开箱即玩 |
+| 行为随机/规则树，风格可预测 | **8 维人格参数 + 12 维行为向量**驱动 16 型差异化打法，毫秒级配置切换，不依赖 LLM |
+| AI 行动没有理由 | **人格化决策理由**：每个 AI 每次行动都给出符合其人格的"内心戏" |
+| 盲注/赔率靠玩家心算 | **Kelly Criterion 实时最优投注比例** + 蒙特卡洛真胜率逐街重算 |
+| 筹码归零无提醒 | **Game-OS 风控层**实时介入，三基准阈值（0.48 保本 / 0.50 稳态 / 0.68 熔断）|
+| 界面千篇一律 | **午夜酒馆沉浸式场景**：贴纸涂鸦美术、人物座位头像、酒馆夜景氛围层 |
 
 ### 在 Game-OS 体系中的位置
 
-Poker Face Arena 是 **Game-OS V2.5 决策AI中台** 的第一个公开可玩 Demo——它验证了中台的核心假设：
+Poker Face Arena V1 是 **Game-OS V2.5 决策AI中台**的第一个公开版本——它验证了中台的核心假设：
 
 > **"人格建模 + 决策数学"可以跨域迁移。**
 >
@@ -62,17 +65,21 @@ Poker Face Arena 是 **Game-OS V2.5 决策AI中台** 的第一个公开可玩 De
 
 ---
 
-## ✨ 核心特性
+## ✨ V1 核心特性
 
 <div align="center">
 
-| 🃏 **MBTI 16 型人格对手** | 📊 **Kelly 实时风控** | 🔄 **WebSocket 实时对局** |
+| 🃏 **MBTI 16 型人格对手** | 📊 **Kelly 实时风控面板** | 🔄 **WebSocket 实时对局** |
 |---|---|---|
-| 12 维行为向量 × 16 型人格，毫秒级配置驱动，零 LLM 延迟 | 实时 EV 计算 + Kelly 最优投注比例，三基准阈值熔断 | 发牌/下注/摊牌全流程 WS 通信，毫秒级牌桌同步 |
+| 8 维人格参数 × 12 维行为向量，毫秒级配置驱动，零 LLM 延迟 | 蒙特卡洛真胜率逐街重算 + Kelly 最优比例 + 三基准熔断提示 | 发牌/下注/摊牌全流程 WS 通信，毫秒级牌桌同步 |
 
-| 📈 **战绩与人格画像** | 🧠 **三层 AI 架构解耦** | ⚡ **零成本一键部署** |
+| 🎭 **人格化决策理由** | 🍸 **午夜酒馆场景** | 🧠 **三层 AI 架构解耦** |
 |---|---|---|
-| 胜率/弃牌率/bluff 捕获率多维统计，牌桌上暴露你的决策人格 | 数学层/人格层/表演层完全解耦，可独立替换升级 | Dockerfile 就绪，Railway + Vercel 双平台零成本部署 |
+| AI 每次行动附带人格化理由与 tilt 记忆——输给谁，都输得明白 | 酒馆夜景氛围层 + 贴纸涂鸦牌桌 + 人物座位头像 + 试炼总结 | 数学层/人格层/表演层完全解耦，可独立替换升级 |
+
+| 📈 **战绩与人格画像** | 🗂️ **抽屉式数据区** | ⚡ **零成本一键部署** |
+|---|---|---|
+| 胜率/弃牌率/bluff 捕获率多维统计，牌桌上暴露你的决策人格 | 六维面板/牌局信息收纳进侧边抽屉，主视觉只留牌局本身 | Dockerfile 就绪，GitHub Pages + Railway 零成本运行 |
 
 </div>
 
@@ -87,15 +94,15 @@ Poker Face Arena 是 **Game-OS V2.5 决策AI中台** 的第一个公开可玩 De
 │   ─ 关闭即退化为纯行为人格，毫秒级响应                         │
 ├─────────────────────────────────────────────────────────────┤
 │                     🎴  人格层 (Persona)                      │
-│   PersonaPokerMapper · 12 维 MBTI 行为模型                    │
+│   PersonaPokerMapper · 8 维人格参数 × 12 维行为模型           │
 │   ─ bluffFreq / tiltResist / noiseResist / aggrFactor       │
 │   ─ foldFreq / callFreq / raiseFreq / positionBias ...      │
-│   ─ 16 型人格配置驱动，无需 LLM，毫秒级切换                    │
+│   ─ 人格化决策理由 + tilt 情绪记忆（连续被诈唬会"上头"）        │
 ├─────────────────────────────────────────────────────────────┤
 │                     📐  数学层 (Mathematics)                  │
-│   Kelly Criterion · 蒙特卡洛确定性 EV · 手牌强度评估          │
+│   Kelly Criterion · 蒙特卡洛真胜率 · 手牌强度评估              │
 │   ─ 实时最优投注比例 f* = (bp - q) / b                       │
-│   ─ 蒙特卡洛枚举对手范围，确定性 EV 计算（非采样估计）          │
+│   ─ 逐街重算胜率（翻牌/转牌/河牌），非静态查表                 │
 │   ─ Game-OS 风控三阈值：0.48 保本 / 0.50 稳态 / 0.68 熔断      │
 └─────────────────────────────────────────────────────────────┘
                               │
@@ -106,8 +113,8 @@ Poker Face Arena 是 **Game-OS V2.5 决策AI中台** 的第一个公开可玩 De
 
 | 层级 | 职责 | 核心模块 | 延迟 |
 |---|---|---|---|
-| 📐 数学层 | EV 计算、Kelly 投注、手牌强度 | `ai_engine.py` + NumPy | < 5ms |
-| 🎴 人格层 | 12 维行为向量、MBTI 映射、决策偏差 | `personalities.py` (PersonaPokerMapper) | < 1ms（配置查表） |
+| 📐 数学层 | EV 计算、Kelly 投注、手牌强度 | `ai/ai_engine.py` + NumPy | < 5ms |
+| 🎴 人格层 | 人格参数、决策理由、tilt 记忆 | `ai/personality_engine.py` + `ai/personalities.py` | < 1ms（配置查表） |
 | 🎭 表演层 | 台词人格、情绪表演、桌面戏剧 | 可选 LLM 接入（规划中） | 200ms~2s（异步） |
 
 ---
@@ -163,31 +170,30 @@ Poker Face Arena 是 **Game-OS V2.5 决策AI中台** 的第一个公开可玩 De
 ### 前端
 | 技术 | 用途 |
 |---|---|
-| **React 18** | UI 框架 |
-| **Vite** | 构建工具（HMR 毫秒级） |
-| **Zustand** | 轻量状态管理 |
+| **React 18 + Vite** | UI 框架与构建（HMR 毫秒级） |
+| **Zustand** | 轻量全局状态（牌局数据流实时刷新） |
 | **Framer Motion** | 动效引擎（发牌/筹码/翻牌动画） |
 | **Ant Design 5** | UI 组件库 |
-| **Recharts** | 数据可视化（战绩图表） |
+| **Recharts** | 战绩数据可视化 |
 | **原生 WebSocket** | 实时通信 |
+| **PWA** | manifest + Service Worker，可安装到主屏 |
 
 ### 后端
 | 技术 | 用途 |
 |---|---|
-| **FastAPI** | 异步 Web 框架 |
-| **Uvicorn** | ASGI 服务器（单 worker 保内存状态） |
+| **FastAPI + Uvicorn** | 异步 Web 框架（单 worker 保内存状态） |
 | **WebSocket** | 实时牌桌通信 |
-| **NumPy** | AI 数学层（EV/蒙特卡洛） |
+| **NumPy** | 数学层（EV / 蒙特卡洛胜率） |
 | **PyJWT + python-jose** | JWT 认证 |
 | **passlib + bcrypt** | 密码哈希 |
-| **asyncpg** | PostgreSQL 异步驱动（无 DB 时自动降级内存模式） |
+| **asyncpg** | PostgreSQL 异步驱动（无 DB 自动降级内存模式） |
 
 ### 部署
 | 平台 | 用途 | 成本 |
 |---|---|---|
-| **Vercel** | 前端托管 | 免费额度 |
-| **Railway** | 后端 + PostgreSQL | 免费额度（Starter Plan） |
-| **Docker** | 容器化部署 | 自建服务器 |
+| **GitHub Pages + Actions** | 前端托管与 CI（push main 自动构建发布） | 免费 |
+| **Railway** | 后端容器 + PostgreSQL | 免费额度 |
+| **Docker** | 自建服务器容器化 | — |
 
 ---
 
@@ -216,26 +222,24 @@ npm run dev
 ```
 
 > 💡 **无数据库也能玩**：未配置 `DATABASE_URL` 时后端自动降级为**内存模式**，任意用户名密码均可登录（如 `test` / `123456`），重启后数据清空。
+>
 > ⚠️ **单 worker 限制**：游戏状态存于进程内存，生产必须 `--workers 1`，多进程会导致房间状态不一致。多副本部署需引入 Redis（规划中）。
 
 ---
 
 ## 🌐 部署
 
-### 前端 · Vercel（推荐）
+### 前端 · GitHub Pages（本仓库现状）
 
-1. Fork 本仓库 → Vercel **New Project** → Import
-2. **Root Directory** 设为 `frontend`，Framework 自动识别为 Vite
-3. 环境变量：
-   - `VITE_API_URL` = 后端 Railway 地址（`https://xxx.up.railway.app`）
-   - `VITE_WS_URL`  = 后端 WS 地址（`wss://xxx.up.railway.app`）
-4. 仓库已包含 `frontend/vercel.json`，SPA 路由 rewrite 自动生效
-5. Deploy → 获得 `*.vercel.app` 域名
+1. 仓库已内置 `.github/workflows/deploy.yml`：**push 到 main 即自动构建并发布**到 GitHub Pages
+2. Pages 源选择 **GitHub Actions**，无需手动配置
+3. 前端通过 `import.meta.env.BASE_URL` 自动适配子路径 `/poker-egg-fullstack/`
+4. 全程约 3~5 分钟，发布后访问 `https://<username>.github.io/poker-egg-fullstack/`
 
-### 后端 · Railway（推荐）
+### 后端 · Railway（本仓库现状）
 
 1. Railway **New Project** → **Deploy from GitHub repo** → 选本仓库
-2. **Root Directory 留空**（仓库根目录，使用根 `Dockerfile`）
+2. **Root Directory 留空**（使用根目录 `Dockerfile`）
 3. 添加 PostgreSQL 服务：**+ New** → **Database** → **Add PostgreSQL**，`DATABASE_URL` 自动注入
 4. 手动设置环境变量：
 
@@ -243,9 +247,9 @@ npm run dev
 |---|---|---|
 | `SECRET_KEY` | 随机字符串 | 生产务必修改 |
 | `JWT_ALGORITHM` | `HS256` | JWT 算法 |
-| `JWT_EXPIRE_MINUTES` | `10080` | Token 有效期（7天） |
+| `JWT_EXPIRE_MINUTES` | `10080` | Token 有效期（7 天） |
 | `ENVIRONMENT` | `production` | 环境标识 |
-| `CORS_ORIGINS` | `https://your-frontend.vercel.app` | 逗号分隔的允许源列表 |
+| `CORS_ORIGINS` | 前端域名 | 逗号分隔的允许源列表 |
 | `PORT` | — | Railway 自动注入，无需手动设置 |
 
 5. 部署后在 **Settings → Networking** 生成公共域名，填回前端环境变量
@@ -267,7 +271,7 @@ npm run dev
 | `POST` | `/api/game/create` | 创建牌局 |
 | `POST` | `/api/game/{id}/join` | 加入牌局 |
 | `POST` | `/api/game/{id}/start` | 开始对局（发牌） |
-| `POST` | `/api/game/{id}/action` | 玩家行动（fold / call / raise） |
+| `POST` | `/api/game/{id}/action` | 玩家行动（fold / call / raise / all-in） |
 | `POST` | `/api/game/{id}/ai/add` | 添加 AI 对手 |
 | `GET` | `/api/game/{id}` | 获取牌局状态 |
 | `GET` | `/api/stats/{playerId}` | 玩家战绩统计 |
@@ -275,76 +279,77 @@ npm run dev
 
 ---
 
-## 🗺️ 路线图 Roadmap
-
-### ✅ 已完成
-- [x] 完整德州扑克流程：preflop → flop → turn → river → showdown
-- [x] WebSocket 实时多人牌桌
-- [x] Kelly Criterion 实时最优投注比例
-- [x] Game-OS 三基准风控阈值（0.48 / 0.50 / 0.68）
-- [x] PersonaPokerMapper · 12 维 MBTI 行为模型（16 型人格配置数据就绪）
-- [x] JWT 用户系统 + 战绩统计
-- [x] Docker 容器化 + Railway/Vercel 零成本部署配置
-- [x] ymine 深色科技感 UI（深紫 `#a78bfa` + 霓虹青 `#22d3ee` + 琥珀金 `#fbbf24`）
-
-### 🎯 MVP 进行中
-- [ ] 16 型 MBTI 人格对手引擎接入（数据已就绪，`ai_engine.py` 对接中）
-- [ ] AI 对手选择界面（选 MBTI 类型上桌）
-- [ ] 人格画像面板（对局后生成你的决策人格报告）
-
-### 🔮 规划中
-- [ ] 🎭 LLM 表演层（人格化台词 / 嘲讽 / 情绪反应，异步不阻塞决策）
-- [ ] Redis 外置状态存储（多 worker / 多副本水平扩展）
-- [ ] 人格对战匹配（基于你的决策画像匹配"最克制你"的对手）
-- [ ] 锦标赛模式（MTT / SNG）
-- [ ] 移动端响应式适配
-- [ ] Game-OS 中台化：人格内核跨域输出（金融/电商/电竞场景）
-- [ ] 强化学习层（人格 + RL 自适应进化）
-
----
-
 ## 📁 项目结构
 
 ```
 poker-egg-fullstack/
-├── frontend/                     # React 18 + Vite 前端
+├── frontend/                        # React 18 + Vite 前端
 │   ├── src/
 │   │   ├── components/
-│   │   │   ├── PokerTable/       # 牌桌组件（发牌/下注/摊牌）
-│   │   │   ├── Dashboard/        # 仪表盘（EV/Kelly/风控面板）
-│   │   │   ├── GameLobby/        # 游戏大厅（创建/加入房间）
-│   │   │   ├── Profile/          # 个人资料
-│   │   │   └── Stats/            # 战绩统计
-│   │   ├── store/gameStore.js    # Zustand 全局状态
-│   │   ├── App.jsx
-│   │   └── main.jsx
-│   ├── index.html
-│   ├── package.json
-│   ├── vite.config.js
-│   ├── vercel.json               # Vercel SPA 配置
-│   └── Dockerfile
+│   │   │   ├── PokerTable/          # 牌桌（座位椭圆布局/贴纸涂鸦/行动按钮）
+│   │   │   ├── MidnightTavern/      # 午夜酒馆主页与氛围层
+│   │   │   ├── AnalysisPanel/       # Kelly 面板（蒙特卡洛真胜率逐街重算）
+│   │   │   ├── SideDrawer/          # 侧边抽屉（六维面板/牌局信息）
+│   │   │   ├── ResultModal/         # 试炼总结与结果弹窗
+│   │   │   ├── Dashboard/           # 仪表盘（EV/Kelly/风控）
+│   │   │   ├── GameLobby/           # 游戏大厅（创建/加入房间）
+│   │   │   ├── Profile/             # 个人资料
+│   │   │   └── Stats/               # 战绩统计
+│   │   ├── store/gameStore.js       # Zustand 全局状态
+│   │   ├── App.jsx / main.jsx
+│   ├── public/
+│   │   ├── characters/              # 人物素材（荷官/座位头像/结果弹窗立绘）
+│   │   ├── stickers/                # 贴纸素材（牌背/筹码堆）
+│   │   ├── bg/                      # 酒馆夜景背景
+│   │   └── manifest.json / sw.js    # PWA
+│   ├── package.json / vite.config.js
 │
-├── backend/                      # FastAPI 后端
-│   ├── services/game_engine.py   # 扑克游戏引擎（发牌/比牌/回合管理）
+├── backend/                         # FastAPI 后端
+│   ├── app.py                       # 入口（路由 + WebSocket）
+│   ├── services/game_engine.py      # 扑克引擎（发牌/比牌/回合管理）
 │   ├── ai/
-│   │   ├── ai_engine.py          # AI 决策引擎（数学层 + 决策逻辑）
-│   │   └── personalities.py      # PersonaPokerMapper · 16 型 MBTI 配置
-│   ├── models/
-│   │   ├── database.py           # 数据库连接（PG / 内存降级）
-│   │   └── schemas.py            # Pydantic 数据模型
-│   ├── auth/auth.py              # JWT 认证
-│   ├── app.py                    # FastAPI 入口（路由 + WebSocket）
-│   ├── requirements.txt
-│   └── Dockerfile
+│   │   ├── ai_engine.py             # 数学层（EV/Kelly/蒙特卡洛）
+│   │   ├── personality_engine.py    # 人格引擎（决策理由 + tilt 记忆）
+│   │   ├── personalities.py         # PersonaPokerMapper · 16 型配置
+│   │   └── analysis.py              # 行为分析
+│   ├── models/                      # 数据库连接（PG/内存降级）+ Pydantic 模型
+│   ├── auth/auth.py                 # JWT 认证
+│   └── requirements.txt
 │
-├── nginx/nginx.conf              # Nginx 反代配置
-├── .github/workflows/deploy.yml  # GitHub Actions CI
-├── docker-compose.yml
-├── Dockerfile                    # 根目录 Dockerfile（Railway 部署用）
-├── .env.example
+├── .github/workflows/deploy.yml     # GitHub Actions 前端 CI
+├── Dockerfile                       # 根 Dockerfile（Railway 部署用）
+├── railway.toml / docker-compose.yml / nginx/
+├── github-poker-background.jpg      # README 封面 · Midnight Tavern 主视觉
 ├── LICENSE
-└── README.md
+└── README.md / README_EN.md
 ```
+
+---
+
+## 🗺️ 路线图 Roadmap
+
+### ✅ V1.0「午夜酒馆」（2026-08，当前版本）
+- [x] 完整德州扑克流程：preflop → flop → turn → river → showdown
+- [x] WebSocket 实时牌桌 + 座位椭圆自适应布局
+- [x] **16 型人格对手引擎**：8 维人格参数 + 人格化决策理由 + tilt 情绪记忆
+- [x] **Kelly 实时风控面板**：蒙特卡洛真胜率逐街重算 + 三基准熔断（0.48 / 0.50 / 0.68）
+- [x] **午夜酒馆沉浸式场景**：酒馆夜景氛围层 + 贴纸涂鸦牌桌 + 人物座位头像 + 牌背/筹码贴纸
+- [x] 试炼总结（对局复盘弹窗）+ 抽屉式数据区（六维/牌局信息）
+- [x] JWT 用户系统 + 战绩统计 + PWA
+- [x] GitHub Pages + Railway 零成本部署链路
+
+### 🎯 V1.1（进行中）
+- [ ] 16 型人格调酒卡视觉集（与 Y.Mine 调酒线联动）
+- [ ] AI 对手选择界面（点选 MBTI 类型上桌）
+- [ ] 对局后决策人格报告（基于你的行动序列生成）
+
+### 🔮 V2（规划中）
+- [ ] 🎭 LLM 表演层（人格化台词/嘲讽/情绪反应，异步不阻塞决策）
+- [ ] Redis 外置状态存储（多副本水平扩展）
+- [ ] 人格对战匹配（基于决策画像匹配"最克制你"的对手）
+- [ ] 锦标赛模式（MTT / SNG）
+- [ ] Game-OS 中台化：人格内核跨域输出（金融/电商/电竞）
+- [ ] 强化学习层（人格 + RL 自适应进化）
 
 ---
 
@@ -358,7 +363,7 @@ poker-egg-fullstack/
 4. 推送分支：`git push origin feature/your-feature`
 5. 开启 Pull Request
 
-如果你对人格配置参数（bluffFreq/aggrFactor 等）有基于实战的调优建议，尤其欢迎——**16 型人格的行为向量需要大量对局数据校准**。
+如果你对人格配置参数（bluffFreq / aggrFactor 等）有基于实战的调优建议，尤其欢迎——**16 型人格的行为向量需要大量对局数据校准**。
 
 ---
 

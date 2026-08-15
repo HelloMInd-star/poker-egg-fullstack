@@ -1,7 +1,7 @@
 {
   "name": "poker-face-arena",
   "version": "1.0.0",
-  "description": "Poker Face Arena · 扑克人格竞技场 — MBTI 16型人格对手 × Kelly实时风控 × 三层AI架构（Game-OS V2.5 决策AI中台首个公开可玩Demo）",
+  "description": "Poker Face Arena · 扑克人格竞技场 — MBTI 16型人格对手 × Kelly实时风控 × 三层AI架构（Game-OS V2.5 决策AI中台首个公开版本 V1「午夜酒馆」）",
   "type": "module",
   "scripts": {
     "dev": "vite",
