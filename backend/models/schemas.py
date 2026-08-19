@@ -33,6 +33,7 @@ class GameCreate(BaseModel):
     player_name: Optional[str] = "Player"
     ai_difficulty: Optional[str] = "medium"
     ai_personality: Optional[str] = None  # MBTI人格类型(如INTJ)，优先于ai_difficulty
+    auto_next_hand: Optional[bool] = True  # 结算后是否自动开下一手（HTTP轮询客户端传False，由玩家显式触发）
 
 
 class GameJoin(BaseModel):

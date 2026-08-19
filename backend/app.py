@@ -102,9 +102,10 @@ class GameManager:
         self.ai_decision_maker = AIDecisionMaker()
         self._ai_tasks: Dict[str, asyncio.Task] = {}
     
-    def create_game(self, player_name: str, ai_difficulty: str = "medium", ai_personality: str = None) -> Dict:
+    def create_game(self, player_name: str, ai_difficulty: str = "medium", ai_personality: str = None, auto_next_hand: bool = True) -> Dict:
         """创建新游戏（1v1: 玩家 + AI），支持MBTI人格AI"""
         game = GameEngine()
+        game.auto_next_hand = auto_next_hand
         player = game.add_player(player_name, is_ai=False)
         persona = MBTI_PERSONALITIES.get(ai_personality) if ai_personality else None
         if persona:
@@ -319,17 +320,18 @@ class GameManager:
                 if False else game.winner.chips if game.winner else 0
             }
         })
-        # 1v1：自动开始下一手（延迟3秒）
-        await asyncio.sleep(3)
-        if game_id in self.games:
-            still_has_chips = [p for p in game.players if p.chips > 0]
-            if len(still_has_chips) >= 2:
-                game.start_new_hand()
-                await self.broadcast(game_id, {"type": "game_state", "data": game.get_state()})
-                await self.broadcast(game_id, {"type": "system_message", "data": {"message": "🔄 新的一局开始"}})
-                # 新的一手可能还是AI先手（1v1 preflop SB=BTN=human先？SB是player0=human先？）
-                if not game.hand_over and game.is_ai_turn():
-                    asyncio.create_task(self.process_ai_turn(game_id))
+        # 1v1：自动开始下一手（延迟3秒）——仅 WS 模式默认开启；HTTP 轮询客户端由玩家显式调 /start
+        if getattr(game, "auto_next_hand", True):
+            await asyncio.sleep(3)
+            if game_id in self.games:
+                still_has_chips = [p for p in game.players if p.chips > 0]
+                if len(still_has_chips) >= 2:
+                    game.start_new_hand()
+                    await self.broadcast(game_id, {"type": "game_state", "data": game.get_state()})
+                    await self.broadcast(game_id, {"type": "system_message", "data": {"message": "🔄 新的一局开始"}})
+                    # 新的一手可能还是AI先手（1v1 preflop SB=BTN=human先？SB是player0=human先？）
+                    if not game.hand_over and game.is_ai_turn():
+                        asyncio.create_task(self.process_ai_turn(game_id))
 
 
 game_manager = GameManager()
@@ -371,7 +373,8 @@ async def create_game(request: GameCreate):
         result = game_manager.create_game(
             player_name=request.player_name or "Player",
             ai_difficulty=request.ai_difficulty or "medium",
-            ai_personality=request.ai_personality
+            ai_personality=request.ai_personality,
+            auto_next_hand=request.auto_next_hand if request.auto_next_hand is not None else True
         )
         return {"success": True, "data": result}
     except Exception as e:
