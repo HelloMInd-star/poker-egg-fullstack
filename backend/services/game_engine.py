@@ -337,6 +337,7 @@ class GameEngine:
         self.history: List[Dict] = []
         self.dealer_index = 0  # 庄位索引（1v1中SB=BTN）
         self.last_raiser_index: Optional[int] = None  # 最后加注者索引
+        self.hand_result: Optional[Dict] = None  # 上一手结算快照（winners/pot/hand_name/win_type）
     
     def add_player(self, name: str, is_ai: bool = False, ai_difficulty: str = "medium", ai_personality: str = "") -> Player:
         """添加玩家"""
@@ -364,6 +365,7 @@ class GameEngine:
         self.hand_over = False
         self.winner = None
         self.winners = []
+        self.hand_result = None
         self.current_bet = 0
         self.min_raise = self.big_blind
         self.last_raiser_index = None
@@ -725,27 +727,41 @@ class GameEngine:
             winners = contenders[:1]
         
         # 分池（简化：均分底池；不处理边池，边池是P2优化）
-        share = self.pot // len(winners)
-        remainder = self.pot % len(winners)
+        total_pot = self.pot
+        share = total_pot // len(winners)
+        remainder = total_pot % len(winners)
         for i, w in enumerate(winners):
             w.chips += share + (1 if i < remainder else 0)
-        
+
         self.winner = winners[0]
         self.winners = winners
         self.hand_over = True
         winner_names = ", ".join(w.name for w in winners)
         hand_name = getattr(winners[0], '_last_eval', {}).get('hand_name', '?')
-        self._add_history(f"{winner_names} 赢了 {self.pot} 筹码! ({hand_name})", "winner")
+        self.hand_result = {
+            "winners": [w.to_dict() for w in winners],
+            "pot": total_pot,
+            "hand_name": hand_name,
+            "win_type": "showdown",
+        }
+        self._add_history(f"{winner_names} 赢了 {total_pot} 筹码! ({hand_name})", "winner")
         self.pot = 0
     
     def _award_pot(self, winner: Player):
         """分配底池（无对手）"""
-        winner.chips += self.pot
+        awarded = self.pot
+        winner.chips += awarded
         self.winner = winner
         self.winners = [winner]
         self.hand_over = True
         self.stage = Stage.SHOWDOWN
-        self._add_history(f"{winner.name} 赢得 {self.pot} 筹码!", "winner")
+        self.hand_result = {
+            "winners": [winner.to_dict()],
+            "pot": awarded,
+            "hand_name": None,
+            "win_type": "fold",
+        }
+        self._add_history(f"{winner.name} 赢得 {awarded} 筹码!", "winner")
         self.pot = 0
     
     def _board_str(self) -> str:
@@ -780,6 +796,7 @@ class GameEngine:
             "hand_over": self.hand_over,
             "winner": self.winner.to_dict() if self.winner else None,
             "winners": [w.to_dict() for w in self.winners] if self.winners else None,
+            "hand_result": self.hand_result,
             "current_player": self.current_player_index,
             "current_bet": self.current_bet,
             "min_raise": self.min_raise,
