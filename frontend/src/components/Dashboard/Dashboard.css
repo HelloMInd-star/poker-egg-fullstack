@@ -15,7 +15,7 @@
 }
 
 .dashboard-card .ant-card-head-title {
-  color: #c4b5fd !important;
+  color: var(--pk-purple-bright) !important;
   font-size: 14px !important;
   font-weight: 700 !important;
   letter-spacing: 1px !important;
@@ -55,10 +55,10 @@
   font-variant-numeric: tabular-nums;
   line-height: 1.1;
 }
-.six-value.violet { color: #c084fc; text-shadow: 0 0 12px rgba(192, 132, 252, 0.45); }
-.six-value.gold { color: #f0c674; text-shadow: 0 0 12px rgba(240, 198, 116, 0.35); }
+.six-value.violet { color: var(--pk-purple); text-shadow: 0 0 12px rgba(192, 132, 252, 0.45); }
+.six-value.gold { color: var(--pk-gold-soft); text-shadow: 0 0 12px rgba(240, 198, 116, 0.35); }
 .six-value.cyan { color: #7dd3fc; text-shadow: 0 0 12px rgba(125, 211, 252, 0.35); }
-.six-value.pink { color: #f0abfc; text-shadow: 0 0 12px rgba(240, 171, 252, 0.4); }
+.six-value.pink { color: var(--pk-purple-bright); text-shadow: 0 0 12px rgba(240, 171, 252, 0.4); }
 
 .six-label {
   font-size: 10px;
@@ -101,7 +101,7 @@
 .info-value {
   font-size: 13px;
   font-weight: 600;
-  color: #ece8fa;
+  color: var(--pk-text);
   font-variant-numeric: tabular-nums;
 }
 

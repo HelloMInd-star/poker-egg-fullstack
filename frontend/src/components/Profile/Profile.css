@@ -46,7 +46,7 @@
 
 .profile-stats .stat-item .anticon {
   font-size: 20px;
-  color: #a78bfa;
+  color: var(--pk-purple);
   display: block;
   margin-bottom: 4px;
 }

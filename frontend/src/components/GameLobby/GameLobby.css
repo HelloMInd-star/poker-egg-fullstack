@@ -30,7 +30,7 @@
 .stat-number {
   font-size: 28px;
   font-weight: 700;
-  color: #a78bfa;
+  color: var(--pk-purple);
 }
 
 .stat-label {
@@ -65,7 +65,7 @@
 }
 
 .lobby-modal .ant-modal-content {
-  background: linear-gradient(160deg, #1a1333, #0d0a1e) !important;
+  background: linear-gradient(160deg, #1a1333, var(--pk-bg-deep)) !important;
   border: 1px solid rgba(167, 139, 250, 0.2) !important;
   border-radius: 16px !important;
 }

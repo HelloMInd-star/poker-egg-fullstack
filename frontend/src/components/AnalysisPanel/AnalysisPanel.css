@@ -27,7 +27,7 @@
 .analysis-title {
   font-weight: 700;
   letter-spacing: 1px;
-  color: #c4b5fd;
+  color: var(--pk-purple-bright);
 }
 
 .analysis-stage {
@@ -52,7 +52,7 @@
 .hand-cards { display: flex; gap: 4px; }
 
 .mini-card {
-  background: #f5f2ea;
+  background: var(--pk-text);
   color: #1a1a1a;
   font-weight: 700;
   border-radius: 6px;
@@ -64,7 +64,7 @@
 
 .hand-name {
   margin-left: auto;
-  color: #f0c674;
+  color: var(--pk-gold-soft);
   font-weight: 600;
 }
 
@@ -75,7 +75,7 @@
   font-size: 44px;
   font-weight: 800;
   line-height: 1;
-  color: #c084fc;
+  color: var(--pk-purple);
   text-shadow: 0 0 20px rgba(192, 132, 252, 0.5);
   font-variant-numeric: tabular-nums;
 }
@@ -108,7 +108,7 @@
   font-weight: 700;
   font-variant-numeric: tabular-nums;
 }
-.grid-value.gold { color: #ffd700; }
+.grid-value.gold { color: var(--pk-gold); }
 
 .grid-label {
   font-size: 11px;
@@ -126,7 +126,7 @@
 }
 .kelly-bar-fill {
   height: 100%;
-  background: linear-gradient(90deg, #b8860b, #ffd700);
+  background: linear-gradient(90deg, #b8860b, var(--pk-gold));
   border-radius: 999px;
   transition: width 0.4s ease;
 }
@@ -173,12 +173,12 @@
 }
 .ai-reason-head {
   font-size: 12px;
-  color: #c9a7e0;
+  color: var(--pk-purple-bright);
   font-weight: 600;
 }
 .ai-reason-text {
   font-size: 13px;
-  color: #e6dcf0;
+  color: var(--pk-text);
   font-style: italic;
 }
 
@@ -189,7 +189,7 @@
 
 /* ===== L2：人格修正 Kelly（电光紫）+ BB 码量梯度 ===== */
 .grid-value.violet {
-  color: #c084fc;
+  color: var(--pk-purple);
   text-shadow: 0 0 14px rgba(192, 132, 252, 0.45);
 }
 
@@ -200,7 +200,7 @@
 .kelly-adj-item.off { opacity: 0.45; }
 
 .bb-item { border: 1px solid rgba(240, 198, 116, 0.28); }
-.grid-value.bb { color: #f0c674; }
+.grid-value.bb { color: var(--pk-gold-soft); }
 .bb-unit { font-size: 11px; margin-left: 3px; color: rgba(230, 225, 245, 0.45); font-weight: 500; }
 
 /* BB 梯度战略提示 */
@@ -242,17 +242,17 @@
   margin-bottom: 12px;
 }
 .tavern-adjust-row { display: flex; align-items: center; gap: 8px; }
-.tavern-adjust-name { font-size: 13px; color: #e6dcf0; font-weight: 600; }
-.tavern-adjust .ant-switch-checked { background: #7c3aed; }
+.tavern-adjust-name { font-size: 13px; color: var(--pk-text); font-weight: 600; }
+.tavern-adjust .ant-switch-checked { background: var(--pk-purple-deep); }
 .tavern-adjust-src {
   margin-top: 4px;
   font-size: 11px;
-  color: #c9a7e0;
+  color: var(--pk-purple-bright);
   letter-spacing: 0.5px;
 }
 .tavern-adjust.empty {
   cursor: pointer;
-  color: #c9a7e0;
+  color: var(--pk-purple-bright);
   font-size: 12px;
   text-align: center;
   transition: background 0.2s;
@@ -261,4 +261,4 @@
 
 /* 修正 Kelly 仓位条（电光紫，叠在金色原始条之下） */
 .kelly-bar-track.adj { margin-top: -8px; height: 5px; }
-.kelly-bar-fill.adj { background: linear-gradient(90deg, #7c3aed, #c084fc); }
+.kelly-bar-fill.adj { background: linear-gradient(90deg, var(--pk-purple-deep), var(--pk-purple)); }

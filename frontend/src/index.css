@@ -1,3 +1,17 @@
+:root {
+  /* Poker Face Arena × Y.Mine 生态统一 design tokens */
+  --pk-bg-deep: #0d0a1e;
+  --pk-gold: #f5c542;
+  --pk-gold-soft: #f0c674;
+  --pk-purple: #a78bfa;
+  --pk-purple-bright: #c4b5fd;
+  --pk-purple-deep: #7c3aed;
+  --pk-cyan: #22d3ee;
+  --pk-text: #f3edff;
+  --pk-text-sec: #8f84b8;
+  --pk-border: rgba(167, 139, 250, 0.14);
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -13,7 +27,7 @@ html {
 
 body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-  background: #0b0a1a;
+  background: var(--pk-bg-deep);
   color: #fff;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;

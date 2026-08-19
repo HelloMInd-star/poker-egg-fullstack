@@ -32,7 +32,7 @@
 }
 
 .side-rail-btn.active {
-  background: linear-gradient(160deg, #7c3aed, #5b21b6);
+  background: linear-gradient(160deg, var(--pk-purple-deep), #5b21b6);
   box-shadow: 0 0 22px rgba(168, 85, 247, 0.6);
 }
 
@@ -82,7 +82,7 @@
 .side-drawer-title {
   font-size: 17px;
   font-weight: 700;
-  color: #e9e4f7;
+  color: var(--pk-text);
   letter-spacing: 1px;
 }
 
@@ -92,7 +92,7 @@
   border-radius: 50%;
   border: 2px solid rgba(255, 255, 255, 0.75);
   background: rgba(168, 85, 247, 0.18);
-  color: #e9e4f7;
+  color: var(--pk-text);
   font-size: 14px;
   cursor: pointer;
   transition: transform 0.15s, background 0.15s;

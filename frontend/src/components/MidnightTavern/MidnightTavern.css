@@ -58,7 +58,7 @@
 .tavern-eyebrow {
   letter-spacing: 6px;
   font-size: 12px;
-  color: #a855f7;
+  color: var(--pk-purple);
   text-transform: uppercase;
   margin-bottom: 12px;
 }
@@ -66,7 +66,7 @@
 .tavern-title {
   font-size: 38px;
   font-weight: 700;
-  color: #f3edff;
+  color: var(--pk-text);
   margin: 0 0 8px;
   text-shadow: 0 0 24px rgba(168, 85, 247, 0.45);
 }
@@ -74,7 +74,7 @@
 .tavern-title-sm {
   font-size: 28px;
   font-weight: 700;
-  color: #f3edff;
+  color: var(--pk-text);
   margin: 0 0 20px;
   text-shadow: 0 0 20px rgba(168, 85, 247, 0.4);
 }
@@ -83,7 +83,7 @@
   width: 120px;
   height: 2px;
   margin: 16px 0 28px;
-  background: linear-gradient(90deg, transparent, #a855f7, #f5c542, transparent);
+  background: linear-gradient(90deg, transparent, var(--pk-purple), var(--pk-gold), transparent);
 }
 
 /* 叙事文本：逐行浮现 */
@@ -112,7 +112,7 @@
 
 /* 主按钮 */
 .tavern-cta {
-  background: linear-gradient(135deg, #7c3aed, #a855f7) !important;
+  background: linear-gradient(135deg, var(--pk-purple-deep), var(--pk-purple)) !important;
   border: 1px solid rgba(245, 197, 66, 0.55) !important;
   color: #fff !important;
   font-weight: 600;
@@ -130,15 +130,15 @@
 
 .tavern-ghost-btn {
   border-color: rgba(168, 85, 247, 0.6) !important;
-  color: #c4b5fd !important;
+  color: var(--pk-purple-bright) !important;
 }
 
-.tavern-link { color: #a78bfa !important; }
+.tavern-link { color: var(--pk-purple) !important; }
 
 .tavern-history {
   margin-top: 22px;
   font-size: 13px;
-  color: #8f84b8;
+  color: var(--pk-text-sec);
   opacity: 0;
   animation: tavern-line-in 0.8s ease forwards;
 }
@@ -155,31 +155,31 @@
   padding: 4px 14px;
   border-radius: 999px;
   font-size: 13px;
-  color: #8f84b8;
+  color: var(--pk-text-sec);
   border: 1px solid rgba(168, 85, 247, 0.25);
   transition: all 0.3s;
 }
 .tavern-dot.done {
-  color: #f5c542;
+  color: var(--pk-gold);
   border-color: rgba(245, 197, 66, 0.5);
 }
 .tavern-dot.active {
   color: #fff;
   background: rgba(168, 85, 247, 0.28);
-  border-color: #a855f7;
+  border-color: var(--pk-purple);
   box-shadow: 0 0 14px rgba(168, 85, 247, 0.4);
 }
 
 /* 题目 */
 .tavern-q-title {
   font-size: 24px;
-  color: #f3edff;
+  color: var(--pk-text);
   margin: 0 0 10px;
 }
 .tavern-q-scene {
   font-family: "Noto Serif SC", "Songti SC", "SimSun", serif;
   font-size: 17px;
-  color: #c4b5fd;
+  color: var(--pk-purple-bright);
   max-width: 560px;
   line-height: 1.9;
   margin: 0 0 30px;
@@ -210,13 +210,13 @@
   line-height: 1.7;
 }
 .tavern-option:hover {
-  border-color: #a855f7;
+  border-color: var(--pk-purple);
   background: rgba(52, 34, 96, 0.85);
   transform: translateX(6px);
-  box-shadow: -4px 0 0 #f5c542, 0 0 18px rgba(168, 85, 247, 0.25);
+  box-shadow: -4px 0 0 var(--pk-gold), 0 0 18px rgba(168, 85, 247, 0.25);
 }
 .tavern-option.picked {
-  border-color: #f5c542;
+  border-color: var(--pk-gold);
   background: rgba(76, 52, 120, 0.9);
   box-shadow: 0 0 24px rgba(245, 197, 66, 0.35);
 }
@@ -229,7 +229,7 @@
   align-items: center;
   justify-content: center;
   font-weight: 700;
-  color: #f5c542;
+  color: var(--pk-gold);
   border: 1px solid rgba(245, 197, 66, 0.5);
 }
 
@@ -252,12 +252,12 @@
 }
 .tavern-drink-card:hover {
   transform: translateY(-6px);
-  border-color: #a855f7;
+  border-color: var(--pk-purple);
   box-shadow: 0 12px 36px rgba(168, 85, 247, 0.35);
 }
 .tavern-drink-card.suggested {
-  border-color: #f5c542;
-  box-shadow: 0 0 0 1px #f5c542, 0 8px 30px rgba(245, 197, 66, 0.25);
+  border-color: var(--pk-gold);
+  box-shadow: 0 0 0 1px var(--pk-gold), 0 8px 30px rgba(245, 197, 66, 0.25);
 }
 .tavern-suggest-badge {
   position: absolute;
@@ -265,7 +265,7 @@
   left: 50%;
   transform: translateX(-50%);
   z-index: 2;
-  background: linear-gradient(135deg, #f5c542, #eab308);
+  background: linear-gradient(135deg, var(--pk-gold), #eab308);
   color: #231a05;
   font-size: 12px;
   font-weight: 700;
@@ -283,18 +283,18 @@
 }
 .tavern-drink-card:hover .tavern-drink-img { transform: scale(1.06); }
 .tavern-drink-body { padding: 14px 16px 18px; text-align: left; }
-.tavern-drink-name { font-size: 18px; font-weight: 700; color: #f3edff; }
-.tavern-drink-en { font-size: 13px; color: #8f84b8; font-weight: 400; margin-left: 6px; }
+.tavern-drink-name { font-size: 18px; font-weight: 700; color: var(--pk-text); }
+.tavern-drink-en { font-size: 13px; color: var(--pk-text-sec); font-weight: 400; margin-left: 6px; }
 .tavern-drink-type {
   margin: 8px 0;
   background: rgba(168, 85, 247, 0.2);
   border-color: rgba(168, 85, 247, 0.5);
-  color: #c4b5fd;
+  color: var(--pk-purple-bright);
   font-weight: 700;
   letter-spacing: 1px;
 }
 .tavern-drink-desc { font-size: 13px; color: #bdb3e0; line-height: 1.7; margin: 0 0 8px; }
-.tavern-drink-kelly { font-size: 12px; color: #f5c542; margin: 0; }
+.tavern-drink-kelly { font-size: 12px; color: var(--pk-gold); margin: 0; }
 
 /* 分享卡 */
 .tavern-share-card {
@@ -316,7 +316,7 @@
   background: linear-gradient(180deg, rgba(11, 8, 23, 0.05) 30%, rgba(11, 8, 23, 0.88) 78%);
   text-align: left;
 }
-.tavern-share-brand { font-size: 11px; letter-spacing: 3px; color: #c4b5fd; margin-bottom: 6px; }
+.tavern-share-brand { font-size: 11px; letter-spacing: 3px; color: var(--pk-purple-bright); margin-bottom: 6px; }
 .tavern-share-drink { font-size: 24px; font-weight: 700; color: #fff; }
 .tavern-share-drink span { font-size: 13px; color: #a89cc9; font-weight: 400; margin-left: 6px; }
 .tavern-share-mbti {
@@ -324,14 +324,14 @@
   font-weight: 800;
   letter-spacing: 4px;
   margin: 4px 0;
-  background: linear-gradient(135deg, #c4b5fd, #a855f7);
+  background: linear-gradient(135deg, var(--pk-purple-bright), var(--pk-purple));
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
 }
-.tavern-share-kelly { font-size: 15px; color: #f5c542; font-weight: 700; }
+.tavern-share-kelly { font-size: 15px; color: var(--pk-gold); font-weight: 700; }
 .tavern-share-mode { font-size: 12px; color: #bdb3e0; margin-top: 2px; }
-.tavern-share-hint { margin: 12px 0 28px; font-size: 13px; color: #8f84b8; }
+.tavern-share-hint { margin: 12px 0 28px; font-size: 13px; color: var(--pk-text-sec); }
 
 /* 结算明细 */
 .tavern-result-grid {
@@ -348,16 +348,16 @@
   border-radius: 12px;
   padding: 18px 20px;
 }
-.tavern-result-label { font-size: 13px; color: #8f84b8; letter-spacing: 1px; margin-bottom: 8px; }
-.tavern-result-value { font-size: 26px; font-weight: 800; color: #c4b5fd; letter-spacing: 2px; }
-.tavern-result-value.tavern-gold { color: #f5c542; }
-.tavern-result-note { font-size: 12px; color: #8f84b8; margin-top: 6px; line-height: 1.6; }
+.tavern-result-label { font-size: 13px; color: var(--pk-text-sec); letter-spacing: 1px; margin-bottom: 8px; }
+.tavern-result-value { font-size: 26px; font-weight: 800; color: var(--pk-purple-bright); letter-spacing: 2px; }
+.tavern-result-value.tavern-gold { color: var(--pk-gold); }
+.tavern-result-note { font-size: 12px; color: var(--pk-text-sec); margin-top: 6px; line-height: 1.6; }
 
 .tavern-report {
   max-width: 640px;
   text-align: left;
   background: rgba(24, 17, 48, 0.6);
-  border-left: 3px solid #a855f7;
+  border-left: 3px solid var(--pk-purple);
   border-radius: 0 12px 12px 0;
   padding: 18px 22px;
   margin-bottom: 20px;
