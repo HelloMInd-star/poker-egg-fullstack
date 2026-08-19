@@ -785,11 +785,17 @@ class GameEngine:
                 return player
         return None
     
-    def get_state(self) -> Dict:
-        """获取游戏状态"""
+    def get_state(self, viewer_id: Optional[str] = None) -> Dict:
+        """获取游戏状态。viewer_id 供 HTTP 轮询客户端遮蔽其他玩家手牌；
+        None 保持旧行为（WS 广播兼容）。hand_over 后全员手牌可见，用于摊牌展示与复盘。"""
+        players = [p.to_dict() for p in self.players]
+        if viewer_id and not self.hand_over:
+            for pd in players:
+                if pd.get("id") != viewer_id:
+                    pd["hole_cards"] = []
         return {
             "id": self.id,
-            "players": [p.to_dict() for p in self.players],
+            "players": players,
             "board": [c.to_dict() for c in self.board],
             "pot": self.pot,
             "stage": self.stage.value,

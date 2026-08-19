@@ -393,11 +393,11 @@ async def join_game(game_id: str, request: GameJoin):
 
 
 @app.get("/api/game/{game_id}")
-async def get_game_state(game_id: str):
+async def get_game_state(game_id: str, player_id: Optional[str] = Query(None)):
     game = game_manager.get_game(game_id)
     if not game:
         raise HTTPException(status_code=404, detail="游戏不存在")
-    return {"success": True, "data": game.get_state()}
+    return {"success": True, "data": game.get_state(viewer_id=player_id)}
 
 
 @app.get("/api/game/{game_id}/analysis")
