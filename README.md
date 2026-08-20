@@ -83,7 +83,7 @@
 
 | 🃏 **MBTI 16 型人格对手** | 📊 **Kelly 实时风控面板** | 🔄 **WebSocket 实时对局** |
 |---|---|---|
-| 8 维人格参数 × 12 维行为向量，毫秒级配置驱动，零 LLM 延迟 | 蒙特卡洛真胜率逐街重算 + Kelly 最优比例 + 三基准熔断提示 | 发牌/下注/摊牌全流程 WS 通信，毫秒级牌桌同步 |
+| 8 维人格参数 × 12 维行为向量，毫秒级配置驱动，零 LLM 延迟 | 蒙特卡洛真胜率逐街重算 + 牌型识别 + Kelly 最优比例 + 三基准熔断提示 | 发牌/下注/摊牌全流程 WS 通信，毫秒级牌桌同步 |
 
 | 🎭 **人格化决策理由** | 🍸 **午夜酒馆场景** | 🧠 **三层 AI 架构解耦** |
 |---|---|---|
@@ -92,6 +92,10 @@
 | 📈 **战绩与人格画像** | 🗂️ **抽屉式数据区** | ⚡ **零成本一键部署** |
 |---|---|---|
 | 胜率/弃牌率/bluff 捕获率多维统计，牌桌上暴露你的决策人格 | 六维面板/牌局信息收纳进侧边抽屉，主视觉只留牌局本身 | Dockerfile 就绪，GitHub Pages + Railway 零成本运行 |
+
+| 🕶️ **viewer_id 观众遮罩** | 📱 **移动端 768px 适配** | 🌐 **后端云端在线** |
+|---|---|---|
+| 观众视角按 viewer_id 脱敏对手底牌，摊牌才揭示 | 768px 断点响应式布局 + PWA 全量能力，可安装到主屏 | Railway 生产后端已上线，API 文档 `/docs` 即开即用 |
 
 </div>
 
@@ -135,7 +139,7 @@
 
 <div align="center">
 
-### 🔮 NF · 紫人组 — 理想主义者（The Dreamers）
+### 🔮 NF · 紫人组 — 诗意弈者（The Dreamers）
 
 > INFP · INFJ · ENFP · ENFJ
 
@@ -145,7 +149,7 @@
 
 ---
 
-### 🧪 NT · 黄人组 — 理性主义者（The Analysts）
+### 🧪 NT · 黄人组 — 算度大师（The Analysts）
 
 > INTP · INTJ · ENTP · ENTJ
 
@@ -155,7 +159,7 @@
 
 ---
 
-### 🛡️ SJ · 蓝人组 — 护卫者（The Guardians）
+### 🛡️ SJ · 蓝人组 — 阵地守将（The Guardians）
 
 > ISTJ · ISFJ · ESTJ · ESFJ
 
@@ -165,7 +169,7 @@
 
 ---
 
-### ⚡ SP · 绿人组 — 艺术创造者（The Explorers）
+### ⚡ SP · 绿人组 — 战术猎手（The Explorers）
 
 > ISTP · ISFP · ESTP · ESFP
 
@@ -267,6 +271,10 @@ npm run dev
 5. 部署后在 **Settings → Networking** 生成公共域名，填回前端环境变量
 6. 健康检查：`/api/health`（Dockerfile 已配置，超时 10s）
 
+**当前生产实例**：<https://poker-egg-fullstack-production.up.railway.app>（Swagger 文档 `/docs`）
+
+> ⚠️ **踩坑记录**：Railway 服务的 **startCommand 若硬编码 `--port 5000`，会覆盖 Dockerfile CMD**，导致端口与健康检查不匹配、部署反复失败；最终通过将 API 调整至 **8080** 端口解决。自定义 startCommand 时务必与 Railway 注入的 `PORT` 行为对齐。
+
 ---
 
 ## 📡 API 端点
@@ -343,12 +351,14 @@ poker-egg-fullstack/
 ### ✅ V1.0「Poker Egg 人格牌桌」（2026-08，当前版本）
 - [x] 完整德州扑克流程：preflop → flop → turn → river → showdown
 - [x] WebSocket 实时牌桌 + 座位椭圆自适应布局
-- [x] **16 型人格对手引擎**：8 维人格参数 + 人格化决策理由 + tilt 情绪记忆
-- [x] **Kelly 实时风控面板**：蒙特卡洛真胜率逐街重算 + 三基准熔断（0.48 / 0.50 / 0.68）
+- [x] **16 型人格对手引擎**：8 维人格参数 + 人格化决策理由 + tilt 情绪记忆（NT 算度大师 / NF 诗意弈者 / SJ 阵地守将 / SP 战术猎手 四大气质组全量实装）
+- [x] **Kelly 实时风控面板**：蒙特卡洛真胜率逐街重算 + 牌型识别 + AnalysisPanel 前端 + 三基准熔断（0.48 / 0.50 / 0.68）
 - [x] **午夜酒馆沉浸式场景**：酒馆夜景氛围层 + 贴纸涂鸦牌桌 + 人物座位头像 + 牌背/筹码贴纸
 - [x] 试炼总结（对局复盘弹窗）+ 抽屉式数据区（六维/牌局信息）
+- [x] **观众视角脱敏**：viewer_id 遮罩对手底牌（HTTP 轮询脱敏，摊牌揭示，WS 广播不变）
+- [x] **移动端适配**：768px 断点响应式布局 + PWA 全量能力
 - [x] JWT 用户系统 + 战绩统计 + PWA
-- [x] GitHub Pages + Railway 零成本部署链路
+- [x] GitHub Pages + Railway 零成本部署链路（生产后端已上线）
 
 ### 🎯 V1.1（进行中）
 - [ ] 16 型人格调酒卡视觉集（与 Y.Mine 调酒线联动）

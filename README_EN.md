@@ -83,7 +83,7 @@ Midnight Tavern is the public showcase layer of the **Game-OS V2.5 Decision-AI P
 
 | 🃏 **16 MBTI Opponents** | 📊 **Live Kelly Risk Panel** | 🔄 **Real-time WebSocket Play** |
 |---|---|---|
-| 8-dim persona params × 12-dim behavior vectors, config-driven in milliseconds, zero LLM latency | Monte Carlo true equity recomputed every street + Kelly optimal sizing + circuit-breaker alerts | Full WS pipeline for deal/bet/showdown, millisecond table sync |
+| 8-dim persona params × 12-dim behavior vectors, config-driven in milliseconds, zero LLM latency | Monte Carlo true equity recomputed every street + hand-type recognition + Kelly optimal sizing + circuit-breaker alerts | Full WS pipeline for deal/bet/showdown, millisecond table sync |
 
 | 🎭 **Persona Decision Rationale** | 🍸 **Midnight Tavern Scene** | 🧠 **Decoupled 3-Layer AI** |
 |---|---|---|
@@ -92,6 +92,10 @@ Midnight Tavern is the public showcase layer of the **Game-OS V2.5 Decision-AI P
 | 📈 **Stats & Personality Profiling** | 🗂️ **Drawer-based Data Zone** | ⚡ **Zero-cost Deployment** |
 |---|---|---|
 | Win rate / fold rate / bluff-catch rate — your decisions expose your personality | Six-dim panel & hand info tucked into a side drawer; the stage belongs to the game | Docker-ready; runs free on GitHub Pages + Railway |
+
+| 🕶️ **viewer_id Spectator Mask** | 📱 **Mobile @ 768px** | 🌐 **Backend Live in the Cloud** |
+|---|---|---|
+| Opponents' hole cards masked per viewer_id, revealed only at showdown | Responsive layout with a 768px breakpoint + full PWA, installable to home screen | Production backend on Railway; Swagger docs at `/docs` ready to explore |
 
 </div>
 
@@ -137,7 +141,7 @@ Midnight Tavern is the public showcase layer of the **Game-OS V2.5 Decision-AI P
 
 <div align="center">
 
-### 🔮 NF · The Dreamers
+### 🔮 NF · The Dreamers · 诗意弈者
 
 > INFP · INFJ · ENFP · ENFJ
 
@@ -147,7 +151,7 @@ Mind-readers and storytellers. They narrate the hand as they play it — the hig
 
 ---
 
-### 🧪 NT · The Analysts
+### 🧪 NT · The Analysts · 算度大师
 
 > INTP · INTJ · ENTP · ENTJ
 
@@ -157,7 +161,7 @@ Cold probability machines. 87%+ noise resistance means your face, your cadence, 
 
 ---
 
-### 🛡️ SJ · The Guardians
+### 🛡️ SJ · The Guardians · 阵地守将
 
 > ISTJ · ISFJ · ESTJ · ESFJ
 
@@ -167,7 +171,7 @@ Walls of steel. They fold seven or eight of every ten hands — but when they ra
 
 ---
 
-### ⚡ SP · The Explorers
+### ⚡ SP · The Explorers · 战术猎手
 
 > ISTP · ISFP · ESTP · ESFP
 
@@ -269,6 +273,10 @@ npm run dev
 5. After deploy, generate a public domain under **Settings → Networking** and feed it back into the frontend env vars
 6. Health check: `/api/health` (configured in Dockerfile, 10s timeout)
 
+**Current production instance**: <https://poker-egg-fullstack-production.up.railway.app> (Swagger docs at `/docs`)
+
+> ⚠️ **Lesson learned**: a Railway **startCommand hardcoding `--port 5000` overrides the Dockerfile CMD**, breaking port/health-check alignment and failing deploys; fixed by moving the API to port **8080**. Keep any custom startCommand aligned with Railway's injected `PORT`.
+
 ---
 
 ## 📡 API Endpoints
@@ -345,12 +353,14 @@ poker-egg-fullstack/
 ### ✅ V1.0 "Poker Egg" (2026-08, current)
 - [x] Full Texas Hold'em flow: preflop → flop → turn → river → showdown
 - [x] Real-time WebSocket table + adaptive elliptical seat layout
-- [x] **16-persona opponent engine**: 8-dim persona params + in-character rationale + tilt memory
-- [x] **Live Kelly risk panel**: Monte Carlo true equity per street + three circuit-breakers (0.48 / 0.50 / 0.68)
+- [x] **16-persona opponent engine**: 8-dim persona params + in-character rationale + tilt memory — all four temperament groups live (NT 算度大师 / NF 诗意弈者 / SJ 阵地守将 / SP 战术猎手)
+- [x] **Live Kelly risk panel**: Monte Carlo true equity per street + hand-type recognition + AnalysisPanel frontend + three circuit-breakers (0.48 / 0.50 / 0.68)
 - [x] **Immersive Midnight Tavern scene**: tavern ambience layer + sticker-graffiti table + character seat avatars + card-back/chip stickers
 - [x] Trial debrief modals + drawer-based data zone (six-dim / hand info)
+- [x] **Spectator-view masking**: viewer_id masks opponents' hole cards (masked over HTTP polling, revealed on hand_over; WS broadcast unchanged)
+- [x] **Mobile adaptation**: responsive 768px breakpoint + full PWA capability
 - [x] JWT user system + stats + PWA
-- [x] Zero-cost pipeline: GitHub Pages + Railway
+- [x] Zero-cost pipeline: GitHub Pages + Railway (production backend live)
 
 ### 🎯 V1.1 (in progress)
 - [ ] 16 persona cocktail-card visual set (crossover with the Y.Mine mixology line)
