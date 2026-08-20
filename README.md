@@ -1,4 +1,6 @@
-https://github.com/HelloMInd-star/poker-egg-fullstack/blob/main/github-poker-background.jpg
+<div align="center">
+  <img src="https://github.com/HelloMInd-star/poker-egg-fullstack/raw/main/github-poker-background.jpg" alt="午夜酒馆背景图" width="80%">
+</div>
 
 <div align="center">
 
