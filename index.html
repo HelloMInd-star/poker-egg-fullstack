@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=1" />
+  <meta name="description" content="Poker Face Arena · 扑克人格竞技场 — Game-OS V2.5 决策AI中台首个公开可玩 Demo。MBTI 16型人格对手 × Kelly公式实时风控 × 三层AI架构，博弈人格训练场。Read your opponent. Read yourself." />
+  <meta name="keywords" content="Poker Face Arena, 扑克人格竞技场, 德州扑克, MBTI, AI陪练, Kelly公式, Game-OS, 博弈AI, 人格建模" />
+  <meta name="author" content="Hello.Mind-star (Y.MINE)" />
+
+  <!-- PWA / Theme -->
+  <meta name="theme-color" content="#0a0a18" />
+  <link rel="manifest" href="/poker-egg-fullstack/manifest.json" />
+  <link rel="icon" type="image/svg+xml" href="/poker-egg-fullstack/favicon.svg" />
+  <link rel="apple-touch-icon" href="/poker-egg-fullstack/icon-192.png" />
+  <link rel="apple-touch-icon" sizes="512x512" href="/poker-egg-fullstack/icon-512.png" />
+
+  <!-- iOS PWA -->
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="Poker Face" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="format-detection" content="telephone=no" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Poker Face Arena · MBTI人格扑克竞技场" />
+  <meta property="og:description" content="16型MBTI人格对手 × Kelly实时风控 × 三层AI架构。你的弃牌率，比你更懂你。" />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="/icon-512.png" />
+
+  <title>MIDNIGHT TAVERN 午夜酒馆 · Poker Egg 人格牌桌</title>
+  <script type="module" crossorigin src="/poker-egg-fullstack/assets/index-CrYH4Q_g.js"></script>
+  <link rel="stylesheet" crossorigin href="/poker-egg-fullstack/assets/index-CHZeOn8d.css">
+</head>
+<body>
+  <div id="root"></div>
+  <script>
+    // Service Worker 注册（PWA 离线支持）
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', function () {
+        navigator.serviceWorker.register('/sw.js').then(
+          function (reg) {
+            console.log('[PWA] Service Worker registered, scope:', reg.scope);
+          },
+          function (err) {
+            console.warn('[PWA] Service Worker registration failed:', err);
+          }
+        );
+      });
+    }
+  </script>
+<a href="https://hellomind-star.github.io/ymine-validation-hub/" target="_blank" rel="noopener" style="position:fixed;right:14px;bottom:14px;z-index:9999;display:inline-flex;align-items:center;gap:6px;padding:6px 12px;border-radius:999px;background:rgba(15,17,26,.85);border:1px solid rgba(168,85,247,.4);color:#c4b5fd;font-size:12px;font-family:-apple-system,'PingFang SC','Microsoft YaHei',sans-serif;text-decoration:none;backdrop-filter:blur(6px);opacity:.7;transition:opacity .2s" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='.7'">🌌 Y.Mine 应用矩阵 · 返回作品集</a>
+</body>
+</html>
